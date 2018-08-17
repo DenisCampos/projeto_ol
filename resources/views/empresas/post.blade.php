@@ -1,5 +1,26 @@
 @extends('layouts.site')
 
+@section('assets_meta')
+    <meta property='og:title' content='{{$empresa->name}}' />
+    <meta property='og:description' content='{{$empresa->descricao}}' />
+    <meta property='og:image' itemprop="image" content='{{ asset($empresa->imagem1) }}' />
+    <meta property='og:type' content='website' />
+    <meta property='article:author' content='https://www.facebook.com/oloyfit' />
+    <meta property='og:site_name' content='OloyFit' />
+    <meta name='twitter:card' content='summary_large_image' />
+    <meta name='twitter:title' content='{{$empresa->name}}' />
+    <meta name='twitter:description' content='{{$empresa->descricao}}' />
+    <meta name='twitter:image:src' content='{{ asset($empresa->imagem1) }}' />
+@endsection
+
+@section('titulo')
+    {{$empresa->name}}
+@endsection
+
+@section('descricao')
+    Parceiro OloyFit: {{$empresa->name}}
+@endsection
+
 @section('content')
 
 <div class="container">
@@ -103,6 +124,7 @@
                     </div>
                 </div>
             </div>
+            <div id="share" class="col-lg-12 mb-3"></div>
         </div>
         <div class="col-lg-4">
             <div class="container row">
@@ -181,5 +203,14 @@
     </div>
     <!-- /.row -->
 </div>
+
+@endsection
+
+@section('assets_scripts')
+<script>
+    $("#share").jsSocials({
+        shares: ["email", "twitter", "facebook", "googleplus", "linkedin", "pinterest", "whatsapp"]
+    });
+</script>
 
 @endsection

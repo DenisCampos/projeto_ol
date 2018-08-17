@@ -1,5 +1,26 @@
 @extends('layouts.site')
 
+@section('assets_meta')
+    <meta property='og:title' content='{{$post->titulo}}' />
+    <meta property='og:description' content='{!!$post->descricao!!}' />
+    <meta property='og:image' itemprop="image" content='{{ asset($post->imagem1) }}' />
+    <meta property='og:type' content='website' />
+    <meta property='article:author' content='https://www.facebook.com/oloyfit' />
+    <meta property='og:site_name' content='OloyFit' />
+    <meta name='twitter:card' content='summary_large_image' />
+    <meta name='twitter:title' content='{{$post->titulo}}' />
+    <meta name='twitter:description' content='{!!$post->descricao!!}' />
+    <meta name='twitter:image:src' content='{{ asset($post->imagem1) }}' />
+@endsection
+
+@section('titulo')
+    {{$post->titulo}}
+@endsection
+
+@section('descricao')
+    InfoProduto OloyFit: {{$post->titulo}}
+@endsection
+
 @section('content')
 
 <div class="container">
@@ -19,6 +40,7 @@
             <hr>
 
             <p>{!!$post->descricao!!}</p>
+            <div id="share" class="mb-3"></div>
         </div>
         <div class="col-lg-4">
             <div class="container row mb-5">
@@ -100,5 +122,14 @@
     </div>
     <!-- /.row -->
 </div>
+
+@endsection
+
+@section('assets_scripts')
+<script>
+    $("#share").jsSocials({
+        shares: ["email", "twitter", "facebook", "googleplus", "linkedin", "pinterest", "whatsapp"]
+    });
+</script>
 
 @endsection

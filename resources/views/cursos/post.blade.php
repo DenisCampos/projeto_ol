@@ -1,5 +1,26 @@
 @extends('layouts.site')
 
+@section('assets_meta')
+    <meta property='og:title' content='{{$curso->titulo}}' />
+    <meta property='og:description' content='{{$curso->descricao}}' />
+    <meta property='og:image' itemprop="image" content='{{ asset($curso->imagem1) }}' />
+    <meta property='og:type' content='website' />
+    <meta property='article:author' content='https://www.facebook.com/oloyfit' />
+    <meta property='og:site_name' content='OloyFit' />
+    <meta name='twitter:card' content='summary_large_image' />
+    <meta name='twitter:title' content='{{$curso->titulo}}' />
+    <meta name='twitter:description' content='{{$curso->descricao}}' />
+    <meta name='twitter:image:src' content='{{ asset($curso->imagem1) }}' />
+@endsection
+
+@section('titulo')
+    {{$curso->titulo}}
+@endsection
+
+@section('descricao')
+    InfoProduto OloyFit: {{$curso->titulo}}
+@endsection
+
 @section('content')
 
 <div class="container">
@@ -63,6 +84,7 @@
                 <button type="buttom" onclick="window.open('{{$curso->link}}','_blank')" class="btn btn-custom">Comece agora</button>
             </div>
             @endif
+            <div id="share" class="col-lg-12 mb-3"></div>
         </div>
         <div class="col-lg-4">
             <div class="container row mb-5">
@@ -133,5 +155,14 @@
     </div>
     <!-- /.row -->
 </div>
+
+@endsection
+
+@section('assets_scripts')
+<script>
+    $("#share").jsSocials({
+        shares: ["email", "twitter", "facebook", "googleplus", "linkedin", "pinterest", "whatsapp"]
+    });
+</script>
 
 @endsection

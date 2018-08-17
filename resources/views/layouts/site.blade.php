@@ -20,6 +20,7 @@
     <meta name="robot" content="all" >
     <meta name="googlebot" content="all">
     <meta name="google-site-verification" content="iMnIjKg586mnbtTv_Tx4EFLcyFkmoSDPEZ4nHcV3GRM" />
+    @yield('assets_meta')
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">

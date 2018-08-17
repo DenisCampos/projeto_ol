@@ -1,5 +1,18 @@
 @extends('layouts.site')
 
+@section('assets_meta')
+    <meta property='og:title' content='{{$evento->titulo}}' />
+    <meta property='og:description' content='{{$evento->descricao}}' />
+    <meta property='og:image' itemprop="image" content='{{ asset($evento->imagem1) }}' />
+    <meta property='og:type' content='website' />
+    <meta property='article:author' content='https://www.facebook.com/oloyfit' />
+    <meta property='og:site_name' content='OloyFit' />
+    <meta name='twitter:card' content='summary_large_image' />
+    <meta name='twitter:title' content='{{$evento->titulo}}' />
+    <meta name='twitter:description' content='{{$evento->descricao}}' />
+    <meta name='twitter:image:src' content='{{ asset($evento->imagem1) }}' />
+@endsection
+
 @section('titulo')
     {{$evento->titulo}}
 @endsection
@@ -63,7 +76,7 @@
                 @endif
             </div>  
             @if($evento->latitude!="")
-            <div class="col-lg-12 mb-4 mt-2" style="height:250px" id="map"></div>
+            <div class="col-lg-12 mb-3 mt-2" style="height:250px" id="map"></div>
             <script>
                 function initMap() {
 
@@ -85,7 +98,7 @@
             </script>
             <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2UTdk-E7kWhTX-YUDQXUVc5FnQiaYIuA&callback=initMap" type="text/javascript"></script>
             @endif
-            <div id="share" class="col-lg-12"></div>
+            <div id="share" class="col-lg-12 mb-3"></div>
         </div>
         <div class="col-lg-4">
             <div class="container row mb-5">

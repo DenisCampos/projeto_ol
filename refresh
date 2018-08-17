@@ -1,0 +1,25 @@
+Nothing to migrate.
+Seeding: UsersTableSeeder
+
+   Illuminate\Database\QueryException  : SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'admin@admin.com' for key 'users_email_unique' (SQL: insert into `users` (`name`, `email`, `foto`, `password`, `remember_token`, `tipo`, `updated_at`, `created_at`) values (Aliya Kozey, admin@admin.com, perfils/user1.png, $2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm, hNJdKCx7sk, 1, 2018-03-28 19:16:47, 2018-03-28 19:16:47))
+
+  at C:\xampp\htdocs\oloyfit\vendor\laravel\framework\src\Illuminate\Database\Connection.php: 664
+    660|         // If an exception occurs when attempting to run a query, we'll format the error
+    661|         // message to include the bindings with SQL, which will make this exception a
+    662|         // lot more helpful to the developer instead of just the database's errors.
+    663|         catch (Exception $e) {
+  > 664|             throw new QueryException(
+    665|                 $query, $this->prepareBindings($bindings), $e
+    666|             );
+    667|         }
+    668|
+
+  Exception trace:
+
+  1   PDOException::("SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry 'admin@admin.com' for key 'users_email_unique'")
+      C:\xampp\htdocs\oloyfit\vendor\laravel\framework\src\Illuminate\Database\Connection.php : 458
+
+  2   PDOStatement::execute()
+      C:\xampp\htdocs\oloyfit\vendor\laravel\framework\src\Illuminate\Database\Connection.php : 458
+
+  Please use the argument -v to see more details.

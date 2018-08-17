@@ -148,7 +148,7 @@ class ProfissionaisController extends Controller
         $user = Auth::user()->id;
         $profissional = $this->repository->find($id);
         if($profissional->user_id != $user){
-            return view('error.403');
+            abort(403);
         }
         $paises = $this->paisesrepository->pluck('descricao','id');
         $paises->prepend('Selecione o País', '');
@@ -173,7 +173,7 @@ class ProfissionaisController extends Controller
         $user = Auth::user()->id;
         $profissional = $this->repository->find($id);
         if($profissional->user_id != $user){
-            return view('error.403');
+            abort(403);
         }
 
         $data = $request->all();
@@ -208,7 +208,7 @@ class ProfissionaisController extends Controller
         $user = Auth::user()->id;
         $profissional = $this->repository->find($id);
         if($profissional->user_id != $user){
-            return view('error.403');
+            abort(403);
         }
 
         $data['situacao_id'] = 2;
@@ -230,7 +230,7 @@ class ProfissionaisController extends Controller
         $user = Auth::user()->id;
         $profissional = $this->repository->find($id);
         if($profissional->user_id != $user){
-            return view('error.403');
+            abort(403);
         }
         @unlink($profissional->foto);
         $this->profissionalatuacoesrepository->deleteWhere([

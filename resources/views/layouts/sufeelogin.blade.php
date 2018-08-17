@@ -28,7 +28,7 @@
     <title>{{ config('app.name', 'Laravel') }} {{ config('app.subtitle', 'Laravel') }}</title>
 
     <link rel="apple-touch-icon" href="apple-icon.png">
-    <<link rel="shortcut icon" href="{{ asset('public/images/oloyfitico.ico') }}">
+    <link rel="shortcut icon" href="{{ asset('public/images/oloyfitico.ico') }}">
 
     <link rel="stylesheet" href="{{ asset('public/assets/css/normalize.css') }}">
     <link rel="stylesheet" href="{{ asset('public/assets/css/bootstrap.min.css') }}">

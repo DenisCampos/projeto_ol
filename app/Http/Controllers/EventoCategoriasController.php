@@ -30,7 +30,7 @@ class EventoCategoriasController extends Controller
     public function index($evento)
     {
         if($this->verificaUser($evento)==1){
-            return view('error.403');
+            abort(403);
         }
 
         $eventoid = $evento;

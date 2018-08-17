@@ -23,7 +23,7 @@ class ProfissionalAtuacoesController extends Controller
     public function index($id){
        
         if($this->verificaUser($id)==1){
-            return view('error.403');
+            abort(403);
         }
         $atuacoes = DB::table('atuacoes')
             ->leftJoin('profissional_atuacoes', function ($join) use ($id) {

@@ -27,7 +27,7 @@ class ProfissionalBannersController extends Controller
     public function index($profissional)
     {
         if($this->verificaUser($profissional)==1){
-            return view('error.403');
+            abort(403);
         }
         $profissional = $this->profissionaisrepository->find($profissional);
         $banners = $this->repository->findwhere(['profissional_id' => $profissional->id]);
@@ -43,7 +43,7 @@ class ProfissionalBannersController extends Controller
     public function create($profissional)
     {
         if($this->verificaUser($profissional)==1){
-            return view('error.403');
+            abort(403);
         }
         $profissional = $this->profissionaisrepository->find($profissional);
         return view('profissionalbanners.create', compact('profissional'));
@@ -58,7 +58,7 @@ class ProfissionalBannersController extends Controller
     public function store(Request $request, $profissional)
     {
         if($this->verificaUser($profissional)==1){
-            return view('error.403');
+            abort(403);
         }
         
         $data = $request->all();
@@ -92,7 +92,7 @@ class ProfissionalBannersController extends Controller
     public function show($profissional,$id)
     {
         if($this->verificaUser($profissional)==1){
-            return view('error.403');
+            abort(403);
         }
         $banner = $this->repository->find($id);
         $parecer =  $this->pareceres->scopeQuery(function($query){
@@ -110,7 +110,7 @@ class ProfissionalBannersController extends Controller
     public function edit($profissional,$id)
     {
         if($this->verificaUser($profissional)==1){
-            return view('error.403');
+            abort(403);
         }
         $banner = $this->repository->find($id);
         return view('profissionalbanners.edit', compact('banner'));
@@ -126,7 +126,7 @@ class ProfissionalBannersController extends Controller
     public function update(Request $request, $profissional, $id)
     {
         if($this->verificaUser($profissional)==1){
-            return view('error.403');
+            abort(403);
         }
 
         $data = $request->all();
@@ -161,7 +161,7 @@ class ProfissionalBannersController extends Controller
     public function destroy($profissional, $id)
     {
         if($this->verificaUser($profissional)==1){
-            return view('error.403');
+            abort(403);
         }
 
         $banner = $this->repository->find($id);
@@ -176,7 +176,7 @@ class ProfissionalBannersController extends Controller
     public function enviar($profissional, $id)
     {
         if($this->verificaUser($profissional)==1){
-            return view('error.403');
+            abort(403);
         }
 
         $data['situacao_id'] = 2;

@@ -28,7 +28,7 @@ class EmpresaBannersController extends Controller
     public function index($empresa)
     {
         if($this->verificaUser($empresa)==1){
-            return view('error.403');
+            abort(403);
         }
         $empresa = $this->empresasrepository->find($empresa);
         $banners = $this->repository->findwhere(['empresa_id' => $empresa->id]);
@@ -43,7 +43,7 @@ class EmpresaBannersController extends Controller
     public function create($empresa)
     {
         if($this->verificaUser($empresa)==1){
-            return view('error.403');
+            abort(403);
         }
         $empresa = $this->empresasrepository->find($empresa);
         return view('empresabanners.create', compact('empresa'));
@@ -58,7 +58,7 @@ class EmpresaBannersController extends Controller
     public function store(Request $request, $empresa)
     {
         if($this->verificaUser($empresa)==1){
-            return view('error.403');
+            abort(403);
         }
         
         $data = $request->all();
@@ -92,7 +92,7 @@ class EmpresaBannersController extends Controller
     public function show($empresa,$id)
     {
         if($this->verificaUser($empresa)==1){
-            return view('error.403');
+            abort(403);
         }
         $banner = $this->repository->find($id);
         $parecer =  $this->pareceres->scopeQuery(function($query){
@@ -110,7 +110,7 @@ class EmpresaBannersController extends Controller
     public function edit($empresa, $id)
     {
         if($this->verificaUser($empresa)==1){
-            return view('error.403');
+            abort(403);
         }
         $banner = $this->repository->find($id);
         return view('empresabanners.edit', compact('banner'));
@@ -126,7 +126,7 @@ class EmpresaBannersController extends Controller
     public function update(Request $request, $empresa, $id)
     {
         if($this->verificaUser($empresa)==1){
-            return view('error.403');
+            abort(403);
         }
 
         $data = $request->all();
@@ -161,7 +161,7 @@ class EmpresaBannersController extends Controller
     public function destroy($empresa, $id)
     {
         if($this->verificaUser($empresa)==1){
-            return view('error.403');
+            abort(403);
         }
 
         $banner = $this->repository->find($id);
@@ -187,7 +187,7 @@ class EmpresaBannersController extends Controller
     public function enviar($empresa, $id)
     {
         if($this->verificaUser($empresa)==1){
-            return view('error.403');
+            abort(403);
         }
 
         $data['situacao_id'] = 2;

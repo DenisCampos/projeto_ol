@@ -20,8 +20,6 @@ use Spatie\Sitemap\SitemapGenerator;
 
 Auth::routes();
 
-Route::get('/error/403', 'ErrorController@error403')->name('error.403');
-
 Route::get('/', 'SiteController@index')->name('index');
 //fale conosto
 Route::get('/faleconosco', 'SiteController@faleconosco')->name('faleconosco');

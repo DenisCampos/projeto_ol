@@ -54,32 +54,55 @@
                                 </thead>
                                 <tbody>
                                     @foreach($pareceres as $parecer)
-                                    
                                     <tr>
                                         <td>
                                             @if($parecer->tipo!=5 && $parecer->tipo!=6)
                                                 <a href="{{$parecer->getRoute($parecer->tipo, $parecer->id_tipo)}}">
-                                                {{$parecer->getTipo($parecer->tipo)}}: 
+                                                    {{$parecer->getTipo($parecer->tipo)}}: 
                                                 @if($parecer->tipo==1)
-                                                    {{$parecer->profissional->name}}
+                                                    @if(isset($parecer->profissional->id))
+                                                        {{$parecer->profissional->name}}
+                                                    @else
+                                                        Profissional excluido.
+                                                    @endif
                                                 @elseif($parecer->tipo==2)
-                                                    {{$parecer->empresa->name}}
+                                                    @if(isset($parecer->empresa->id))
+                                                        {{$parecer->empresa->name}}
+                                                    @else
+                                                        Empresa excluida.
+                                                    @endif
                                                 @elseif($parecer->tipo==3)
-                                                    {{$parecer->curso->titulo}}
+                                                    @if(isset($parecer->curso->id))
+                                                        {{$parecer->curso->titulo}}
+                                                    @else
+                                                        InfoProdudo excluido.
+                                                    @endif
                                                 @elseif($parecer->tipo==4)
-                                                    {{$parecer->evento->titulo}}
+                                                    @if(isset($parecer->evento->id))
+                                                        {{$parecer->evento->titulo}}
+                                                    @else
+                                                        Evento excluido.
+                                                    @endif
                                                 @endif
                                                 </a>
                                             @elseif($parecer->tipo==5)
-                                                <a href="{{$parecer->getRoute($parecer->tipo, $parecer->bannerprof->profissional_id)}}">
-                                                    {{$parecer->getTipo($parecer->tipo)}}:
-                                                    {{$parecer->bannerprof->profissional->name}}
-                                                </a>
+                                                @if(isset($parecer->bannerprof->id))
+                                                    <a href="{{$parecer->getRoute($parecer->tipo, $parecer->bannerprof->profissional_id)}}">
+                                                        {{$parecer->getTipo($parecer->tipo)}}:
+                                                        {{$parecer->bannerprof->profissional->name}}
+                                                    </a>
+                                                @else
+                                                    Banner excluido.
+                                                @endif
                                             @elseif($parecer->tipo==6)
-                                                <a href="{{$parecer->getRoute($parecer->tipo, $parecer->banneremp->empresa_id)}}">
-                                                    {{$parecer->getTipo($parecer->tipo)}}:
-                                                    {{$parecer->banneremp->empresa->name}}
-                                                </a>
+                                                @if(isset($parecer->banneremp->id))
+                                                    <a href="{{$parecer->getRoute($parecer->tipo, $parecer->banneremp->empresa_id)}}">
+                                                        {{$parecer->getTipo($parecer->tipo)}}:
+                                                        {{$parecer->banneremp->empresa->name}}
+                                                    </a>
+                                                @else
+                                                    Banner excluido.
+                                                @endif
                                             @endif
                                         </td>
                                         <td>{{$parecer->situacao->descricao}}</td>

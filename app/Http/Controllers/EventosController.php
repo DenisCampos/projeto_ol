@@ -152,7 +152,7 @@ class EventosController extends Controller
     public function edit($id)
     {
         if($this->verificaUser($id)==1){
-            return view('error.403');
+            abort(403);
         }
         $user = Auth::user()->id;
         $evento = $this->repository->find($id);
@@ -177,7 +177,7 @@ class EventosController extends Controller
     public function update(Request $request, $id)
     {
         if($this->verificaUser($id)==1){
-            return view('error.403');
+            abort(403);
         }
 
         $evento = $this->repository->find($id);
@@ -231,7 +231,7 @@ class EventosController extends Controller
     public function destroy($id)
     {
         if($this->verificaUser($id)==1){
-            return view('error.403');
+            abort(403);
         }
 
         $evento = $this->repository->find($id);
@@ -252,7 +252,7 @@ class EventosController extends Controller
     public function enviar($id)
     {
         if($this->verificaUser($id)==1){
-            return view('error.403');
+            abort(403);
         }
 
         $data['situacao_id'] = 2;

@@ -168,7 +168,7 @@ class EmpresasController extends Controller
         $user = Auth::user()->id;
         $empresa = $this->repository->find($id);
         if($empresa->user_id != $user){
-            return view('error.403');
+            abort(403);
         }
         $paises = $this->paisesrepository->pluck('descricao','id');
         $paises->prepend('Selecione o País', '');
@@ -192,7 +192,7 @@ class EmpresasController extends Controller
         $user = Auth::user()->id;
         $empresa = $this->repository->find($id);
         if($empresa->user_id != $user){
-            return view('error.403');
+            abort(403);
         }
 
         $data = $request->all();
@@ -254,7 +254,7 @@ class EmpresasController extends Controller
         $user = Auth::user()->id;
         $empresa = $this->repository->find($id);
         if($empresa->user_id != $user){
-            return view('error.403');
+            abort(403);
         }
 
         $data['situacao_id'] = 2;
@@ -276,7 +276,7 @@ class EmpresasController extends Controller
         $user = Auth::user()->id;
         $empresa = $this->repository->find($id);
         if($empresa->user_id != $user){
-            return view('error.403');
+            abort(403);
         }
         @unlink($empresa->imagem1);
         if($empresa->imagem2!=""){

@@ -21,6 +21,11 @@ class EmpresaAtuacoesController extends Controller
     }
 
     public function index($id){
+
+        if($this->verificaUser($id)==1){
+            abort(403);
+        }
+
         $atuacoes = DB::table('atuacoes')
             ->leftJoin('empresa_atuacoes', function ($join) use ($id) {
                 $join->on('atuacoes.id', '=', 'empresa_atuacoes.atuacao_id')
@@ -61,5 +66,15 @@ class EmpresaAtuacoesController extends Controller
         $emp['destaque_id'] = '1';
         $this->empresasrepository->update($emp, $request->eid);
         return \Response::json($request->id); 
+    }
+
+    private function verificaUser($id){
+        $user = Auth::user()->id;
+        $empresa = $this->empresasrepository->find($id);
+        if($empresa->user_id != $user){
+           return 1;
+        }else{
+            return 0;
+        }
     }
 }

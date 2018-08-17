@@ -29,7 +29,7 @@ class CursoCategoriasController extends Controller
     public function index($curso)
     {
         if($this->verificaUser($curso)==1){
-            return view('error.403');
+            abort(403);
         }
 
         $cursoid = $curso;

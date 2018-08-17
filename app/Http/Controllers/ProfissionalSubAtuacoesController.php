@@ -25,7 +25,7 @@ class ProfissionalSubAtuacoesController extends Controller
     public function index($id, $atuacao){
 
         if($this->verificaUser($id)==1){
-            return view('error.403');
+            abort(403);
         }
 
         $subatuacoes = DB::table('sub_atuacoes')

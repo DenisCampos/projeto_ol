@@ -13,7 +13,7 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="OloyFit, conectando pessoas que buscam um estilo de vida saudável.">
+    <meta name="description" content="@yield('descricao', 'OloyFit, conectando pessoas que buscam um estilo de vida saudável.')"> 
     <meta name="keywords" content="OloyFit, oloyfit, vida saudavel, bem estar, suplementos" >
     <meta name="keywords" content="alimentacao saudavel, nutricionistas, nutrólogos, personal trainer" >
     <meta name="author" content="OloyFit">
@@ -24,7 +24,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }} {{ config('app.subtitle', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Laravel') }} - @yield('titulo', config('app.subtitle', 'Laravel'))  </title>
 
     <link rel="apple-touch-icon" href="apple-icon.png">
     <link rel="shortcut icon" href="{{ asset('public/images/oloyfitico.ico') }}">
@@ -41,6 +41,8 @@
     <link rel="stylesheet" href="{{ asset('public/assets/css/themify-icons.css') }}">
     <link rel="stylesheet" href="{{ asset('public/assets/css/flag-icon.min.css') }}">
     <link rel="stylesheet" href="{{ asset('public/assets/scss/socials.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/css/jssocials.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/css/jssocials-theme-flat.css') }}">
     @yield('assets_css')
 </head>
 <body style="padding-top: 30px">
@@ -266,6 +268,7 @@
     <script src="{{ asset('public/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('public/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('public/js/bootstrap-4-navbar.js') }}"></script>
+    <script src="{{ asset('public/js/jssocials.min.js') }}"></script>
     @yield('assets_scripts')
 </body>
 </html>

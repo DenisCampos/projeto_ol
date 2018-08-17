@@ -14,7 +14,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'OloyFit'),
-    'subtitle' => '- O mundo fitness num só lugar!',
+    'subtitle' => 'O mundo fitness num só lugar!',
     /*
     |--------------------------------------------------------------------------
     | Application Environment

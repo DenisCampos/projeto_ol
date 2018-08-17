@@ -1,5 +1,13 @@
 @extends('layouts.site')
 
+@section('titulo')
+    {{$evento->titulo}}
+@endsection
+
+@section('descricao')
+    Evento OloyFit: {{$evento->titulo}}
+@endsection
+
 @section('content')
 
 <div class="container">
@@ -7,10 +15,10 @@
     <!-- Intro Content -->
     <div class="row mb-2">
         <div class="col-lg-12 text-custom-titulo"><h3>{{$evento->titulo}}</h3><hr></div>
-        <div class="row col-lg-8">
+        <div class="row col-lg-8" style="margin-left: 0px">
             @if($evento->imagem2!="")
             <div class="col-lg-12">
-                <img class="img-fluid rounded mb-2" src="{{ asset($evento->imagem2) }}" alt="">
+                <img class="img-fluid rounded mb-2" src="{{ asset($evento->imagem2) }}" data-src="{{ asset($evento->imagem2) }}" alt="{{$evento->titulo}}">
             </div>
             @endif
             <div class="col-lg-12">
@@ -77,6 +85,7 @@
             </script>
             <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2UTdk-E7kWhTX-YUDQXUVc5FnQiaYIuA&callback=initMap" type="text/javascript"></script>
             @endif
+            <div id="share" class="col-lg-12"></div>
         </div>
         <div class="col-lg-4">
             <div class="container row mb-5">
@@ -141,5 +150,13 @@
     </div>
     <!-- /.row -->
 </div>
+
+@endsection
+@section('assets_scripts')
+<script>
+    $("#share").jsSocials({
+        shares: ["email", "twitter", "facebook", "googleplus", "linkedin", "pinterest", "whatsapp"]
+    });
+</script>
 
 @endsection

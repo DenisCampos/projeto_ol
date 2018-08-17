@@ -81,7 +81,9 @@
             @endif
             @if($curso->link!="")
             <div class="col-lg-12 text-center">
+                <hr>
                 <button type="buttom" onclick="window.open('{{$curso->link}}','_blank')" class="btn btn-custom">Comece agora</button>
+                <hr>
             </div>
             @endif
             <div id="share" class="col-lg-12 mb-3"></div>

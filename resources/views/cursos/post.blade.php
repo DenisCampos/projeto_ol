@@ -28,7 +28,7 @@
     <!-- Intro Content -->
     <div class="row mb-2">
         <div class="col-lg-12 text-custom-titulo"><h3>{{$curso->titulo}}</h3><hr></div>
-        <div class="row col-lg-8">
+        <div class="row col-lg-8" style="margin-left: 0px">
             @if($curso->imagem2!="")
             <div class="col-lg-12">
                 <img class="img-fluid rounded mb-4" src="{{ asset($curso->imagem2) }}" alt="">

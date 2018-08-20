@@ -2,8 +2,8 @@
 {!! Form::hidden('latitude', null, ['id' => "latitude"]) !!}
 {!! Form::hidden('longitude', null, ['id' => "longitude"]) !!}
 <div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-4">
+    <div class="col-md-1"></div>
+    <div class="col-md-5">
         <div class="card" align="center">
             <div class="imageBoxProf">
                 <div class="thumbBoxProf"></div>
@@ -28,8 +28,8 @@
             </div>
         </div>
     </div>
-    <div class="croppedProf col-md-4"></div>
-    <div class="col-md-2"></div>
+    <div class="croppedProf col-md-5"></div>
+    <div class="col-md-1"></div>
     <div class="col-lg-4">
         {!! Form::label('name', 'Nome*', ['class' => 'control-label']) !!}
         {!! Form::text('name', null, ['class' => 'form-control', 'required' => 'required']) !!}

@@ -34,12 +34,12 @@
                 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                     <div class="carousel-inner">
                         @if($empresa->imagem2!="")
-                        <div class="carousel-item active" style="height: auto">
+                        <div class="carousel-item active" style="height: auto; min-height:171px">
                         <img class="d-block w-100" src="{{ asset($empresa->imagem2) }}" alt="First slide">
                         </div>
                         @endif
                         @if($empresa->imagem3!="")
-                        <div class="carousel-item" @if($empresa->imagem2=='') active @endif style="height: auto">
+                        <div class="carousel-item" @if($empresa->imagem2=='') active @endif style="height: auto; min-height:171px">
                         <img class="d-block w-100" src="{{ asset($empresa->imagem3) }}" alt="Second slide">
                         </div>
                         @endif

@@ -59,25 +59,25 @@
 
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active">
+                    <li>
                         <a href="{{route('index')}}"> <i class="menu-icon fa fa-external-link"></i>Site</a>
                     </li>
-                    <li>
+                    <li  class="{{ request()->is('home') ? 'active' : '' }}">
                         <a href="{{route('home')}}"> <i class="menu-icon fa fa-home"></i>Home</a>
                     </li>
                     <h3 class="menu-title">Para você</h3><!-- /.menu-title -->
-                    <li>
+                    <li  class="{{ request()->is('userinteresses') ? 'active' : '' }}">
                         <a href="{{route('userinteresses.index')}}"> <i class="menu-icon fa fa-thumbs-up"></i>Interesses</a>
                     </li>
                     <h3 class="menu-title">Para parceiros</h3><!-- /.menu-title -->
-                    <li class="menu-item-has-children dropdown">
+                    <li class="menu-item-has-children dropdown {{ request()->is('profissionais*') ? 'active' : '' }} {{ request()->is('profissionalatuacoes*') ? 'active' : '' }}  {{ request()->is('profissionalsubatuacoes*') ? 'active' : '' }}">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-user"></i>Profissional</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class="fa fa-id-card-o"></i><a href="{{route('profissionais.create')}}">Novo</a></li>
                             <li><i class="fa fa-file-text-o"></i><a href="{{route('profissionais.index')}}">Cadastrados</a></li>
                         </ul>
                     </li>
-                    <li class="menu-item-has-children dropdown">
+                    <li class="menu-item-has-children dropdown {{ request()->is('empresas*') ? 'active' : '' }} {{ request()->is('empresaatuacoes*') ? 'active' : '' }}  {{ request()->is('empresasubatuacoes*') ? 'active' : '' }}">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Empresa</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class="fa fa-id-card-o"></i><a href="{{route('empresas.create')}}">Novo</a></li>
@@ -85,7 +85,7 @@
                         </ul>
                     </li>
                     @if(Auth::user()->tipo==1)
-                    <li class="menu-item-has-children dropdown">
+                    <li class="menu-item-has-children dropdown {{ request()->is('cursos*') ? 'active' : '' }}">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-book"></i>Infoprodutos</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class="fa fa-id-card-o"></i><a href="{{route('cursos.create')}}">Novo</a></li>
@@ -93,7 +93,7 @@
                         </ul>
                     </li>
                     @endif
-                    <li class="menu-item-has-children dropdown">
+                    <li class="menu-item-has-children dropdown {{ request()->is('eventos*') ? 'active' : '' }} {{ request()->is('eventocategorias*') ? 'active' : '' }}">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-globe"></i>Eventos</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class="fa fa-id-card-o"></i><a href="{{route('eventos.create')}}">Novo</a></li>
@@ -102,10 +102,10 @@
                     </li>
                     @if(Auth::user()->tipo==1)
                     <h3 class="menu-title">Administrador</h3><!-- /.menu-title -->
-                    <li>
+                    <li  class="{{ request()->is('admin/usuarios*') ? 'active' : '' }}">
                         <a href="{{route('admin.usuarios.index')}}"> <i class="menu-icon fa fa-users"></i>Usuarios</a>
                     </li>
-                    <li class="menu-item-has-children dropdown">
+                    <li class="menu-item-has-children dropdown {{ request()->is('admin/profissionais*') ? 'active' : '' }}">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-user"></i>Profissionais</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class="fa fa-mail-forward"></i><a href="{{route('admin.profissionais.enviados')}}">Enviados</a></li>
@@ -113,7 +113,7 @@
                             <li><i class="fa fa-ban"></i><a href="{{route('admin.profissionais.negados')}}">Negados</a></li>
                         </ul>
                     </li>
-                    <li class="menu-item-has-children dropdown">
+                    <li class="menu-item-has-children dropdown {{ request()->is('admin/empresas*') ? 'active' : '' }}">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-building-o"></i>Empresas</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class="fa fa-mail-forward"></i><a href="{{route('admin.empresas.enviados')}}">Enviados</a></li>
@@ -121,7 +121,7 @@
                             <li><i class="fa fa-ban"></i><a href="{{route('admin.empresas.negados')}}">Negados</a></li>
                         </ul>
                     </li>
-                    <li class="menu-item-has-children dropdown">
+                    <li class="menu-item-has-children dropdown {{ request()->is('admin/cursos*') ? 'active' : '' }}">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-book"></i>Infoprodutos</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class="fa fa-mail-forward"></i><a href="{{route('admin.cursos.enviados')}}">Enviados</a></li>
@@ -129,7 +129,7 @@
                             <li><i class="fa fa-ban"></i><a href="{{route('admin.cursos.negados')}}">Negados</a></li>
                         </ul>
                     </li>
-                    <li class="menu-item-has-children dropdown">
+                    <li class="menu-item-has-children dropdown {{ request()->is('admin/eventos*') ? 'active' : '' }}">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-globe"></i>Eventos</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class="fa fa-mail-forward"></i><a href="{{route('admin.eventos.enviados')}}">Enviados</a></li>
@@ -138,19 +138,19 @@
                         </ul>
                     </li>
                     <h3 class="menu-title">Cadastros</h3><!-- /.menu-title -->
-                    <li>
+                    <li class="{{ request()->is('admin/bannersprincipais*') ? 'active' : '' }}">
                         <a href="{{route('admin.bannersprincipais.index')}}"> <i class="menu-icon fa fa-image"></i>Banners Principais</a>
                     </li>
-                    <li>
+                    <li class="{{ request()->is('admin/posts*') ? 'active' : '' }}">
                         <a href="{{route('admin.posts.index')}}"> <i class="menu-icon fa fa-laptop"></i>Posts</a>
                     </li>
-                    <li>
+                    <li class="{{ request()->is('admin/categorias*') ? 'active' : '' }}">
                         <a href="{{route('admin.categorias.index')}}"> <i class="menu-icon fa fa-th"></i>Categorias</a>
                     </li>
-                    <li>
+                    <li class="{{ request()->is('admin/atuacoes*') ? 'active' : '' }} {{ request()->is('admin/*/subatuacoes*') ? 'active' : '' }}">
                         <a href="{{route('admin.atuacoes.index')}}"> <i class="menu-icon fa fa-table"></i>Atuações</a>
-                    </li>
-                    <li>
+                    </li>  
+                    <li class="{{ request()->is('admin/paises*') ? 'active' : '' }} {{ request()->is('admin/*/estados*') ? 'active' : '' }} {{ request()->is('admin/*/*/cidades*') ? 'active' : '' }}">
                         <a href="{{route('admin.paises.index')}}"> <i class="menu-icon fa fa-map-o"></i>Localidades</a>
                     </li>
                     @endif

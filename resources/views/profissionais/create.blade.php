@@ -17,10 +17,10 @@
         <div class="page-header float-right">
             <div class="page-title">
                 <ol class="breadcrumb text-right">
-                        <li><a href="{{route('home')}}">Home</a></li>
-                        <li><a href="{{route('edit')}}">Dados Pessoais</a></li>
-                        <li><a href="{{route('profissionais.index')}}">Profissional</a></li>
-                        <li class="active">Novo</li>
+                    <li><a href="{{route('home')}}">Home</a></li>
+                    <li><a href="{{route('edit')}}">Dados Pessoais</a></li>
+                    <li><a href="{{route('profissionais.index')}}">Profissional</a></li>
+                    <li class="active">Novo</li>
                 </ol>
             </div>
         </div>

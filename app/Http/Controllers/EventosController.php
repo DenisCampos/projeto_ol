@@ -293,6 +293,68 @@ class EventosController extends Controller
         return view('admin.eventos.adminshow', compact('evento','categorias', 'parecer'));
     }
 
+    public function adminedit($id)
+    {
+        $evento = $this->repository->find($id);
+        $paises = $this->paisesrepository->pluck('descricao','id');
+        $paises->prepend('Selecione o País', '');
+        $estados = $this->estadosrepository->findWhere(['pais_id' => $evento->pais_id])->pluck('descricao','id');
+        $estados->prepend('Selecione o Estado', '');
+        $cidades = $this->cidadesrepository->findWhere(['estado_id' => $evento->estado_id])->pluck('descricao','id');
+        $cidades->prepend('Selecione a Cidade', '');
+        $evento->data_inicio = Carbon::createFromFormat('Y-m-d H:i:s', $evento->data_inicio)->format('Y-m-d\TH:i:s');
+        $evento->data_fim = Carbon::createFromFormat('Y-m-d H:i:s', $evento->data_fim)->format('Y-m-d\TH:i:s');
+        return view('admin.eventos.adminedit', compact('evento', 'paises', 'estados', 'cidades'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function adminupdate(Request $request, $id)
+    {
+        $evento = $this->repository->find($id);
+        $data = $request->all();
+        
+        if($data['imagem1_crop']!=""){
+            @unlink($evento->imagem1);
+            $numero_aux = rand(1, 9999);
+            $img = $data['imagem1_crop'];
+            $img = str_replace('data:image/png;base64,', '', $img);
+            $img = str_replace(' ', '+', $img);
+            $arquivo = base64_decode($img);
+            $file = 'public/eventos_imagens/evento_logo'.$id."_".$numero_aux.".png";
+            $success = file_put_contents($file, $arquivo);
+            $url = 'public/eventos_imagens/evento_logo'.$id."_".$numero_aux.".png";
+            $data['imagem1'] = $url;
+        }else{
+            unset($data['imagem1']); 
+        }
+
+        if($data['imagem2_crop']!=""){
+            @unlink($evento->imagem2);
+            $numero_aux = rand(1, 9999);
+            $img = $data['imagem2_crop'];
+            $img = str_replace('data:image/png;base64,', '', $img);
+            $img = str_replace(' ', '+', $img);
+            $arquivo = base64_decode($img);
+            $file = 'public/eventos_imagens/evento_foto'.$id."_".$numero_aux.".png";
+            $success = file_put_contents($file, $arquivo);
+            $url = 'public/eventos_imagens/evento_foto'.$id."_".$numero_aux.".png";
+            $data['imagem2'] = $url;
+        }else{
+            unset($data['imagem2']); 
+        }
+      
+        $this->repository->update($data, $id);
+        \Session::flash('message', ' Dados atualizados com sucesso.');
+
+        return redirect()->route('admin.eventos.adminshow', ['id' => $evento]);
+    }
+
     public function analise(Request $request)
     {
         $data['situacao_id'] = $request->analise;

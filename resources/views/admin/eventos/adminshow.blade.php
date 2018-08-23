@@ -150,6 +150,11 @@
                                 @endif
                             </li>
                             @endif
+                            <li class="list-group-item">
+                                <div class="col-lg-12">
+                                    <button type="button" class="btn btn-warning" onclick="window.location='{{ route('admin.eventos.edit', ['id' => $evento->id]) }}'"><i class="fa fa-pencil-square-o"></i> Editar</button>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                     @if($evento->situacao_id==2)

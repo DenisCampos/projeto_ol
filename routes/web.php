@@ -249,10 +249,10 @@ Route::group(['middleware'=>'auth'], function () {
         Route::get('/empresas/aprovados/', 'EmpresasController@aprovados')->name('empresas.aprovados');
         Route::get('/empresas/negados/', 'EmpresasController@negados')->name('empresas.negados');
 
-         //empresa banner admin
-         Route::get('/empresas/{empresa}/banner', 'EmpresaBannersController@banneremps')->name('empresabanners.banneremps');
-         Route::get('/empresas/{empresa}/banner/{banner}', 'EmpresaBannersController@adminshow')->name('empresabanners.adminshow');
-         Route::put('/empresas/{empresa}/banner/analise', 'EmpresaBannersController@analise')->name('empresabanners.analise');
+        //empresa banner admin
+        Route::get('/empresas/{empresa}/banner', 'EmpresaBannersController@banneremps')->name('empresabanners.banneremps');
+        Route::get('/empresas/{empresa}/banner/{banner}', 'EmpresaBannersController@adminshow')->name('empresabanners.adminshow');
+        Route::put('/empresas/{empresa}/banner/analise', 'EmpresaBannersController@analise')->name('empresabanners.analise');
 
         //cursos admin
         Route::post('/cursos/liberadestaque', 'CursosController@liberadestaque')->name('cursos.liberadestaque');
@@ -265,6 +265,8 @@ Route::group(['middleware'=>'auth'], function () {
         //eventos admin
         Route::post('/eventos/liberadestaque', 'EventosController@liberadestaque')->name('eventos.liberadestaque');
         Route::get('/eventos/adminshow/{evento}', 'EventosController@adminshow')->name('eventos.adminshow');
+        Route::get('/eventos/adminedit/{evento}', 'EventosController@adminedit')->name('eventos.adminedit');
+        Route::put('/eventos/adminupdate/{evento}', 'EventosController@adminupdate')->name('eventos.adminupdate');
         Route::put('/eventos/analise', 'EventosController@analise')->name('eventos.analise');
         Route::get('/eventos/enviados/', 'EventosController@enviados')->name('eventos.enviados');
         Route::get('/eventos/aprovados/', 'EventosController@aprovados')->name('eventos.aprovados');

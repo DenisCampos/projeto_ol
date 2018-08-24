@@ -42,10 +42,10 @@ class ProfissionalSubAtuacoesController extends Controller
             ->orderBy('sub_atuacoes.descricao', 'asc')
             ->select('sub_atuacoes.id as sub_atuacoesid', 'sub_atuacoes.descricao', 'profissional_sub_atuacoes.id as psubatuacaoid')
             ->get();
-        $profissional = $id;
+        $profissional = $this->profissionaisrepository->find($id);
         //dd($atuacoes);
 
-        return view('profissionalsubatuacoes.index', compact('profissional', 'subatuacoes'));
+        return view('profissionalsubatuacoes.index', compact('profissional', 'subatuacoes', 'atuacao'));
     }
 
     public function store(Request $request){

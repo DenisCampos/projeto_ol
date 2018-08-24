@@ -38,7 +38,7 @@ class ProfissionalAtuacoesController extends Controller
             ->select('atuacoes.id as atuacaoid','atuacoes.descricao','profissional_atuacoes.id as patuacaoid', DB::raw('count(sub_atuacoes.id) as subcontador'))
             ->groupBy('atuacoes.id')
             ->get();
-        $profissional = $id;
+        $profissional = $this->profissionaisrepository->find($id);
         //dd($atuacoes);
 
         return view('profissionalatuacoes.index', compact('atuacoes','profissional'));

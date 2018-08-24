@@ -94,11 +94,12 @@ class ProfissionalBannersController extends Controller
         if($this->verificaUser($profissional)==1){
             abort(403);
         }
+        $profissional = $this->profissionaisrepository->find($profissional);
         $banner = $this->repository->find($id);
         $parecer =  $this->pareceres->scopeQuery(function($query){
             return $query->orderBy('id', 'desc');
         })->findWhere(['id_tipo'=>$id, 'tipo'=>'5'])->first();
-        return view('profissionalbanners.show', compact('banner', 'parecer'));
+        return view('profissionalbanners.show', compact('banner', 'parecer', 'profissional'));
     }
 
     /**
@@ -112,8 +113,9 @@ class ProfissionalBannersController extends Controller
         if($this->verificaUser($profissional)==1){
             abort(403);
         }
+        $profissional = $this->profissionaisrepository->find($profissional);
         $banner = $this->repository->find($id);
-        return view('profissionalbanners.edit', compact('banner'));
+        return view('profissionalbanners.edit', compact('banner','profissional'));
     }
 
     /**

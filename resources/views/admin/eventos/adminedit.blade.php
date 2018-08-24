@@ -19,7 +19,7 @@
                 <ol class="breadcrumb text-right">
                     <li><a href="{{route('home')}}">Home</a></li>
                     <li><a href="{{url($returnevent)}}">Eventos</a></li>
-                    <li><a href="{{URL::previous()}}">Detalhar</a></li>
+                    <li><a href="{{url($redirect_to)}}">Detalhar</a></li>
                     <li class="active">Editar</li>
                 </ol>
             </div>
@@ -48,6 +48,7 @@
                         <strong class="card-title">Edite seus dados</strong>
                     </div>
                     {!! Form::model($evento,['route' => ['admin.eventos.adminupdate', 'id' => $evento->id],'class' => 'form', 'method' => 'PUT', 'enctype'=>'multipart/form-data']) !!}
+                    {!! Form::hidden('returnevent', $returnevent) !!}
                     @include('eventos._form')
                     <div class="card-footer" align="center">
                         {!! Form::submit('Salvar', ['class' => 'btn btn-primary btn-block']) !!}                       

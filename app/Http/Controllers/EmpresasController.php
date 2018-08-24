@@ -115,13 +115,15 @@ class EmpresasController extends Controller
             $img = str_replace('data:image/png;base64,', '', $img);
             $img = str_replace(' ', '+', $img);
             $arquivo = base64_decode($img);
-            $file = 'public/empresas_perfil/empresa_foto2'.$id."_".$numero_aux.".png";
+            $file = 'public/empresas_perfil/empresa_segunda_foto'.$id."_".$numero_aux.".png";
             $success = file_put_contents($file, $arquivo);
-            $url = 'public/empresas_perfil/empresa_foto2'.$id."_".$numero_aux.".png";
-            $data['imagem2'] = $url;
+            $url = 'public/empresas_perfil/empresa_segunda_foto'.$id."_".$numero_aux.".png";
+            $data['imagem3'] = $url;
         }else{
             unset($data['imagem3']);
         }
+
+        //dd($data);
         
         $data['user_id'] = $id;
         $data['statu_id'] = 1;
@@ -232,9 +234,9 @@ class EmpresasController extends Controller
             $img = str_replace('data:image/png;base64,', '', $img);
             $img = str_replace(' ', '+', $img);
             $arquivo = base64_decode($img);
-            $file = 'public/empresas_perfil/empresa_foto2'.$id."_".$numero_aux.".png";
+            $file = 'public/empresas_perfil/empresa_segunda_foto'.$id."_".$numero_aux.".png";
             $success = file_put_contents($file, $arquivo);
-            $url = 'public/empresas_perfil/empresa_foto2'.$id."_".$numero_aux.".png";
+            $url = 'public/empresas_perfil/empresa_segunda_foto'.$id."_".$numero_aux.".png";
             $data['imagem2'] = $url;
         }else{
             unset($data['imagem3']);

@@ -14,7 +14,13 @@
             <div class="page-title">
                 <ol class="breadcrumb text-right">
                     <li><a href="{{route('home')}}">Home</a></li>
-                    <li><a href="{{URL::previous()}}">Eventos</a></li>
+                    <li><a href="
+                        @if(isset($returnevent)) 
+                            {{url($returnevent)}}
+                        @else 
+                            {{URL::previous()}} 
+                        @endif
+                    ">Eventos</a></li>
                     <li class="active">Detalhar</li>
                 </ol>
             </div>
@@ -154,6 +160,7 @@
                                 <div class="col-lg-12 text-center">
                                     {!! Form::open(['route' => ['admin.eventos.adminedit', 'id' => $evento->id],'class' => 'form', 'method' => 'POST']) !!}
                                         {!! Form::hidden('returnevent', URL::previous()) !!}
+                                        {!! Form::hidden('redirect_to', URL::current()) !!}
                                         <button type="submit" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i> Editar informações do evento</button>
                                     {!! Form::close() !!}
                                 </div>

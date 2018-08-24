@@ -42,10 +42,10 @@ class EmpresaSubAtuacoesController extends Controller
             ->orderBy('sub_atuacoes.descricao', 'asc')
             ->select('sub_atuacoes.id as sub_atuacoesid', 'sub_atuacoes.descricao', 'empresa_sub_atuacoes.id as esubatuacaoid')
             ->get();
-        $empresa = $id;
+        $empresa = $this->empresasrepository->find($id);
         //dd($atuacoes);
 
-        return view('empresasubatuacoes.index', compact('empresa', 'subatuacoes'));
+        return view('empresasubatuacoes.index', compact('empresa', 'subatuacoes','atuacao'));
     }
 
     public function store(Request $request){

@@ -1,28 +1,10 @@
 @extends('layouts.sufee')
 
+@section('page_name', 'Sub Atuações')
+
+@section('breadcrumbs', Breadcrumbs::render('profissionalsubatuacoes.index', $profissional,$atuacao))
+
 @section('content')
-<div class="breadcrumbs">
-    <div class="col-sm-4">
-        <div class="page-header float-left">
-            <div class="page-title">
-                <h1>Sub Atuações</h1>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-8">
-        <div class="page-header float-right">
-            <div class="page-title">
-                <ol class="breadcrumb text-right">
-                    <li><a href="{{route('home')}}">Home</a></li>
-                    <li><a href="{{route('edit')}}">Dados Pessoais</a></li>
-                    <li><a href="{{route('profissionais.index')}}">Profissional</a></li>
-                    <li><a href="{{route('profissionalatuacoes.index',[$profissional])}}">Atuações</a></li>
-                    <li class="active">Sub Atuações</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="content mt-3">
     @if(Session::has('message'))
@@ -61,7 +43,7 @@
                                 <tr>
                                     <td>{{$cont}}</td>
                                     <td>{{$subatuacao->descricao}}</td>
-                                    <td onclick="selecionar_subatuacao('{{$subatuacao->sub_atuacoesid}}', '{{$profissional}}')">
+                                    <td onclick="selecionar_subatuacao('{{$subatuacao->sub_atuacoesid}}', '{{$profissional->id}}')">
                                         @if($subatuacao->psubatuacaoid!='')
                                         <i id="{{$subatuacao->sub_atuacoesid}}" style="color:#5cb85c" class="fa fa-toggle-on fa-2x"></i>
                                         @else

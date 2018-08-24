@@ -1,28 +1,10 @@
 @extends('layouts.sufee')
 
+@section('page_name', 'Editar')
+
+@section('breadcrumbs', Breadcrumbs::render('profissionalbanners.edit', $profissional, $banner))
+
 @section('content')
-<div class="breadcrumbs">
-    <div class="col-sm-4">
-        <div class="page-header float-left">
-            <div class="page-title">
-                <h1>Editar</h1>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-8">
-        <div class="page-header float-right">
-            <div class="page-title">
-                <ol class="breadcrumb text-right">
-                    <li><a href="{{route('home')}}">Home</a></li>
-                    <li><a href="{{route('edit')}}">Dados Pessoais</a></li>
-                    <li><a href="{{route('profissionais.index')}}">Profissional</a></li>
-                    <li <a href="{{ route("profissionalbanners.index", ['profissional' => $banner->profissional_id])}}">Banner</a></li>
-                    <li class="active">Editar</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="content mt-3">
     @if(Session::has('message'))

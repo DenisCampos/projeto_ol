@@ -1,27 +1,10 @@
 @extends('layouts.sufee')
 
+@section('page_name', 'Atuações')
+
+@section('breadcrumbs', Breadcrumbs::render('empresaatuacoes.index', $empresa))
+
 @section('content')
-<div class="breadcrumbs">
-    <div class="col-sm-4">
-        <div class="page-header float-left">
-            <div class="page-title">
-                <h1>Atuações</h1>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-8">
-        <div class="page-header float-right">
-            <div class="page-title">
-                <ol class="breadcrumb text-right">
-                    <li><a href="{{route('home')}}">Home</a></li>
-                    <li><a href="{{route('edit')}}">Dados Pessoais</a></li>
-                    <li><a href="{{route('empresas.index')}}">Empresa</a></li>
-                    <li class="active">Atuações</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="content mt-3">
     @if(Session::has('message'))
@@ -61,7 +44,7 @@
                                 <tr>
                                     <td>{{$cont}}</td>
                                     <td>{{$atuacao->descricao}}</td>
-                                    <td onclick="selecionar_atuacao('{{$atuacao->atuacaoid}}', '{{$empresa}}')">
+                                    <td onclick="selecionar_atuacao('{{$atuacao->atuacaoid}}', '{{$empresa->id}}')">
                                         @if($atuacao->eatuacaoid!='')
                                         <i id="{{$atuacao->atuacaoid}}" style="color:#5cb85c" class="fa fa-toggle-on fa-2x"></i>
                                         @else
@@ -70,7 +53,7 @@
                                     </td>
                                     <td class="text-center">
                                         @if($atuacao->subcontador>0)
-                                        <button type="button" class="btn btn-primary" onclick="window.location='{{ route("empresasubatuacoes.index", ['id' => $empresa, 'atuacao' => $atuacao->atuacaoid]) }}'"><i class="fa fa-check-square-o"></i> Ações</button>
+                                        <button type="button" class="btn btn-primary" onclick="window.location='{{ route("empresasubatuacoes.index", ['id' => $empresa->id, 'atuacao' => $atuacao->atuacaoid]) }}'"><i class="fa fa-check-square-o"></i> Ações</button>
                                         @endif
                                     </td>
                                 </tr>

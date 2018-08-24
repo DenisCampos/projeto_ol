@@ -39,7 +39,7 @@ class EmpresaAtuacoesController extends Controller
             ->select('atuacoes.id as atuacaoid', 'atuacoes.descricao', 'empresa_atuacoes.id as eatuacaoid', DB::raw('count(sub_atuacoes.id) as subcontador'))
             ->groupBy('atuacoes.id')
             ->get();
-        $empresa = $id;
+        $empresa = $this->empresasrepository->find($id);
         //dd($atuacoes);
 
         return view('empresaatuacoes.index', compact('atuacoes','empresa'));

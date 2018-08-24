@@ -265,7 +265,7 @@ Route::group(['middleware'=>'auth'], function () {
         //eventos admin
         Route::post('/eventos/liberadestaque', 'EventosController@liberadestaque')->name('eventos.liberadestaque');
         Route::get('/eventos/adminshow/{evento}', 'EventosController@adminshow')->name('eventos.adminshow');
-        Route::get('/eventos/adminedit/{evento}', 'EventosController@adminedit')->name('eventos.adminedit');
+        Route::post('/eventos/adminedit/{evento}', 'EventosController@adminedit')->name('eventos.adminedit');
         Route::put('/eventos/adminupdate/{evento}', 'EventosController@adminupdate')->name('eventos.adminupdate');
         Route::put('/eventos/analise', 'EventosController@analise')->name('eventos.analise');
         Route::get('/eventos/enviados/', 'EventosController@enviados')->name('eventos.enviados');

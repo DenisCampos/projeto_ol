@@ -151,8 +151,11 @@
                             </li>
                             @endif
                             <li class="list-group-item">
-                                <div class="col-lg-12">
-                                    <button type="button" class="btn btn-warning" onclick="window.location='{{ route('admin.eventos.edit', ['id' => $evento->id]) }}'"><i class="fa fa-pencil-square-o"></i> Editar</button>
+                                <div class="col-lg-12 text-center">
+                                    {!! Form::open(['route' => ['admin.eventos.adminedit', 'id' => $evento->id],'class' => 'form', 'method' => 'POST']) !!}
+                                        {!! Form::hidden('returnevent', URL::previous()) !!}
+                                        <button type="submit" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i> Editar informações do evento</button>
+                                    {!! Form::close() !!}
                                 </div>
                             </li>
                         </ul>

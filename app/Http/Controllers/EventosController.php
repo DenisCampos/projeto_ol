@@ -293,8 +293,10 @@ class EventosController extends Controller
         return view('admin.eventos.adminshow', compact('evento','categorias', 'parecer'));
     }
 
-    public function adminedit($id)
+    public function adminedit(Request $request,$id)
     {
+        $data = $request->all();
+        $returnevent = $data['returnevent'];
         $evento = $this->repository->find($id);
         $paises = $this->paisesrepository->pluck('descricao','id');
         $paises->prepend('Selecione o País', '');
@@ -304,7 +306,7 @@ class EventosController extends Controller
         $cidades->prepend('Selecione a Cidade', '');
         $evento->data_inicio = Carbon::createFromFormat('Y-m-d H:i:s', $evento->data_inicio)->format('Y-m-d\TH:i:s');
         $evento->data_fim = Carbon::createFromFormat('Y-m-d H:i:s', $evento->data_fim)->format('Y-m-d\TH:i:s');
-        return view('admin.eventos.adminedit', compact('evento', 'paises', 'estados', 'cidades'));
+        return view('admin.eventos.adminedit', compact('evento', 'paises', 'estados', 'cidades','returnevent'));
     }
 
     /**

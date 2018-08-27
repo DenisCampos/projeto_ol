@@ -95,10 +95,11 @@ class EmpresaBannersController extends Controller
             abort(403);
         }
         $banner = $this->repository->find($id);
+        $empresa = $this->empresasrepository->find($empresa);
         $parecer =  $this->pareceres->scopeQuery(function($query){
             return $query->orderBy('id', 'desc');
         })->findWhere(['id_tipo'=>$id, 'tipo'=>'6'])->first();
-        return view('empresabanners.show', compact('banner', 'parecer'));
+        return view('empresabanners.show', compact('banner', 'parecer','empresa'));
     }
 
     /**
@@ -113,7 +114,8 @@ class EmpresaBannersController extends Controller
             abort(403);
         }
         $banner = $this->repository->find($id);
-        return view('empresabanners.edit', compact('banner'));
+        $empresa = $this->empresasrepository->find($empresa);
+        return view('empresabanners.edit', compact('banner','empresa'));
     }
 
     /**

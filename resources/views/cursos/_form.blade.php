@@ -6,43 +6,65 @@
     <hr>
     <div class="row">
         <div class="col-lg-12">
-            <div class="col-md-4">
-                <div class="card">
-                    @if(isset($curso->imagem1)!="")
-                        <img class="card-img-top" src="{{ asset($curso->imagem1) }}" alt="Card image cap">
-                        <div class="card-body">
-                            <hr>
-                            <h4 class="card-title mb-3">Imagem em destaque</h4>
-                            <p class="card-text">{!! Form::file('imagem1', ['class' => 'form-control-file'])!!}</p>
+            <div class="col-md-6">
+                <div class="card"  align="center">
+                    <div class="imageBox">
+                        <div class="thumbBox"></div>
+                        <div class="spinner" style="display: none">Loading...</div>
+                    </div>
+                    <div class="card-body">
+                        <hr>
+                        <h4 class="card-title mb-3">Imagem em destaque</h4>
+                        <div class="action">
+                            <p class="card-text">
+                                @if(isset($curso->imagem1)=="")
+                                    {!! Form::file('imagem1', ['required' => 'required','style' => 'float:left;', 'id' => 'imagem1'])!!}
+                                @else
+                                    {!! Form::file('imagem1', ['style' => 'float:left;', 'id' => 'imagem1'])!!}
+                                @endif 
+                            </p>
+                            <input name="imagem1_crop" id='imagem1_crop' type="hidden"/>
+                            <input type="button" id="btnCrop1" value="Cortar" style="float: right">
+                            <input type="button" id="btnZoomIn1" value="+" style="float: right">
+                            <input type="button" id="btnZoomOut1" value="-" style="float: right">
                         </div>
-                    @else
-                        <img class="card-img-top" src="{{ asset('public/images/700x400.png') }}"  alt="Card image cap">
-                        <div class="card-body">
-                            <hr>
-                            <h4 class="card-title mb-3">Imagem em destaque</h4>
-                            <p class="card-text">{!! Form::file('imagem1', ['class' => 'form-control-file', 'required' => 'required'])!!}</p>
-                        </div>
-                    @endif
+                    </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card">
-                    @if(isset($curso->imagem2)!="")
-                        <img class="card-img-top" src="{{ asset($curso->imagem2) }}" alt="Card image cap">
-                        <div class="card-body">
-                            <hr>
-                            <h4 class="card-title mb-3">Imagem na descrição</h4>
-                            <p class="card-text">{!! Form::file('imagem2', ['class' => 'form-control-file'])!!}</p>
+            <div class="cropped1 col-md-6">
+                
+            </div>
+
+        </div>
+
+        <div class="col-lg-12">
+            <div class="col-md-6">
+                <div class="card"  align="center">
+                    <div class="imageBox2">
+                        <div class="thumbBox2"></div>
+                        <div class="spinner2" style="display: none">Loading...</div>
+                    </div>
+                    <div class="card-body">
+                        <hr>
+                        <h4 class="card-title mb-3">Imagem em destaque</h4>
+                        <div class="action">
+                            <p class="card-text">
+                            @if(isset($curso->imagem2)=="")
+                                {!! Form::file('imagem2', ['required' => 'required', 'style' => 'float:left;', 'id' => 'imagem2'])!!}
+                            @else
+                                {!! Form::file('imagem2', ['style' => 'float:left;', 'id' => 'imagem2'])!!}
+                            @endif 
+                            </p>
+                            <input name="imagem2_crop" id='imagem2_crop' type="hidden"/>
+                            <input type="button" id="btnCrop2" value="Cortar" style="float: right">
+                            <input type="button" id="btnZoomIn2" value="+" style="float: right">
+                            <input type="button" id="btnZoomOut2" value="-" style="float: right">
                         </div>
-                    @else
-                        <img class="card-img-top" src="{{  asset('public/images/700x400.png') }}"  alt="Card image cap">
-                        <div class="card-body">
-                            <hr>
-                            <h4 class="card-title mb-3">Imagem na descrição</h4>
-                            <p class="card-text">{!! Form::file('imagem2', ['class' => 'form-control-file'])!!}</p>
-                        </div>
-                    @endif
+                    </div>
                 </div>
+            </div>
+            <div class="cropped2 col-md-6">
+                
             </div>
         </div>
         <div class="col-lg-12">

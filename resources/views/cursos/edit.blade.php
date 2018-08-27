@@ -1,26 +1,14 @@
 @extends('layouts.sufee')
 
+@section('page_name', 'Editar')
+
+@section('breadcrumbs', Breadcrumbs::render('cursos.edit', $curso))
+
+@section('assets_css')
+<link rel="stylesheet" href="{{ asset('public/css/custom-sistema.css') }}" type="text/css" />
+@endsection
+
 @section('content')
-<div class="breadcrumbs">
-    <div class="col-sm-4">
-        <div class="page-header float-left">
-            <div class="page-title">
-                <h1>Editar</h1>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-8">
-        <div class="page-header float-right">
-            <div class="page-title">
-                <ol class="breadcrumb text-right">
-                    <li><a href="{{route('home')}}">Home</a></li>
-                    <li><a href="{{route('cursos.index')}}">Infoprodutos</a></li>
-                    <li class="active">Editar</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="content mt-3">
     @if(Session::has('message'))
@@ -85,5 +73,86 @@
             }
         });	
     };
+</script>
+@endsection
+
+@section('assets_scripts')
+<script src="{{ asset('public/js/cropbox.js') }}"></script>
+<script type="text/javascript">
+    window.onload = function() {
+        var options1 =
+        {
+            imageBox: '.imageBox',
+            thumbBox: '.thumbBox',
+            spinner: '.spinner',
+            @if($curso->imagem1=="")
+                imgSrc: '{{ asset("public/images/700x400.png") }}'
+            @else
+                imgSrc: '{{ asset($curso->imagem1) }}'
+            @endif
+        }
+        var cropper1 = new cropbox(options1);
+        document.querySelector('#imagem1').addEventListener('change', function(){
+            var reader1 = new FileReader();
+            reader1.onload = function(e) {
+                options1.imgSrc = e.target.result;
+                cropper1 = new cropbox(options1);
+            }
+            reader1.readAsDataURL(this.files[0]);
+            setTimeout(function(){ autocrop(cropper1, '1'); }, 300);
+            this.files = [];
+        })
+        document.querySelector('#btnCrop1').addEventListener('click', function(){
+            var img1 = cropper1.getDataURL();
+            document.querySelector('.cropped1').innerHTML = '<img src="'+img1+'">';
+            $("#imagem1_crop").val(img1);
+        })
+        document.querySelector('#btnZoomIn1').addEventListener('click', function(){
+            cropper1.zoomIn();
+        })
+        document.querySelector('#btnZoomOut1').addEventListener('click', function(){
+            cropper1.zoomOut();
+        })
+
+         var options2 =
+        {
+            imageBox: '.imageBox2',
+            thumbBox: '.thumbBox2',
+            spinner: '.spinner2',
+            @if($curso->imagem2=="")
+                imgSrc: '{{ asset("public/images/700x400.png") }}'
+            @else
+                imgSrc: '{{ asset($curso->imagem2) }}'
+            @endif
+        }
+        var cropper2 = new cropbox(options2);
+        document.querySelector('#imagem2').addEventListener('change', function(){
+            var reader2 = new FileReader();
+            reader2.onload = function(e) {
+                options2.imgSrc = e.target.result;
+                cropper2 = new cropbox(options2);
+            }
+            reader2.readAsDataURL(this.files[0]);
+            setTimeout(function(){ autocrop(cropper2, '2'); }, 300);
+            this.files = [];
+        })
+        document.querySelector('#btnCrop2').addEventListener('click', function(){
+            var img2 = cropper2.getDataURL();
+            document.querySelector('.cropped2').innerHTML = '<img src="'+img2+'">';
+            $("#imagem2_crop").val(img2);
+        })
+        document.querySelector('#btnZoomIn2').addEventListener('click', function(){
+            cropper2.zoomIn();
+        })
+        document.querySelector('#btnZoomOut2').addEventListener('click', function(){
+            cropper2.zoomOut();
+        })
+    };
+
+    function autocrop(cropper, id){
+        var img = cropper.getDataURL();
+        document.querySelector('.cropped'+id).innerHTML = '<img src="'+img+'">';
+        $("#imagem"+id+"_crop").val(img);
+    }
 </script>
 @endsection

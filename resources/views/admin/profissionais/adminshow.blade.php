@@ -1,28 +1,10 @@
 @extends('layouts.sufee')
 
+@section('page_name', $profissional->name)
+
+@section('breadcrumbs', Breadcrumbs::render('admin.profissionais.adminshow', $usuario, $profissional))
+
 @section('content')
-<div class="breadcrumbs">
-    <div class="col-sm-4">
-        <div class="page-header float-left">
-            <div class="page-title">
-                <h1>Detalhar</h1>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-8">
-        <div class="page-header float-right">
-            <div class="page-title">
-                <ol class="breadcrumb text-right">
-                    <li><a href="{{route('home')}}">Home</a></li>
-                    <li><a href="{{route('admin.usuarios.index')}}">Usuários</a></li>
-                    <li><a href="{{route('admin.usuarios.edit',['usuario'=>$profissional->user_id])}}">Detalhar</a></li>
-                    <li><a href="{{route('admin.profissionais.userprofs',['usuario' => $profissional->user_id])}}">Profissões</a></li>
-                    <li class="active">Detalhar</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="content mt-3">
     @if(Session::has('message'))
@@ -141,27 +123,34 @@
                                 </div>
                                 @endif
                             </li>
-                            @endif
-                            @if($profissional->situacao_id==2)
-                            <div class="card-footer">
-                                {!! Form::model($profissional,['route' => ['admin.profissionais.analise'],'class' => 'form', 'method' => 'PUT', 'name' => 'form_parecer', 'id' => 'form_parecer']) !!}
-                                {!! Form::hidden('id', $profissional->id) !!}
-                                {!! Form::hidden('user_id', $profissional->user_id) !!}
-                                {!! Form::hidden('analise', '', ['id' => "analise"]) !!}
-                                <div class="col-lg-12">
-                                    {!! Form::label('parecer', 'Parecer*', ['class' => 'control-label']) !!}
-                                    {!! Form::textarea('parecer', null, ['rows' => "3",'class' => 'form-control', 'required' => 'required']) !!}<br>
+                            <li class="list-group-item">
+                                <div class="col-lg-12 text-center">
+                                    {!! Form::open(['route' => ['admin.profissionais.adminedit', 'id' => $profissional->id],'class' => 'form', 'method' => 'GET']) !!}
+                                        <button type="submit" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i> Editar informações do(a) profissional</button>
+                                    {!! Form::close() !!}
                                 </div>
-                                <div class="col-lg-6 text-center">
-                                    <button type="buttom" class="btn btn-danger" onclick="coloca_analise('4')"><i class="fa fa-ban"></i> Negar</button>
-                                </div>
-                                <div class="col-lg-6 text-center">
-                                    <button type="buttom" class="btn btn-success" onclick="coloca_analise('3')"><i class="fa fa-check"></i> Aceitar</button>
-                                </div>
-                                {!! Form::close() !!}
-                            </div>
+                            </li>
                             @endif
                         </ul>
+                        @if($profissional->situacao_id==2)
+                        <div class="card-footer">
+                            {!! Form::model($profissional,['route' => ['admin.profissionais.analise'],'class' => 'form', 'method' => 'PUT', 'name' => 'form_parecer', 'id' => 'form_parecer']) !!}
+                            {!! Form::hidden('id', $profissional->id) !!}
+                            {!! Form::hidden('user_id', $profissional->user_id) !!}
+                            {!! Form::hidden('analise', '', ['id' => "analise"]) !!}
+                            <div class="col-lg-12">
+                                {!! Form::label('parecer', 'Parecer*', ['class' => 'control-label']) !!}
+                                {!! Form::textarea('parecer', null, ['rows' => "3",'class' => 'form-control', 'required' => 'required']) !!}<br>
+                            </div>
+                            <div class="col-lg-6 text-center">
+                                <button type="buttom" class="btn btn-danger" onclick="coloca_analise('4')"><i class="fa fa-ban"></i> Negar</button>
+                            </div>
+                            <div class="col-lg-6 text-center">
+                                <button type="buttom" class="btn btn-success" onclick="coloca_analise('3')"><i class="fa fa-check"></i> Aceitar</button>
+                            </div>
+                            {!! Form::close() !!}
+                        </div>
+                        @endif
                     </section>
                 </aside>
             </div>

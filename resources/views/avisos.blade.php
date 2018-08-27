@@ -41,7 +41,7 @@
         @endif
     </a>
     @endforeach
-    <a href="{{route('pareceres.showall',['id'=>Auth::user()->id])}}">
+    <a href="{{route('pareceres.showall')}}">
         <p class="red">Ver todos</p>
     </a>
 </div>

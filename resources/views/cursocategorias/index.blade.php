@@ -1,26 +1,10 @@
 @extends('layouts.sufee')
 
+@section('page_name', 'Categorias')
+
+@section('breadcrumbs', Breadcrumbs::render('cursocategorias.index', $curso))
+
 @section('content')
-<div class="breadcrumbs">
-    <div class="col-sm-4">
-        <div class="page-header float-left">
-            <div class="page-title">
-                <h1>Categorias</h1>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-8">
-        <div class="page-header float-right">
-            <div class="page-title">
-                <ol class="breadcrumb text-right">
-                    <li><a href="{{route('home')}}">Home</a></li>
-                    <li><a href="{{route('cursos.index')}}">Cursos</a></li>
-                    <li class="active">Categorias</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="content mt-3">
     @if(Session::has('message'))
@@ -59,7 +43,7 @@
                                 <tr>
                                     <td>{{$cont}}</td>
                                     <td>{{$categoria->descricao}}</td>
-                                    <td onclick="selecionar_categoria('{{$categoria->categoriaid}}','{{$cursoid}}')">
+                                    <td onclick="selecionar_categoria('{{$categoria->categoriaid}}','{{$curso->id}}')">
                                         @if($categoria->categoria_curso!='')
                                         <i id="{{$categoria->categoriaid}}" style="color:#5cb85c" class="fa fa-toggle-on fa-2x"></i>
                                         @else

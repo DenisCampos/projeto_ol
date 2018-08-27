@@ -1,35 +1,43 @@
 @extends('layouts.sufee')
 
-@section('page_name', 'Novo')
-
-@section('breadcrumbs', Breadcrumbs::render('eventos.create'))
-
 @section('assets_css')
 <link rel="stylesheet" href="{{ asset('public/css/custom-sistema.css') }}" type="text/css" />
 @endsection
+
+@section('page_name',  'Editar')
+
+@section('breadcrumbs', Breadcrumbs::render('admin.profissionais.adminedit', $usuario, $profissional))
 
 @section('content')
 
 <div class="content mt-3">
     @if(Session::has('message'))
+    <div class="row">
         <div class="col-sm-12">
             <div class="alert  alert-success alert-dismissible fade show" role="alert">
-                <span class="badge badge-pill badge-success">Sucesso</span>  {!! Session::get('message') !!}.
+                <span class="badge badge-pill badge-success">Sucesso</span>  {!! Session::get('message') !!}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
         </div>
+    </div>
     @endif
     <div class="animated fadeIn">
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <strong class="card-title">Edite os dados do evento</strong>
+                        <strong class="card-title">Edite seus dados</strong>
                     </div>
-                    {!! Form::open(['route' => ['eventos.store'],'class' => 'form', 'method' => 'POST', 'enctype'=>'multipart/form-data']) !!}
-                    @include('eventos._form')
+                    {!! Form::model($profissional,['route' => ['admin.profissionais.adminupdate', 'id' => $profissional->id],'class' => 'form', 'method' => 'PUT', 'enctype'=>'multipart/form-data']) !!}
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h3 class="text-center">Perfil Profissional</h3>
+                        </div>
+                        <hr>
+                        @include('profissionais._form')
+                    </div>
                     <div class="card-footer" align="center">
                         {!! Form::submit('Salvar', ['class' => 'btn btn-primary btn-block']) !!}                       
                     </div>
@@ -82,7 +90,26 @@
         center: myLatLng
         });
 
-        var geocoder = new google.maps.Geocoder();
+        @if($profissional->latitude!="")
+            myLatLng = new google.maps.LatLng({{$profissional->latitude}}, {{$profissional->longitude}});
+            addMarker(myLatLng);
+            map.setCenter(myLatLng);
+            count_marker++;
+        @else
+            // Try HTML5 geolocation.
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    map.setCenter(pos);
+                    map.setZoom(20);
+                });
+            } 
+        @endif
+
+         var geocoder = new google.maps.Geocoder();
 
         document.getElementById('buscar').addEventListener('click', function() {
             geocodeAddress(geocoder, map);
@@ -133,99 +160,61 @@
                 marker.setMap(null);
                 $("#latitude").val('');
                 $("#longitude").val('');
-                count_marker=0;
+                count_marker = 0;
             } 
             
         }
 
-        // Try HTML5 geolocation.
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                var pos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                };
-                map.setCenter(pos);
-                map.setZoom(20);
-            });
-        } 
     }
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2UTdk-E7kWhTX-YUDQXUVc5FnQiaYIuA&callback=initMap" type="text/javascript"></script>
 @endsection
 
-
 @section('assets_scripts')
 <script src="{{ asset('public/js/cropbox.js') }}"></script>
 <script type="text/javascript">
     window.onload = function() {
-        var options1 =
+        var options =
         {
-            imageBox: '.imageBox',
-            thumbBox: '.thumbBox',
-            spinner: '.spinner',
-            imgSrc: '{{ asset("public/images/700x400.png") }}'
+            imageBox: '.imageBoxProf',
+            thumbBox: '.thumbBoxProf',
+            spinner: '.spinnerProf',
+            @if($profissional->foto=="")
+                imgSrc: '{{ asset("public/images/260x300.jpg") }}'
+            @else
+                imgSrc: '{{ asset($profissional->foto) }}'
+            @endif
         }
-        var cropper1 = new cropbox(options1);
-        document.querySelector('#imagem1').addEventListener('change', function(){
-            var reader1 = new FileReader();
-            reader1.onload = function(e) {
-                options1.imgSrc = e.target.result;
-                cropper1 = new cropbox(options1);
+        var cropper = new cropbox(options);
+        document.querySelector('#foto').addEventListener('change', function(){
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                options.imgSrc = e.target.result;
+                cropper = new cropbox(options);
             }
-            reader1.readAsDataURL(this.files[0]);
-            setTimeout(function(){ autocrop(cropper1, '1'); }, 300);
+            reader.readAsDataURL(this.files[0]);
+            setTimeout(function(){ autocrop(cropper, '1'); }, 300);
             this.files = [];
         })
 
-        document.querySelector('#btnCrop1').addEventListener('click', function(){
-            var img1 = cropper1.getDataURL();
-            document.querySelector('.cropped1').innerHTML = '<img src="'+img1+'">';
-            $("#imagem1_crop").val(img1);
+        document.querySelector('#btnCropProf').addEventListener('click', function(){
+            var img = cropper.getDataURL();
+            document.querySelector('.croppedProf').innerHTML = '<img src="'+img+'">';
+            $("#foto_crop").val(img);
         })
-        document.querySelector('#btnZoomIn1').addEventListener('click', function(){
-            cropper1.zoomIn();
+        document.querySelector('#btnZoomInProf').addEventListener('click', function(){
+            cropper.zoomIn();
         })
-        document.querySelector('#btnZoomOut1').addEventListener('click', function(){
-            cropper1.zoomOut();
+        document.querySelector('#btnZoomOutProf').addEventListener('click', function(){
+            cropper.zoomOut();
         })
 
-         var options2 =
-        {
-            imageBox: '.imageBox2',
-            thumbBox: '.thumbBox2',
-            spinner: '.spinner2',
-            imgSrc: '{{ asset("public/images/700x400.png") }}'
-        }
-        var cropper2 = new cropbox(options2);
-        document.querySelector('#imagem2').addEventListener('change', function(){
-            var reader2 = new FileReader();
-            reader2.onload = function(e) {
-                options2.imgSrc = e.target.result;
-                cropper2 = new cropbox(options2);
-            }
-            reader2.readAsDataURL(this.files[0]);
-            setTimeout(function(){ autocrop(cropper2, '2'); }, 300);
-            this.files = [];
-        })
-        document.querySelector('#btnCrop2').addEventListener('click', function(){
-            var img2 = cropper2.getDataURL();
-            document.querySelector('.cropped2').innerHTML = '<img src="'+img2+'">';
-            $("#imagem2_crop").val(img2);
-        })
-        document.querySelector('#btnZoomIn2').addEventListener('click', function(){
-            cropper2.zoomIn();
-        })
-        document.querySelector('#btnZoomOut2').addEventListener('click', function(){
-            cropper2.zoomOut();
-        })
-     
     };
 
     function autocrop(cropper, id){
         var img = cropper.getDataURL();
-        document.querySelector('.cropped'+id).innerHTML = '<img src="'+img+'">';
-        $("#imagem"+id+"_crop").val(img);
+        document.querySelector('.croppedProf').innerHTML = '<img src="'+img+'">';
+        $("#foto_crop").val(img);
     }
     
 </script>

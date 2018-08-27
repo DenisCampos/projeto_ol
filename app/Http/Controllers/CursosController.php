@@ -78,22 +78,30 @@ class CursosController extends Controller
     {
         $id = Auth::user()->id;
         $data = $request->all();
-        if($request->hasFile('imagem1')){
+      
+        //dd($data);
+        if($data['imagem1_crop']!=""){
             $numero_aux = rand(1, 9999);
-            $extensao = $request->imagem1->getClientOriginalExtension();
-            $file = $request->imagem1;
-            $file->move('public/cursos_imagens', 'curso_logo'.$id."_".$numero_aux.".".$extensao);
-            $url = 'public/cursos_imagens/curso_logo'.$id."_".$numero_aux.".".$extensao;
+            $img = $data['imagem1_crop'];
+            $img = str_replace('data:image/png;base64,', '', $img);
+            $img = str_replace(' ', '+', $img);
+            $arquivo = base64_decode($img);
+            $file = 'public/cursos_imagens/curso_logo'.$id."_".$numero_aux.".png";
+            $success = file_put_contents($file, $arquivo);
+            $url = 'public/cursos_imagens/curso_logo'.$id."_".$numero_aux.".png";
             $data['imagem1'] = $url;
         }else{
             unset($data['imagem1']);
         }
-        if($request->hasFile('imagem2')){
+        if($data['imagem2_crop']!=""){
             $numero_aux = rand(1, 9999);
-            $extensao = $request->imagem2->getClientOriginalExtension();
-            $file = $request->imagem2;
-            $file->move('public/cursos_imagens', 'curso_foto'.$id."_".$numero_aux.".".$extensao);
-            $url = 'public/cursos_imagens/curso_foto'.$id."_".$numero_aux.".".$extensao;
+            $img = $data['imagem2_crop'];
+            $img = str_replace('data:image/png;base64,', '', $img);
+            $img = str_replace(' ', '+', $img);
+            $arquivo = base64_decode($img);
+            $file = 'public/cursos_imagens/curso_foto'.$id."_".$numero_aux.".png";
+            $success = file_put_contents($file, $arquivo);
+            $url = 'public/cursos_imagens/curso_foto'.$id."_".$numero_aux.".png";
             $data['imagem2'] = $url;
         }else{
             unset($data['imagem2']);
@@ -182,26 +190,32 @@ class CursosController extends Controller
 
         $curso = $this->repository->find($id);
         $data = $request->all();
-        
-        if($request->hasFile('imagem1')){
+
+        if($data['imagem1_crop']!=""){
             @unlink($curso->imagem1);
             $numero_aux = rand(1, 9999);
-            $extensao = $request->imagem1->getClientOriginalExtension();
-            $file = $request->imagem1;
-            $file->move('public/cursos_imagens', 'curso_logo'.$id."_".$numero_aux.".".$extensao);
-            $url = 'public/cursos_imagens/curso_logo'.$id."_".$numero_aux.".".$extensao;
+            $img = $data['imagem1_crop'];
+            $img = str_replace('data:image/png;base64,', '', $img);
+            $img = str_replace(' ', '+', $img);
+            $arquivo = base64_decode($img);
+            $file = 'public/cursos_imagens/curso_logo'.$id."_".$numero_aux.".png";
+            $success = file_put_contents($file, $arquivo);
+            $url = 'public/cursos_imagens/curso_logo'.$id."_".$numero_aux.".png";
             $data['imagem1'] = $url;
         }else{
             unset($data['imagem1']); 
         }
 
-        if($request->hasFile('imagem2')){
+        if($data['imagem2_crop']!=""){
             @unlink($curso->imagem2);
             $numero_aux = rand(1, 9999);
-            $extensao = $request->imagem2->getClientOriginalExtension();
-            $file = $request->imagem2;
-            $file->move('public/cursos_imagens', 'curso_foto'.$id."_".$numero_aux.".".$extensao);
-            $url = 'public/cursos_imagens/curso_foto'.$id."_".$numero_aux.".".$extensao;
+            $img = $data['imagem2_crop'];
+            $img = str_replace('data:image/png;base64,', '', $img);
+            $img = str_replace(' ', '+', $img);
+            $arquivo = base64_decode($img);
+            $file = 'public/cursos_imagens/curso_foto'.$id."_".$numero_aux.".png";
+            $success = file_put_contents($file, $arquivo);
+            $url = 'public/cursos_imagens/curso_foto'.$id."_".$numero_aux.".png";
             $data['imagem2'] = $url;
         }else{
             unset($data['imagem2']); 

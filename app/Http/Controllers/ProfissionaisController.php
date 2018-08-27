@@ -247,10 +247,11 @@ class ProfissionaisController extends Controller
     }
 
     public function userprofs($id){
-        $usuario = $id;
         $profissionais = $this->repository->findWhere([
             'user_id'=>$id
         ]);
+        $usuario = $this->usersrepository->find($id);
+
         return view('admin.profissionais.userprofs', compact('profissionais','usuario'));
     }
 
@@ -271,12 +272,55 @@ class ProfissionaisController extends Controller
     public function adminshow($id)
     {
         $profissional = $this->repository->find($id);
+        $usuario = $this->usersrepository->find($profissional->user_id);
         $atuacoes = $this->profissionalatuacoesrepository->findWhere(['profissional_id'=>$profissional->id]);
         $subatuacoes = $this->profissionalsubatuacoesrepository->findWhere(['profissional_id'=>$profissional->id]);
         $parecer =  $this->pareceres->scopeQuery(function($query){
             return $query->orderBy('id', 'desc');
         })->findWhere(['id_tipo'=>$profissional->id, 'tipo'=>'1'])->first();
-        return view('admin.profissionais.adminshow', compact('profissional','atuacoes','subatuacoes','parecer'));
+        return view('admin.profissionais.adminshow', compact('profissional','atuacoes','subatuacoes','parecer', 'usuario'));
+    }
+
+    public function adminedit($id)
+    {
+        $profissional = $this->repository->find($id); 
+        $usuario = $this->usersrepository->find($profissional->user_id);
+        $paises = $this->paisesrepository->pluck('descricao','id');
+        $paises->prepend('Selecione o País', '');
+        $estados = $this->estadosrepository->findWhere(['pais_id' => $profissional->pais_id])->pluck('descricao','id');
+        $estados->prepend('Selecione o Estado', '');
+        $cidades = $this->cidadesrepository->findWhere(['estado_id' => $profissional->estado_id])->pluck('descricao','id');
+        $cidades->prepend('Selecione a Cidade', '');
+        return view('admin.profissionais.adminedit', compact('profissional', 'paises', 'estados', 'cidades', 'usuario'));
+    }
+
+    public function adminupdate(Request $request, $id)
+    {
+        $data = $request->all();
+        if($data['foto_crop']!=""){
+            @unlink($profissional->foto);
+            $numero_aux = rand(1, 9999);
+            $img = $data['foto_crop'];
+            $img = str_replace('data:image/png;base64,', '', $img);
+            $img = str_replace(' ', '+', $img);
+            $arquivo = base64_decode($img);
+            $file = 'public/profissionais_perfil/profissional'.$id."_".$numero_aux.".png";
+            $success = file_put_contents($file, $arquivo);
+            $url = 'public/profissionais_perfil/profissional'.$id."_".$numero_aux.".png";
+            $data['foto'] = $url;
+        }else{
+            unset($data['foto']);
+        }
+
+        $data['statu_id'] = 1;
+        $data['situacao_id'] = 1;
+        $data['destaque_id'] = 1;
+        $this->repository->update($data, $id);
+        $profissional = $this->repository->find($id); 
+        $usuario = $this->usersrepository->find($profissional->user_id);
+        \Session::flash('message', ' Dados atualizados com sucesso.');
+
+        return redirect()->route('admin.profissionais.adminshow', compact('profissional','usuario')); 
     }
 
     public function analise(Request $request)

@@ -1,30 +1,14 @@
 @extends('layouts.sufee')
 
+@section('page_name', 'Editar')
+
+@section('breadcrumbs', Breadcrumbs::render('eventos.edit', $evento))
+
 @section('assets_css')
 <link rel="stylesheet" href="{{ asset('public/css/custom-sistema.css') }}" type="text/css" />
 @endsection
 
 @section('content')
-<div class="breadcrumbs">
-    <div class="col-sm-4">
-        <div class="page-header float-left">
-            <div class="page-title">
-                <h1>Editar</h1>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-8">
-        <div class="page-header float-right">
-            <div class="page-title">
-                <ol class="breadcrumb text-right">
-                    <li><a href="{{route('home')}}">Home</a></li>
-                    <li><a href="{{route('eventos.index')}}">Eventos</a></li>
-                    <li class="active">Editar</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="content mt-3">
     @if(Session::has('message'))

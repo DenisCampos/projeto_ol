@@ -1,27 +1,10 @@
 @extends('layouts.sufee')
 
+@section('page_name', 'Profissionais')
+
+@section('breadcrumbs', Breadcrumbs::render('admin.profissionais.userprofs', $usuario))
+
 @section('content')
-<div class="breadcrumbs">
-    <div class="col-sm-4">
-        <div class="page-header float-left">
-            <div class="page-title">
-                <h1>Profissional</h1>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-8">
-        <div class="page-header float-right">
-            <div class="page-title">
-                <ol class="breadcrumb text-right">
-                    <li><a href="{{route('home')}}">Home</a></li>
-                    <li><a href="{{route('admin.usuarios.index')}}">Usuários</a></li>
-                    <li><a href="{{route('admin.usuarios.edit',['usuario'=>$usuario])}}">Detalhar</a></li>
-                    <li class="active">Profissões</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="content mt-3">
     @if(Session::has('message'))

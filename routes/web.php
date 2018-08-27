@@ -163,7 +163,7 @@ Route::group(['middleware'=>'auth'], function () {
 
     //parecer
     Route::get('/pareceres/show/{parecer}', 'PareceresController@show')->name('pareceres.show');
-    Route::get('/pareceres/showall/{user}', 'PareceresController@showall')->name('pareceres.showall');
+    Route::get('/pareceres/showall', 'PareceresController@showall')->name('pareceres.showall');
     //admin
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'check.permission']], function () {
         //usuarios
@@ -229,6 +229,8 @@ Route::group(['middleware'=>'auth'], function () {
         Route::post('/profissionais/liberabanner', 'ProfissionaisController@liberabanner')->name('profissionais.liberabanner');
         Route::post('/profissionais/liberadestaque', 'ProfissionaisController@liberadestaque')->name('profissionais.liberadestaque');
         Route::get('/profissionais/adminshow/{profissional}', 'ProfissionaisController@adminshow')->name('profissionais.adminshow');
+        Route::get('/profissionais/adminedit/{profissional}', 'ProfissionaisController@adminedit')->name('profissionais.adminedit'); 
+        Route::put('/profissionais/adminupdate/{profissional}', 'ProfissionaisController@adminupdate')->name('profissionais.adminupdate');
         Route::put('/profissionais/analise', 'ProfissionaisController@analise')->name('profissionais.analise');
         Route::get('/profissionais/enviados/', 'ProfissionaisController@enviados')->name('profissionais.enviados');
         Route::get('/profissionais/aprovados/', 'ProfissionaisController@aprovados')->name('profissionais.aprovados');

@@ -32,8 +32,6 @@ class CursoCategoriasController extends Controller
             abort(403);
         }
 
-        $cursoid = $curso;
-
         $categorias = DB::table('categorias')
             ->leftJoin('curso_categorias', function ($join) use ($curso) {
                 $join->on('categorias.id', '=', 'curso_categorias.categoria_id')
@@ -44,9 +42,11 @@ class CursoCategoriasController extends Controller
             ->select('categorias.id as categoriaid', 'categorias.descricao', 'curso_categorias.id as categoria_curso')
             ->get();
 
+        $curso = $this->cursosrepository->find($curso);
+
         //dd($categorias);
 
-        return view('cursocategorias.index', compact('categorias','cursoid'));
+        return view('cursocategorias.index', compact('categorias','curso'));
     }
 
     public function store(Request $request)

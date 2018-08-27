@@ -33,8 +33,6 @@ class EventoCategoriasController extends Controller
             abort(403);
         }
 
-        $eventoid = $evento;
-
         $categorias = DB::table('categorias')
             ->leftJoin('evento_categorias', function ($join) use ($evento) {
                 $join->on('categorias.id', '=', 'evento_categorias.categoria_id')
@@ -45,9 +43,10 @@ class EventoCategoriasController extends Controller
             ->select('categorias.id as categoriaid', 'categorias.descricao', 'evento_categorias.id as categoria_evento')
             ->get();
 
+        $evento = $this->eventosrepository->find($evento);
         //dd($categorias);
 
-        return view('eventocategorias.index', compact('categorias','eventoid'));
+        return view('eventocategorias.index', compact('categorias','evento'));
     }
 
     /**

@@ -1,28 +1,10 @@
 @extends('layouts.sufee')
 
+@section('page_name', 'Novo')
+
+@section('breadcrumbs', Breadcrumbs::render('empresabanners.create', $empresa))
+
 @section('content')
-<div class="breadcrumbs">
-    <div class="col-sm-4">
-        <div class="page-header float-left">
-            <div class="page-title">
-                <h1>Novo</h1>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-8">
-        <div class="page-header float-right">
-            <div class="page-title">
-                <ol class="breadcrumb text-right">
-                    <li><a href="{{route('home')}}">Home</a></li>
-                    <li><a href="{{route('edit')}}">Dados Pessoais</a></li>
-                    <li><a href="{{route('empresas.index')}}">Empresa</a></li>
-                    <li <a href="{{ route("empresabanners.index", ['empresa' => $empresa->id])}}">Banner</a></li>
-                    <li class="active">Novo</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="content mt-3">
     @if(Session::has('message'))

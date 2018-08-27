@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Repositories\UserInteressesRepository;
 use App\Repositories\CategoriasRepository;
+use App\Repositories\UsersRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -12,10 +13,12 @@ class UserInteressesController extends Controller
 {
     protected $repository;
     private $categoriasrepository;
+    private $usersrepository;
 
-    public function __construct(UserInteressesRepository $repository, CategoriasRepository $categoriasrepository){
+    public function __construct(UserInteressesRepository $repository, CategoriasRepository $categoriasrepository, UsersRepository $usersrepository){
         $this->repository = $repository;
         $this->categoriasrepository = $categoriasrepository;
+        $this->usersrepository = $usersrepository;
     }
 
     public function index(){
@@ -53,7 +56,7 @@ class UserInteressesController extends Controller
     }
 
     public function adminshow($id){
-        $usuario = $id;
+        
         $categorias = DB::table('categorias')
             ->join('user_interesses', function ($join) use ($id) {
                 $join->on('categorias.id', '=', 'user_interesses.categoria_id')
@@ -64,6 +67,7 @@ class UserInteressesController extends Controller
             ->select('categorias.id as categoriaid', 'categorias.descricao', 'user_interesses.id as interessesid')
             ->get();
         
+        $usuario = $this->usersrepository->find($id);
         //dd($categorias);
 
         return view('admin.userinteresses.adminshow', compact('categorias', 'usuario'));

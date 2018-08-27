@@ -110,3 +110,131 @@ Breadcrumbs::for('empresasubatuacoes.index', function ($trail, $empresa, $atuaco
     $trail->parent('empresaatuacoes.index', $empresa);
     $trail->push('Sub Atuações', route('empresasubatuacoes.index', [$empresa->id, $atuacoes]));
 });
+
+//usuario empresa banner
+Breadcrumbs::for('empresabanners.index', function ($trail, $empresa) {
+    $trail->parent('empresas.show', $empresa);
+    $trail->push('Banner', route('empresabanners.index', $empresa->id));
+});
+
+Breadcrumbs::for('empresabanners.create', function ($trail, $empresa) {
+    $trail->parent('empresabanners.index', $empresa);
+    $trail->push('Novo', route('empresabanners.create', $empresa->id));
+});
+
+Breadcrumbs::for('empresabanners.edit', function ($trail, $empresa, $banner) {
+    $trail->parent('empresabanners.index', $empresa);
+    $trail->push('Editar', route('empresabanners.edit', [$empresa->id, $banner->id]));
+});
+
+Breadcrumbs::for('empresabanners.show', function ($trail, $empresa, $banner) {
+    $trail->parent('empresabanners.index', $empresa);
+    $trail->push('Detalhar', route('empresabanners.show', [$empresa->id, $banner->id]));
+});
+
+
+//cursos usuarios
+Breadcrumbs::for('cursos.index', function ($trail) {
+    $trail->parent('edit');
+    $trail->push('Infoprodutos', route('cursos.index'));
+});
+
+Breadcrumbs::for('cursos.create', function ($trail) {
+    $trail->parent('cursos.index');
+    $trail->push('Novo', route('cursos.create'));
+});
+
+Breadcrumbs::for('cursos.edit', function ($trail, $curso) {
+    $trail->parent('cursos.index');
+    $trail->push('Editar', route('cursos.edit', $curso->id));
+});
+
+Breadcrumbs::for('cursos.show', function ($trail, $curso) {
+    $trail->parent('cursos.index');
+    $trail->push($curso->titulo, route('cursos.show', $curso->id));
+});
+
+
+//cursos categorias
+Breadcrumbs::for('cursocategorias.index', function ($trail, $curso) {
+    $trail->parent('cursos.edit', $curso);
+    $trail->push('Categorias', route('cursocategorias.index', $curso->id));
+});
+
+
+//eventos usuarios
+Breadcrumbs::for('eventos.index', function ($trail) {
+    $trail->parent('edit');
+    $trail->push('Eventos', route('eventos.index'));
+});
+
+Breadcrumbs::for('eventos.create', function ($trail) {
+    $trail->parent('eventos.index');
+    $trail->push('Novo', route('eventos.create'));
+});
+
+Breadcrumbs::for('eventos.edit', function ($trail, $evento) {
+    $trail->parent('eventos.index');
+    $trail->push('Editar', route('eventos.edit', $evento->id));
+});
+
+Breadcrumbs::for('eventos.show', function ($trail, $evento) {
+    $trail->parent('eventos.index');
+    $trail->push($evento->titulo, route('eventos.show', $evento->id));
+});
+
+
+//eventos categorias
+Breadcrumbs::for('eventocategorias.index', function ($trail, $evento) {
+    $trail->parent('eventos.edit', $evento);
+    $trail->push('Categorias', route('eventocategorias.index', $evento->id));
+});
+
+
+//parecer
+Breadcrumbs::for('pareceres.show', function ($trail, $parecer) {
+    $trail->parent('home');
+    $trail->push('Parecer', route('pareceres.show', $parecer->id));
+});
+
+Breadcrumbs::for('pareceres.showall', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Pareceres', route('pareceres.showall'));
+});
+
+
+//ADMIN
+//usuarios
+Breadcrumbs::for('admin.usuarios.index', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Usuários', route('admin.usuarios.index'));
+});
+
+Breadcrumbs::for('admin.usuarios.edit', function ($trail, $usuario) {
+    $trail->parent('admin.usuarios.index');
+    $trail->push($usuario->name, route('admin.usuarios.edit', $usuario->id));
+});
+
+
+//usuariointeresse
+Breadcrumbs::for('admin.userinteresses.adminshow', function ($trail, $usuario) {
+    $trail->parent('admin.usuarios.edit', $usuario);
+    $trail->push('Interesses', route('admin.userinteresses.adminshow', $usuario->id));
+});
+
+
+//profissional admin
+Breadcrumbs::for('admin.profissionais.userprofs', function ($trail, $usuario) {
+    $trail->parent('admin.usuarios.edit', $usuario);
+    $trail->push('Profissionais', route('admin.profissionais.userprofs', $usuario->id));
+});
+
+Breadcrumbs::for('admin.profissionais.adminshow', function ($trail, $usuario, $profissional) {
+    $trail->parent('admin.profissionais.userprofs', $usuario);
+    $trail->push($profissional->name, route('admin.profissionais.adminshow', $profissional->id));
+});
+
+Breadcrumbs::for('admin.profissionais.adminedit', function ($trail, $usuario, $profissional) {
+    $trail->parent('admin.profissionais.adminshow', $usuario, $profissional);
+    $trail->push('Editar', route('admin.profissionais.adminedit', $profissional->id));
+});

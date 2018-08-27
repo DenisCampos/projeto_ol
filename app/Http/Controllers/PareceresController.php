@@ -98,10 +98,10 @@ class PareceresController extends Controller
 
     }
 
-    public function showall($id)
+    public function showall()
     {
         $pareceres = $this->repository->findWhere([
-            'user_id'=>$id
+            'user_id'=>Auth::user()->id
         ]);
 
         $data['visualizou'] = '1';

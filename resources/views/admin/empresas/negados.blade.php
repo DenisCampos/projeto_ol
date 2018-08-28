@@ -1,25 +1,10 @@
 @extends('layouts.sufee')
 
+@section('page_name', 'Empresas Negadas')
+
+@section('breadcrumbs', Breadcrumbs::render('admin.empresas.negados'))
+
 @section('content')
-<div class="breadcrumbs">
-    <div class="col-sm-4">
-        <div class="page-header float-left">
-            <div class="page-title">
-                <h1>Empresas</h1>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-8">
-        <div class="page-header float-right">
-            <div class="page-title">
-                <ol class="breadcrumb text-right">
-                    <li><a href="{{route('home')}}">Home</a></li>
-                    <li class="active">Empresas</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="content mt-3">
     @if(Session::has('message'))
@@ -54,6 +39,9 @@
                                     <th scope="col">Nome</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Situação</th>
+                                    <th scope="col" class="text-center">Banners</th>
+                                    <th scope="col" class="text-center">Destaque</th>
+                                    <th scope="col" class="text-center" width="8%"></th>
                                     <th scope="col" class="text-center" width="8%"></th>
                                 </tr>
                                 </thead>
@@ -74,7 +62,26 @@
                                         </td>
                                         <td>{{$empresa->statu->descricao}}</td>
                                         <td>{{$empresa->situacao->descricao}}</td>
-                                        <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='{{ route("admin.empresas.adminshow", ['id' => $empresa->id]) }}'"><i class="fa fa-file-text-o"></i> Detalhar</button></td>
+                                        <td class="text-center" onclick="liberar_banner('{{$empresa->id}}')">
+                                            @if($empresa->banner=='1')
+                                            <i id="banner{{$empresa->id}}" style="color:#5cb85c" class="fa fa-toggle-on fa-2x"></i>
+                                            @else
+                                            <i id="banner{{$empresa->id}}" style="color:#d9534f" class="fa fa-toggle-off fa-2x"></i>
+                                            @endif
+                                        </td>
+                                        <td class="text-center" onclick="liberar_destaque('{{$empresa->id}}')">
+                                            @if($empresa->destaque_id=='2')
+                                            <i id="destaque{{$empresa->id}}" style="color:#5cb85c" class="fa fa-toggle-on fa-2x"></i>
+                                            @else
+                                            <i id="destaque{{$empresa->id}}" style="color:#d9534f" class="fa fa-toggle-off fa-2x"></i>
+                                            @endif
+                                        </td> 
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-secondary" onclick="window.location='{{ route("admin.empresabanners.banneremps", [$empresa->user_id, $empresa->id]) }}'">
+                                                <i class="fa fa-picture-o"></i> Ver Banners
+                                            </button>
+                                        </td>  
+                                        <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='{{ route("admin.empresas.adminshow", [$empresa->user_id, $empresa->id]) }}'"><i class="fa fa-file-text-o"></i> Detalhar</button></td>
                                     </tr>
                                     @php
                                         $cont++;
@@ -93,6 +100,68 @@
     $(document).ready(function() {
        $('#bootstrap-data-table-export').DataTable();
    } );
+
+   function liberar_banner(empresa) {
+        
+        var classe = document.getElementById('banner'+empresa).getAttribute('class');
+        var valor;
+        
+        if (classe == 'fa fa-toggle-on fa-2x'){
+            document.getElementById('banner'+empresa).setAttribute('class', 'fa fa-toggle-off fa-2x');
+            document.getElementById('banner'+empresa).setAttribute('style', 'color:#d9534f');
+            valor = 0;
+        }else{
+            document.getElementById('banner'+empresa).setAttribute('class', 'fa fa-toggle-on fa-2x');
+            document.getElementById('banner'+empresa).setAttribute('style', 'color:#5cb85c');
+            valor = 1;
+        }
+
+        jQuery.ajax({
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            type:"POST",
+            url: "{{route('admin.empresas.liberabanner')}}",
+            data: { id: empresa, banner: valor},
+            dataType: 'json',
+            success: function (res)
+            {  
+                if(res)
+                {
+                                            
+                }
+            }
+        });	
+    };
+
+   function liberar_destaque(empresa) {
+       
+       var classe = document.getElementById('destaque'+empresa).getAttribute('class');
+       var acao, valor;
+       
+       if (classe == 'fa fa-toggle-on fa-2x'){
+           document.getElementById('destaque'+empresa).setAttribute('class', 'fa fa-toggle-off fa-2x');
+           document.getElementById('destaque'+empresa).setAttribute('style', 'color:#d9534f');
+           valor = 1;
+       }else{
+           document.getElementById('destaque'+empresa).setAttribute('class', 'fa fa-toggle-on fa-2x');
+           document.getElementById('destaque'+empresa).setAttribute('style', 'color:#5cb85c');
+           valor = 2;
+       }
+
+       jQuery.ajax({
+           headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+           type:"POST",
+           url: "{{route('admin.empresas.liberadestaque')}}",
+           data: { id: empresa, destaque_id: valor},
+           dataType: 'json',
+           success: function (res)
+           {  
+               if(res)
+               {
+                                           
+               }
+           }
+       });	
+   };
 </script>
 
 @endsection

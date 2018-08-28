@@ -76,10 +76,12 @@ class PareceresController extends Controller
      */
     public function show($id)
     {
+        $parecer = $this->repository->find($id);
+        if($parecer->user_id!=Auth::user()->id){
+            abort(403);
+        }
         $data['visualizou'] = '1';
         $this->repository->update($data, $id);
-        //dd($this->repository->update($data, $id));
-        $parecer = $this->repository->find($id);
         if($parecer->tipo==1){
             $dados = $this->profissionaisrepository->find($parecer->id_tipo);
         }elseif($parecer->tipo==2){

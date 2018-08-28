@@ -123,11 +123,11 @@
                                 </div>
                                 @endif
                             </li>
-                            <li class="list-group-item">
+                            <li class="list-group-item"> 
                                 <div class="col-lg-12 text-center">
-                                    {!! Form::open(['route' => ['admin.profissionais.adminedit', 'id' => $profissional->id],'class' => 'form', 'method' => 'GET']) !!}
-                                        <button type="submit" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i> Editar informações do(a) profissional</button>
-                                    {!! Form::close() !!}
+                                    <button type="submit" class="btn btn-warning" onclick="window.open('{{route('admin.profissionais.adminedit', [$usuario->id, $profissional->id])}}', '_self');">
+                                        <i class="fa fa-pencil-square-o"></i> Editar informações do(a) profissional
+                                    </button>
                                 </div>
                             </li>
                             @endif

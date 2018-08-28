@@ -1,6 +1,6 @@
 @extends('layouts.sufee')
 
-@section('page_name', 'Profissionais')
+@section('page_name', 'Enviados')
 
 @section('breadcrumbs', Breadcrumbs::render('admin.profissionais.userprofs', $usuario))
 
@@ -76,12 +76,12 @@
                                         @endif
                                     </td>
                                     <td class="text-center">
-                                        <button type="button" class="btn btn-secondary" onclick="window.location='{{ route("admin.profissionalbanners.bannerprofs", ['profissional' => $profissional->id]) }}'">
+                                        <button type="button" class="btn btn-secondary" onclick="window.location='{{ route("admin.profissionalbanners.bannerprofs", [$usuario->id , $profissional->id]) }}'">
                                             <i class="fa fa-picture-o"></i> Ver Banners
                                         </button>
                                     </td>
                                     <td class="text-center">
-                                        <button type="button" class="btn btn-info" onclick="window.location='{{ route("admin.profissionais.adminshow", ['id' => $profissional->id]) }}'">
+                                        <button type="button" class="btn btn-info" onclick="window.location='{{ route("admin.profissionais.adminshow", [ $usuario->id , $profissional->id]) }}'">
                                             <i class="fa fa-file-text-o"></i> Detalhar
                                         </button>
                                     </td>

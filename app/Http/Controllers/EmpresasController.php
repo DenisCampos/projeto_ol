@@ -299,10 +299,10 @@ class EmpresasController extends Controller
         return redirect()->route('empresas.index'); 
     }
 
-    public function useremps($id){
-        $usuario = $id;
+    public function useremps($user_id){
+        $usuario = $this->usersrepository->find($user_id);
         $empresas = $this->repository->findWhere([
-            'user_id'=>$id
+            'user_id'=>$usuario->id
         ]);
         return view('admin.empresas.useremps', compact('empresas','usuario'));
     }
@@ -321,15 +321,16 @@ class EmpresasController extends Controller
         return $request->banne;
     }
 
-    public function adminshow($id)
+    public function adminshow($user_id, $emp_id)
     {
-        $empresa = $this->repository->find($id);
+        $empresa = $this->repository->find($emp_id);
+        $usuario = $this->usersrepository->find($user_id);
         $atuacoes = $this->empresaatuacoesrepository->findWhere(['empresa_id'=>$empresa->id]);
         $subatuacoes = $this->empresasubatuacoesrepository->findWhere(['empresa_id'=>$empresa->id]);
         $parecer =  $this->pareceres->scopeQuery(function($query){
             return $query->orderBy('id', 'desc');
         })->findWhere(['id_tipo'=>$empresa->id, 'tipo'=>'2'])->first();
-        return view('admin.empresas.adminshow', compact('empresa','atuacoes','subatuacoes', 'parecer'));
+        return view('admin.empresas.adminshow', compact('empresa','atuacoes','subatuacoes', 'parecer', 'usuario'));
     }
 
     public function analise(Request $request)
@@ -355,6 +356,85 @@ class EmpresasController extends Controller
         $this->pareceres->create($parecer);
 
         return redirect()->route('admin.empresas.enviados'); 
+    }
+
+    public function adminedit($user_id, $emp_id)
+    {
+        $usuario = $this->usersrepository->find($user_id);
+        $empresa = $this->repository->find($emp_id);
+        if($empresa->user_id != $usuario->id){
+            abort(403);
+        }
+        $paises = $this->paisesrepository->pluck('descricao','id');
+        $paises->prepend('Selecione o País', '');
+        $estados = $this->estadosrepository->findWhere(['pais_id' => $empresa->pais_id])->pluck('descricao','id');
+        $estados->prepend('Selecione o Estado', '');
+        $cidades = $this->cidadesrepository->findWhere(['estado_id' => $empresa->estado_id])->pluck('descricao','id');
+        $cidades->prepend('Selecione a Cidade', '');
+        return view('admin.empresas.adminedit', compact('empresa', 'paises', 'estados', 'cidades', 'usuario'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function adminupdate(Request $request, $id)
+    {
+        $data = $request->all();
+
+        if($data['imagem1_crop']!=""){
+            @unlink($empresa->imagem1);
+            $numero_aux = rand(1, 9999);
+            $img = $data['imagem1_crop'];
+            $img = str_replace('data:image/png;base64,', '', $img);
+            $img = str_replace(' ', '+', $img);
+            $arquivo = base64_decode($img);
+            $file = 'public/empresas_perfil/empresa_perfil'.$id."_".$numero_aux.".png";
+            $success = file_put_contents($file, $arquivo);
+            $url = 'public/empresas_perfil/empresa_perfil'.$id."_".$numero_aux.".png";
+            $data['imagem1'] = $url;
+        }else{
+            unset($data['imagem1']);
+        }
+        if($data['imagem2_crop']!=""){
+            @unlink($empresa->imagem2);
+            $numero_aux = rand(1, 9999);
+            $img = $data['imagem2_crop'];
+            $img = str_replace('data:image/png;base64,', '', $img);
+            $img = str_replace(' ', '+', $img);
+            $arquivo = base64_decode($img);
+            $file = 'public/empresas_perfil/empresa_foto'.$id."_".$numero_aux.".png";
+            $success = file_put_contents($file, $arquivo);
+            $url = 'public/empresas_perfil/empresa_foto'.$id."_".$numero_aux.".png";
+            $data['imagem2'] = $url;
+        }else{
+            unset($data['imagem2']);
+        }
+        if($data['imagem3_crop']!=""){
+            @unlink($empresa->imagem3);
+            $numero_aux = rand(1, 9999);
+            $img = $data['imagem3_crop'];
+            $img = str_replace('data:image/png;base64,', '', $img);
+            $img = str_replace(' ', '+', $img);
+            $arquivo = base64_decode($img);
+            $file = 'public/empresas_perfil/empresa_segunda_foto'.$id."_".$numero_aux.".png";
+            $success = file_put_contents($file, $arquivo);
+            $url = 'public/empresas_perfil/empresa_segunda_foto'.$id."_".$numero_aux.".png";
+            $data['imagem2'] = $url;
+        }else{
+            unset($data['imagem3']);
+        }
+
+        $this->repository->update($data, $id);
+        $empresa = $this->repository->find($id);
+        $usuario = $this->usersrepository->find($empresa->user_id);
+
+        \Session::flash('message', ' Dados atualizados com sucesso.');
+
+        return redirect()->route('admin.empresas.adminshow', [$usuario, $empresa]); 
     }
  
     public function enviados()

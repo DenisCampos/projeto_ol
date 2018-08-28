@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\UsersRepository;
 use App\Repositories\EmpresasRepository;
 use App\Repositories\EmpresaBannersRepository;
 use App\Repositories\PareceresRepository;
@@ -12,12 +13,18 @@ class EmpresaBannersController extends Controller
 {
 
     protected $repository;
-    private $empresasrepository, $pareceres;
+    private $empresasrepository, $pareceres, $usersrepository;
 
-    public function __construct(EmpresaBannersRepository $repository, EmpresasRepository $empresasrepository, PareceresRepository $pareceres){
+    public function __construct(
+        EmpresaBannersRepository $repository, 
+        EmpresasRepository $empresasrepository, 
+        PareceresRepository $pareceres,
+        UsersRepository $usersrepository
+    ){
         $this->repository = $repository;
         $this->empresasrepository = $empresasrepository;
         $this->pareceres = $pareceres;
+        $this->usersrepository = $usersrepository;
     }
 
     /**
@@ -201,20 +208,22 @@ class EmpresaBannersController extends Controller
     }
 
 
-    public function banneremps($empresa){
-        $empresa = $this->empresasrepository->find($empresa);
+    public function banneremps($user_id, $emp_id){
+        $empresa = $this->empresasrepository->find($emp_id);
+        $usuario = $this->usersrepository->find($user_id);
         $banners = $this->repository->findwhere(['empresa_id' => $empresa->id]);
-        return view('admin.empresabanners.banneremps', compact('empresa','banners'));
+        return view('admin.empresabanners.banneremps', compact('empresa','banners','usuario'));
     }
 
-    public function adminshow($empresa, $id)
+    public function adminshow($user_id, $emp_id, $banner_id)
     {
-        $empresa = $this->empresasrepository->find($empresa);
-        $banner = $this->repository->find($id);
+        $empresa = $this->empresasrepository->find($emp_id);
+        $usuario = $this->usersrepository->find($user_id);
+        $banner = $this->repository->find($banner_id);
         $parecer = $this->pareceres->scopeQuery(function($query){
             return $query->orderBy('id', 'desc');
         })->findWhere(['id_tipo'=>$empresa->id, 'tipo'=>'6'])->first();
-        return view('admin.empresabanners.adminshow', compact('empresa','banner', 'parecer'));
+        return view('admin.empresabanners.adminshow', compact('empresa','banner','parecer','usuario'));
     }
 
     public function analise(Request $request, $empresa)

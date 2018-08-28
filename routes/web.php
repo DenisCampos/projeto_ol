@@ -225,11 +225,11 @@ Route::group(['middleware'=>'auth'], function () {
         Route::get('/userinteresses/{usuario}', 'UserInteressesController@adminshow')->name('userinteresses.adminshow');
 
         //profissional admin
-        Route::get('/profissionais/userprofs/{user}', 'ProfissionaisController@userprofs')->name('profissionais.userprofs');
+        Route::get('/usuarios/{user}/profissionais/userprofs', 'ProfissionaisController@userprofs')->name('profissionais.userprofs');
         Route::post('/profissionais/liberabanner', 'ProfissionaisController@liberabanner')->name('profissionais.liberabanner');
         Route::post('/profissionais/liberadestaque', 'ProfissionaisController@liberadestaque')->name('profissionais.liberadestaque');
-        Route::get('/profissionais/adminshow/{profissional}', 'ProfissionaisController@adminshow')->name('profissionais.adminshow');
-        Route::get('/profissionais/adminedit/{profissional}', 'ProfissionaisController@adminedit')->name('profissionais.adminedit'); 
+        Route::get('/usuarios/{user}/profissionais/adminshow/{profissional}', 'ProfissionaisController@adminshow')->name('profissionais.adminshow');
+        Route::get('/usuarios/{user}/profissionais/adminedit/{profissional}', 'ProfissionaisController@adminedit')->name('profissionais.adminedit');  
         Route::put('/profissionais/adminupdate/{profissional}', 'ProfissionaisController@adminupdate')->name('profissionais.adminupdate');
         Route::put('/profissionais/analise', 'ProfissionaisController@analise')->name('profissionais.analise');
         Route::get('/profissionais/enviados/', 'ProfissionaisController@enviados')->name('profissionais.enviados');
@@ -237,23 +237,25 @@ Route::group(['middleware'=>'auth'], function () {
         Route::get('/profissionais/negados/', 'ProfissionaisController@negados')->name('profissionais.negados');
 
         //profissional banner admin
-        Route::get('/profissionais/{profissional}/banner', 'ProfissionalBannersController@bannerprofs')->name('profissionalbanners.bannerprofs');
-        Route::get('/profissionais/{profissional}/banner/{banner}', 'ProfissionalBannersController@adminshow')->name('profissionalbanners.adminshow');
+        Route::get('/usuarios/{user}/profissionais/{profissional}/banner', 'ProfissionalBannersController@bannerprofs')->name('profissionalbanners.bannerprofs');
+        Route::get('/usuarios/{user}/profissionais/{profissional}/banner/{banner}', 'ProfissionalBannersController@adminshow')->name('profissionalbanners.adminshow');
         Route::put('/profissionais/{profissional}/banner/analise', 'ProfissionalBannersController@analise')->name('profissionalbanners.analise');
 
         //empresa admin
-        Route::get('/empresas/useremps/{user}', 'EmpresasController@useremps')->name('empresas.useremps');
+        Route::get('/usuarios/{user}/empresas/useremps/', 'EmpresasController@useremps')->name('empresas.useremps');
         Route::post('/empresas/liberabanner', 'EmpresasController@liberabanner')->name('empresas.liberabanner');
         Route::post('/empresas/liberadestaque', 'EmpresasController@liberadestaque')->name('empresas.liberadestaque');
-        Route::get('/empresas/adminshow/{empresa}', 'EmpresasController@adminshow')->name('empresas.adminshow');
+        Route::get('/usuarios/{user}/empresas/adminshow/{empresa}', 'EmpresasController@adminshow')->name('empresas.adminshow');
+        Route::get('/usuarios/{user}/empresas/adminedit/{empresa}', 'EmpresasController@adminedit')->name('empresas.adminedit'); 
+        Route::put('/empresas/adminupdate/{empresa}', 'EmpresasController@adminupdate')->name('empresas.adminupdate');
         Route::put('/empresas/analise', 'EmpresasController@analise')->name('empresas.analise');
         Route::get('/empresas/enviados/', 'EmpresasController@enviados')->name('empresas.enviados');
         Route::get('/empresas/aprovados/', 'EmpresasController@aprovados')->name('empresas.aprovados');
         Route::get('/empresas/negados/', 'EmpresasController@negados')->name('empresas.negados');
 
         //empresa banner admin
-        Route::get('/empresas/{empresa}/banner', 'EmpresaBannersController@banneremps')->name('empresabanners.banneremps');
-        Route::get('/empresas/{empresa}/banner/{banner}', 'EmpresaBannersController@adminshow')->name('empresabanners.adminshow');
+        Route::get('/usuarios/{user}/empresas/{empresa}/banner', 'EmpresaBannersController@banneremps')->name('empresabanners.banneremps');
+        Route::get('/usuarios/{user}/empresas/{empresa}/banner/{banner}', 'EmpresaBannersController@adminshow')->name('empresabanners.adminshow');
         Route::put('/empresas/{empresa}/banner/analise', 'EmpresaBannersController@analise')->name('empresabanners.analise');
 
         //cursos admin

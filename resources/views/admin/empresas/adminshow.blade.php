@@ -1,28 +1,10 @@
 @extends('layouts.sufee')
 
+@section('page_name', $empresa->name)
+
+@section('breadcrumbs', Breadcrumbs::render('admin.empresas.adminshow', $usuario, $empresa))
+
 @section('content')
-<div class="breadcrumbs">
-    <div class="col-sm-4">
-        <div class="page-header float-left">
-            <div class="page-title">
-                <h1>Detalhar</h1>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-8">
-        <div class="page-header float-right">
-            <div class="page-title">
-                <ol class="breadcrumb text-right">
-                    <li><a href="{{route('home')}}">Home</a></li>
-                    <li><a href="{{route('admin.usuarios.index')}}">Usuários</a></li>
-                    <li><a href="{{route('admin.usuarios.edit',['id' => $empresa->user_id])}}">Detalhar</a></li>
-                    <li><a href="{{route('admin.empresas.useremps',['id' => $empresa->user_id])}}">Empresas</a></li>
-                    <li class="active">Detalhar</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="content mt-3">
     @if(Session::has('message'))
@@ -147,6 +129,13 @@
                                 @endif
                             </li>
                             @endif
+                            <li class="list-group-item"> 
+                                <div class="col-lg-12 text-center">
+                                    <button type="submit" class="btn btn-warning" onclick="window.open('{{route('admin.empresas.adminedit', [$usuario->id, $empresa->id])}}', '_self');">
+                                        <i class="fa fa-pencil-square-o"></i> Editar informações da empresa
+                                    </button>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                     @if($empresa->situacao_id==2)

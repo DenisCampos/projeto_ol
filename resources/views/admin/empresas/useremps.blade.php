@@ -1,40 +1,11 @@
 @extends('layouts.sufee')
 
-@section('content')
-<div class="breadcrumbs">
-    <div class="col-sm-4">
-        <div class="page-header float-left">
-            <div class="page-title">
-                <h1>Empresa</h1>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-8">
-        <div class="page-header float-right">
-            <div class="page-title">
-                <ol class="breadcrumb text-right">
-                    <li><a href="{{route('home')}}">Home</a></li>
-                    <li><a href="{{route('admin.usuarios.index')}}">Usuários</a></li>
-                    <li><a href="{{route('admin.usuarios.edit',['id' => $usuario])}}">Detalhar</a></li>
-                    <li class="active">Empresas</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</div>
+@section('page_name', 'Empresas')
 
+@section('breadcrumbs', Breadcrumbs::render('admin.empresas.useremps', $usuario))
+
+@section('content')
 <div class="content mt-3">
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="sufee-alert alert with-close alert-warning alert-dismissible fade show">
-                <span class="badge badge-pill badge-warning"><i class="fa fa-warning"></i> Atenção</span>
-                    Qualquer edição altera os status para "Não Publicado" e retorna para a situação para "Criado".
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-        </div>
-    </div>
     @if(Session::has('message'))
     <div class="row">
         <div class="col-sm-12">
@@ -59,13 +30,6 @@
                             <h3 class="text-center">Perfil da Empresa</h3>
                         </div>
                         <hr>
-                        <div class="col-lg-4"></div>
-                        <div class="col-lg-4">
-                            <div class="mx-auto d-block text-center">
-                                <button type="button" class="btn btn-primary" onclick="window.location='{{ route("empresas.create") }}'"><i class="fa fa-building-o"></i>&nbsp;Nova empresa</button>
-                            </div>
-                        </div>
-                        <div class="col-lg-4"></div><br><br>
                         <table class="table table-responsive">
                             <thead class="thead-dark">
                             <tr>
@@ -73,7 +37,9 @@
                                 <th scope="col">Nome</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Situação</th>
+                                <th scope="col" class="text-center">Banners</th>
                                 <th scope="col" class="text-center">Destaque</th>
+                                <th scope="col" class="text-center" width="8%"></th>
                                 <th scope="col" class="text-center" width="8%"></th>
                             </tr>
                             </thead>
@@ -94,14 +60,26 @@
                                     </td>
                                     <td>{{$empresa->statu->descricao}}</td>
                                     <td>{{$empresa->situacao->descricao}}</td>
+                                    <td class="text-center" onclick="liberar_banner('{{$empresa->id}}')">
+                                        @if($empresa->banner=='1')
+                                        <i id="banner{{$empresa->id}}" style="color:#5cb85c" class="fa fa-toggle-on fa-2x"></i>
+                                        @else
+                                        <i id="banner{{$empresa->id}}" style="color:#d9534f" class="fa fa-toggle-off fa-2x"></i>
+                                        @endif
+                                    </td>
                                     <td class="text-center" onclick="liberar_destaque('{{$empresa->id}}')">
                                         @if($empresa->destaque_id=='2')
                                         <i id="destaque{{$empresa->id}}" style="color:#5cb85c" class="fa fa-toggle-on fa-2x"></i>
                                         @else
                                         <i id="destaque{{$empresa->id}}" style="color:#d9534f" class="fa fa-toggle-off fa-2x"></i>
                                         @endif
-                                    </td>                                    
-                                    <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='{{ route("admin.empresas.adminshow", ['id' => $empresa->id]) }}'"><i class="fa fa-file-text-o"></i> Detalhar</button></td>
+                                    </td>     
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-secondary" onclick="window.location='{{ route("admin.empresabanners.banneremps", [$usuario->id, $empresa->id]) }}'">
+                                            <i class="fa fa-picture-o"></i> Ver Banners
+                                        </button>
+                                    </td>                               
+                                    <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='{{ route("admin.empresas.adminshow", [$usuario->id, $empresa->id]) }}'"><i class="fa fa-file-text-o"></i> Detalhar</button></td>
                                 </tr>
                                 @php
                                     $cont++;
@@ -117,7 +95,38 @@
     </div>
 </div> <!-- .content -->
 <script>
-     function liberar_destaque(empresa) {
+    function liberar_banner(empresa) {
+        
+        var classe = document.getElementById('banner'+empresa).getAttribute('class');
+        var valor;
+        
+        if (classe == 'fa fa-toggle-on fa-2x'){
+            document.getElementById('banner'+empresa).setAttribute('class', 'fa fa-toggle-off fa-2x');
+            document.getElementById('banner'+empresa).setAttribute('style', 'color:#d9534f');
+            valor = 0;
+        }else{
+            document.getElementById('banner'+empresa).setAttribute('class', 'fa fa-toggle-on fa-2x');
+            document.getElementById('banner'+empresa).setAttribute('style', 'color:#5cb85c');
+            valor = 1;
+        }
+
+        jQuery.ajax({
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            type:"POST",
+            url: "{{route('admin.empresas.liberabanner')}}",
+            data: { id: empresa, banner: valor},
+            dataType: 'json',
+            success: function (res)
+            {  
+                if(res)
+                {
+                                            
+                }
+            }
+        });	
+    };
+
+    function liberar_destaque(empresa) {
         
         var classe = document.getElementById('destaque'+empresa).getAttribute('class');
         var acao, valor;

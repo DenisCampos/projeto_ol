@@ -1,28 +1,10 @@
 @extends('layouts.sufee')
 
+@section('page_name', 'Banners')
+
+@section('breadcrumbs', Breadcrumbs::render('admin.profissionalbanners.bannerprofs', $usuario, $profissional))
+
 @section('content')
-<div class="breadcrumbs">
-    <div class="col-sm-4">
-        <div class="page-header float-left">
-            <div class="page-title">
-                <h1>Banners</h1>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-8">
-        <div class="page-header float-right">
-            <div class="page-title">
-                <ol class="breadcrumb text-right">
-                    <li><a href="{{route('home')}}">Home</a></li>
-                    <li><a href="{{route('admin.usuarios.index')}}">Usuários</a></li>
-                    <li><a href="{{route('admin.usuarios.edit',['usuario'=>$profissional->user_id])}}">Detalhar</a></li>
-                    <li><a href="{{route('admin.profissionais.userprofs',['usuario' => $profissional->user_id])}}">Profissões</a></li>
-                    <li class="active">Banners</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="content mt-3">
     @if(Session::has('message'))
@@ -87,7 +69,7 @@
                                         {{date('d/m/Y', strtotime($banner->data_fim))}}
                                         @endif
                                     </td>
-                                    <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='{{ route("admin.profissionalbanners.adminshow", ['profissional' => $profissional->id, 'id' => $banner->id]) }}'"><i class="fa fa-file-text-o"></i> Detalhar</button></td>
+                                    <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='{{ route("admin.profissionalbanners.adminshow", [$usuario->id, $profissional->id, $banner->id]) }}'"><i class="fa fa-file-text-o"></i> Detalhar</button></td>
                                 </tr>
                                 @php
                                     $cont++;

@@ -231,10 +231,81 @@ Breadcrumbs::for('admin.profissionais.userprofs', function ($trail, $usuario) {
 
 Breadcrumbs::for('admin.profissionais.adminshow', function ($trail, $usuario, $profissional) {
     $trail->parent('admin.profissionais.userprofs', $usuario);
-    $trail->push($profissional->name, route('admin.profissionais.adminshow', $profissional->id));
+    $trail->push($profissional->name, route('admin.profissionais.adminshow', [$usuario, $profissional->id]));
 });
 
 Breadcrumbs::for('admin.profissionais.adminedit', function ($trail, $usuario, $profissional) {
     $trail->parent('admin.profissionais.adminshow', $usuario, $profissional);
-    $trail->push('Editar', route('admin.profissionais.adminedit', $profissional->id));
+    $trail->push('Editar', route('admin.profissionais.adminedit', [$usuario->id, $profissional->id]));
+});
+
+Breadcrumbs::for('admin.profissionais.enviados', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Enviados', route('admin.profissionais.enviados'));
+});
+
+Breadcrumbs::for('admin.profissionais.aprovados', function ($trail) {
+    $trail->parent('admin.profissionais.enviados');
+    $trail->push('Aprovados', route('admin.profissionais.aprovados'));
+});
+
+Breadcrumbs::for('admin.profissionais.negados', function ($trail) {
+    $trail->parent('admin.profissionais.enviados');
+    $trail->push('Negados', route('admin.profissionais.negados'));
+});
+
+
+//profissional banner admin
+Breadcrumbs::for('admin.profissionalbanners.bannerprofs', function ($trail, $usuario, $profissional) {
+    $trail->parent('admin.profissionais.adminshow', $usuario, $profissional);
+    $trail->push('Banners', route('admin.profissionalbanners.bannerprofs', [$usuario->id, $profissional->id]));
+});
+
+Breadcrumbs::for('admin.profissionalbanners.adminshow', function ($trail, $usuario, $profissional, $banner) {
+    $trail->parent('admin.profissionalbanners.bannerprofs', $usuario, $profissional);
+    $trail->push('Detalhar', route('admin.profissionalbanners.adminshow', [$usuario->id, $profissional->id, $banner->id]));
+});
+
+
+//empresa admin
+Breadcrumbs::for('admin.empresas.useremps', function ($trail, $usuario) {
+    $trail->parent('admin.usuarios.edit', $usuario);
+    $trail->push('Empresas', route('admin.empresas.useremps', [$usuario->id]));
+});
+
+Breadcrumbs::for('admin.empresas.adminshow', function ($trail, $usuario, $empresa) {
+    $trail->parent('admin.empresas.useremps', $usuario);
+    $trail->push($empresa->name, route('admin.empresas.adminshow', [$usuario->id, $empresa->id]));
+});
+
+Breadcrumbs::for('admin.empresas.adminedit', function ($trail, $usuario, $empresa) {
+    $trail->parent('admin.empresas.adminshow', $usuario, $empresa);
+    $trail->push('Editar', route('admin.empresas.adminedit', [$usuario->id, $empresa->id]));
+});
+
+Breadcrumbs::for('admin.empresas.enviados', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Enviados', route('admin.empresas.enviados'));
+});
+
+Breadcrumbs::for('admin.empresas.aprovados', function ($trail) {
+    $trail->parent('admin.empresas.enviados');
+    $trail->push('Aprovados', route('admin.empresas.aprovados'));
+});
+
+Breadcrumbs::for('admin.empresas.negados', function ($trail) {
+    $trail->parent('admin.empresas.enviados');
+    $trail->push('Negados', route('admin.empresas.negados'));
+});
+
+
+//empresa banner admin
+Breadcrumbs::for('admin.empresabanners.banneremps', function ($trail, $usuario, $empresa) {
+    $trail->parent('admin.empresas.adminshow', $usuario, $empresa);
+    $trail->push('Banners', route('admin.empresabanners.banneremps', [$usuario->id, $empresa->id]));
+});
+
+Breadcrumbs::for('admin.empresabanners.adminshow', function ($trail, $usuario, $empresa, $banner) {
+    $trail->parent('admin.empresabanners.banneremps', $usuario, $empresa);
+    $trail->push('Detalhar', route('admin.empresabanners.adminshow', [$usuario->id, $empresa->id, $banner->id]));
 });

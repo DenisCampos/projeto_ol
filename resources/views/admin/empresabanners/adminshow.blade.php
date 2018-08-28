@@ -1,29 +1,10 @@
 @extends('layouts.sufee')
 
+@section('page_name', 'Detalhar')
+
+@section('breadcrumbs', Breadcrumbs::render('admin.empresabanners.adminshow', $usuario, $empresa, $banner))
+
 @section('content')
-<div class="breadcrumbs">
-    <div class="col-sm-4">
-        <div class="page-header float-left">
-            <div class="page-title">
-                <h1>Detalhar</h1>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-8">
-        <div class="page-header float-right">
-            <div class="page-title">
-                <ol class="breadcrumb text-right">
-                    <li><a href="{{route('home')}}">Home</a></li>
-                    <li><a href="{{route('admin.usuarios.index')}}">Usuários</a></li>
-                    <li><a href="{{route('admin.usuarios.edit',['usuario'=>$empresa->user_id])}}">Detalhar</a></li>
-                    <li><a href="{{route('admin.empresas.useremps',['usuario' => $empresa->user_id])}}">Empresas</a></li>
-                    <li><a href="{{route('admin.empresabanners.banneremps',['empresa' => $empresa->id])}}">Banners</a></li>
-                    <li class="active">Banner</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="content mt-3">
     @if(Session::has('message'))

@@ -1,25 +1,10 @@
 @extends('layouts.sufee')
 
+@section('page_name', 'Profissionais Aprovados')
+
+@section('breadcrumbs', Breadcrumbs::render('admin.profissionais.aprovados'))
+
 @section('content')
-<div class="breadcrumbs">
-    <div class="col-sm-4">
-        <div class="page-header float-left">
-            <div class="page-title">
-                <h1>Profissionais</h1>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-8">
-        <div class="page-header float-right">
-            <div class="page-title">
-                <ol class="breadcrumb text-right">
-                    <li><a href="{{route('home')}}">Home</a></li>
-                    <li class="active">Profissionais</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="content mt-3">
     @if(Session::has('message'))
@@ -92,11 +77,11 @@
                                             @endif
                                         </td>
                                         <td class="text-center">
-                                            <button type="button" class="btn btn-secondary" onclick="window.location='{{ route("admin.profissionalbanners.bannerprofs", ['profissional' => $profissional->id]) }}'">
+                                            <button type="button" class="btn btn-secondary" onclick="window.location='{{ route("admin.profissionalbanners.bannerprofs", [$profissional->user_id, $profissional->id]) }}'">
                                                 <i class="fa fa-picture-o"></i> Ver Banners
                                             </button>
                                         </td>
-                                        <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='{{ route("admin.profissionais.adminshow", ['id' => $profissional->id]) }}'"><i class="fa fa-file-text-o"></i> Detalhar</button></td>
+                                        <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='{{ route("admin.profissionais.adminshow", [$profissional->user_id, $profissional->id]) }}'"><i class="fa fa-file-text-o"></i> Detalhar</button></td>
                                     </tr>
                                     @php
                                         $cont++;

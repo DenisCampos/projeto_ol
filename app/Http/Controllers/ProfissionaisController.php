@@ -269,10 +269,10 @@ class ProfissionaisController extends Controller
         return $request->banne;
     }
 
-    public function adminshow($id)
+    public function adminshow($user_id, $prof_id)
     {
-        $profissional = $this->repository->find($id);
-        $usuario = $this->usersrepository->find($profissional->user_id);
+        $profissional = $this->repository->find($prof_id);
+        $usuario = $this->usersrepository->find($user_id);
         $atuacoes = $this->profissionalatuacoesrepository->findWhere(['profissional_id'=>$profissional->id]);
         $subatuacoes = $this->profissionalsubatuacoesrepository->findWhere(['profissional_id'=>$profissional->id]);
         $parecer =  $this->pareceres->scopeQuery(function($query){
@@ -281,10 +281,10 @@ class ProfissionaisController extends Controller
         return view('admin.profissionais.adminshow', compact('profissional','atuacoes','subatuacoes','parecer', 'usuario'));
     }
 
-    public function adminedit($id)
+    public function adminedit($user_id, $prof_id)
     {
-        $profissional = $this->repository->find($id); 
-        $usuario = $this->usersrepository->find($profissional->user_id);
+        $profissional = $this->repository->find($prof_id); 
+        $usuario = $this->usersrepository->find($user_id);
         $paises = $this->paisesrepository->pluck('descricao','id');
         $paises->prepend('Selecione o País', '');
         $estados = $this->estadosrepository->findWhere(['pais_id' => $profissional->pais_id])->pluck('descricao','id');
@@ -312,15 +312,12 @@ class ProfissionaisController extends Controller
             unset($data['foto']);
         }
 
-        $data['statu_id'] = 1;
-        $data['situacao_id'] = 1;
-        $data['destaque_id'] = 1;
         $this->repository->update($data, $id);
         $profissional = $this->repository->find($id); 
         $usuario = $this->usersrepository->find($profissional->user_id);
         \Session::flash('message', ' Dados atualizados com sucesso.');
 
-        return redirect()->route('admin.profissionais.adminshow', compact('profissional','usuario')); 
+        return redirect()->route('admin.profissionais.adminshow', [$profissional, $usuario]); 
     }
 
     public function analise(Request $request)

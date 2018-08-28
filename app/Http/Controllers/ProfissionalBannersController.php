@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\ProfissionaisRepository;
 use App\Repositories\ProfissionalBannersRepository;
+use App\Repositories\UsersRepository;
 use App\Repositories\PareceresRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,11 +12,17 @@ use Illuminate\Support\Facades\Auth;
 class ProfissionalBannersController extends Controller
 {
     protected $repository;
-    private $profissionaisrepository, $pareceres;
+    private $profissionaisrepository, $pareceres, $usersrepository;
 
-    public function __construct(ProfissionalBannersRepository $repository, ProfissionaisRepository $profissionaisrepository, PareceresRepository $pareceres){
+    public function __construct(
+        ProfissionalBannersRepository $repository, 
+        ProfissionaisRepository $profissionaisrepository,
+        UsersRepository $usersrepository, 
+        PareceresRepository $pareceres
+    ){
         $this->repository = $repository;
         $this->profissionaisrepository = $profissionaisrepository;
+        $this->usersrepository = $usersrepository;
         $this->pareceres = $pareceres;
     }
 
@@ -200,23 +207,25 @@ class ProfissionalBannersController extends Controller
         }
     }
 
-    public function bannerprofs($profissional){
-        $profissional = $this->profissionaisrepository->find($profissional);
+    public function bannerprofs($user_id, $prof_id){
+        $profissional = $this->profissionaisrepository->find($prof_id);
+        $usuario = $this->usersrepository->find($user_id);
         $banners = $this->repository->findwhere(['profissional_id' => $profissional->id]);
-        return view('admin.profissionalbanners.bannerprofs', compact('profissional','banners'));
+        return view('admin.profissionalbanners.bannerprofs', compact('profissional','banners','usuario'));
     }
 
-    public function adminshow($profissional, $id)
+    public function adminshow($user_id, $prof_id, $banner_id)
     {
-        $profissional = $this->profissionaisrepository->find($profissional);
-        $banner = $this->repository->find($id);
+        $profissional = $this->profissionaisrepository->find($prof_id);
+        $usuario = $this->usersrepository->find($user_id);
+        $banner = $this->repository->find($banner_id);
         $parecer = $this->pareceres->scopeQuery(function($query){
             return $query->orderBy('id', 'desc');
         })->findWhere(['id_tipo'=>$profissional->id, 'tipo'=>'5'])->first();
-        return view('admin.profissionalbanners.adminshow', compact('profissional','banner', 'parecer'));
+        return view('admin.profissionalbanners.adminshow', compact('profissional','banner','parecer','usuario'));
     }
 
-    public function analise(Request $request, $profissional)
+    public function analise(Request $request, $prof_id)
     {
         $data['situacao_id'] = $request->analise;
         $data['data_inicio'] = $request->data_inicio;
@@ -229,15 +238,15 @@ class ProfissionalBannersController extends Controller
             \Session::flash('message', 'Banner negado e não publicado.');
         }
 
-        $this->repository->update($data, $request->id);
+        $this->repository->update($data, $request->banner_id);
 
         $parecer['parecer'] = $request->parecer;
         $parecer['situacao_id'] = $request->analise;
         $parecer['tipo'] = 5;
-        $parecer['id_tipo'] = $request->id;
+        $parecer['id_tipo'] = $request->banner_id;
         $parecer['user_id'] = $request->user_id;
         $this->pareceres->create($parecer);
 
-        return redirect()->route('admin.profissionalbanners.bannerprofs',['profissional' => $profissional]); 
+        return redirect()->route('admin.profissionalbanners.bannerprofs',[$request->user_id, $prof_id]); 
     }
 }

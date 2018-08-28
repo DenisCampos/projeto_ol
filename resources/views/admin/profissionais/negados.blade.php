@@ -1,5 +1,9 @@
 @extends('layouts.sufee')
 
+@section('page_name', 'Profissionais Negados')
+
+@section('breadcrumbs', Breadcrumbs::render('admin.profissionais.negados'))
+
 @section('content')
 <div class="breadcrumbs">
     <div class="col-sm-4">
@@ -76,11 +80,11 @@
                                         <td>{{$profissional->statu->descricao}}</td>
                                         <td>{{$profissional->situacao->descricao}}</td>
                                         <td class="text-center">
-                                            <button type="button" class="btn btn-secondary" onclick="window.location='{{ route("admin.profissionalbanners.bannerprofs", ['profissional' => $profissional->id]) }}'">
+                                            <button type="button" class="btn btn-secondary" onclick="window.location='{{ route("admin.profissionalbanners.bannerprofs", [$profissional->user_id, $profissional->id]) }}'">
                                                 <i class="fa fa-picture-o"></i> Ver Banners
                                             </button>
                                         </td>
-                                        <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='{{ route("admin.profissionais.adminshow", ['id' => $profissional->id]) }}'"><i class="fa fa-file-text-o"></i> Detalhar</button></td>
+                                        <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='{{ route("admin.profissionais.adminshow", [$profissional->user_id, $profissional->id]) }}'"><i class="fa fa-file-text-o"></i> Detalhar</button></td>
                                     </tr>
                                     @php
                                         $cont++;

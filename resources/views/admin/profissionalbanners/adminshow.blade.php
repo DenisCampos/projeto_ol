@@ -1,29 +1,10 @@
 @extends('layouts.sufee')
 
+@section('page_name', 'Detalhar')
+
+@section('breadcrumbs', Breadcrumbs::render('admin.profissionalbanners.adminshow', $usuario, $profissional, $banner))
+
 @section('content')
-<div class="breadcrumbs">
-    <div class="col-sm-4">
-        <div class="page-header float-left">
-            <div class="page-title">
-                <h1>Detalhar</h1>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-8">
-        <div class="page-header float-right">
-            <div class="page-title">
-                <ol class="breadcrumb text-right">
-                    <li><a href="{{route('home')}}">Home</a></li>
-                    <li><a href="{{route('admin.usuarios.index')}}">Usuários</a></li>
-                    <li><a href="{{route('admin.usuarios.edit',['usuario'=>$profissional->user_id])}}">Detalhar</a></li>
-                    <li><a href="{{route('admin.profissionais.userprofs',['usuario' => $profissional->user_id])}}">Profissões</a></li>
-                    <li><a href="{{route('admin.profissionalbanners.bannerprofs',['profissional' => $profissional->id])}}">Banners</a></li>
-                    <li class="active">Banner</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="content mt-3">
     @if(Session::has('message'))
@@ -75,7 +56,7 @@
                         @if($banner->situacao_id==2||$banner->situacao_id==3)
                         <div class="card-footer">
                             {!! Form::model($banner,['route' => ['admin.profissionalbanners.analise', $profissional->id],'class' => 'form', 'method' => 'PUT', 'name' => 'form_parecer', 'id' => 'form_parecer']) !!}
-                            {!! Form::hidden('id', $banner->id) !!}
+                            {!! Form::hidden('banner_id', $banner->id) !!}
                             {!! Form::hidden('user_id', $profissional->user_id) !!}
                             {!! Form::hidden('analise', '', ['id' => "analise"]) !!}
                             <div class="col-lg-12">

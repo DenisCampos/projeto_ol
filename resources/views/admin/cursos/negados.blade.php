@@ -1,25 +1,10 @@
 @extends('layouts.sufee')
 
+@section('page_name', 'Negados')
+
+@section('breadcrumbs', Breadcrumbs::render('admin.cursos.negados'))
+
 @section('content')
-<div class="breadcrumbs">
-    <div class="col-sm-4">
-        <div class="page-header float-left">
-            <div class="page-title">
-                <h1>Infoprodutos</h1>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-8">
-        <div class="page-header float-right">
-            <div class="page-title">
-                <ol class="breadcrumb text-right">
-                    <li><a href="{{route('home')}}">Home</a></li>
-                    <li class="active">Infoprodutos</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="content mt-3">
     @if(Session::has('message'))
@@ -74,7 +59,7 @@
                                         </td>
                                         <td>{{$curso->statu->descricao}}</td>
                                         <td>{{$curso->situacao->descricao}}</td>
-                                        <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='{{ route("admin.cursos.adminshow", ['id' => $curso->id]) }}'"><i class="fa fa-file-text-o"></i> Detalhar</button></td>
+                                        <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='{{ route("admin.cursos.adminshow", [$curso->user_id, $curso->id]) }}'"><i class="fa fa-file-text-o"></i> Detalhar</button></td>
                                     </tr>
                                     @php
                                         $cont++;

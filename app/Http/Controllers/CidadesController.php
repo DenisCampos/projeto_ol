@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Repositories\PaisesRepository;
+use App\Repositories\EstadosRepository;
 use App\Repositories\CidadesRepository;
 use Illuminate\Support\Facades\DB;
 
@@ -10,14 +12,18 @@ class CidadesController extends Controller
 {
     protected $repository;
 
-    public function __construct(CidadesRepository $repository){
+    public function __construct(PaisesRepository $paisesrepository, EstadosRepository $estadosrepository, CidadesRepository $repository){
         $this->repository = $repository;
+        $this->estadosrepository = $estadosrepository;
+        $this->paisesrepository = $paisesrepository;
     }
 
-    public function index($pais, $estado)
+    public function index($pais_id, $estado_id)
     {
+        $pais = $this->paisesrepository->find($pais_id);
+        $estado = $this->estadosrepository->find($estado_id);
         $cidades = $this->repository->orderBy('descricao')->findWhere([
-            'estado_id' => $estado
+            'estado_id' => $estado->id
         ]);
         //dd($cidades);
 
@@ -29,8 +35,11 @@ class CidadesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($pais, $estado)
+    public function create($pais_id, $estado_id)
     {
+        $pais = $this->paisesrepository->find($pais_id);
+        $estado = $this->estadosrepository->find($estado_id);
+
         return view('admin.cidades.create', compact('pais', 'estado'));
     }
 
@@ -66,9 +75,11 @@ class CidadesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($pais, $estado, $id)
+    public function edit($pais_id, $estado_id, $cidade_id)
     {
-        $cidade = $this->repository->find($id);
+        $pais = $this->paisesrepository->find($pais_id);
+        $estado = $this->estadosrepository->find($estado_id);
+        $cidade = $this->repository->find($cidade_id);
         return view('admin.cidades.edit', compact('pais','estado','cidade'));
     }
 

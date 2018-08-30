@@ -1,10 +1,11 @@
 @extends('layouts.sufee')
 
-@section('page_name', 'Aprovados')
+@section('page_name', 'Eventos')
 
-@section('breadcrumbs', Breadcrumbs::render('admin.eventos.aprovados'))
+@section('breadcrumbs', Breadcrumbs::render('admin.eventos.usereven', $usuario))
 
 @section('content')
+
 <div class="content mt-3">
     @if(Session::has('message'))
     <div class="row">
@@ -27,7 +28,7 @@
                     </div>
                     <div class="card-body">
                         <div class="card-title">
-                            <h3 class="text-center">Eventos Aprovados</h3>
+                            <h3 class="text-center">Eventos Enviados</h3>
                         </div>
                         <hr>
                         <div class="table-responsive">
@@ -35,7 +36,7 @@
                                 <thead class="thead-dark">
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Nome</th>
+                                    <th scope="col">Titulo</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Situação</th>
                                     <th scope="col" class="text-center">Destaque</th>
@@ -66,7 +67,7 @@
                                             <i id="destaque{{$evento->id}}" style="color:#d9534f" class="fa fa-toggle-off fa-2x"></i>
                                             @endif
                                         </td>
-                                        <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='{{ route("admin.eventos.adminshow", [$evento->user_id, $evento->id]) }}'"><i class="fa fa-file-text-o"></i> Detalhar</button></td>
+                                        <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='{{ route("admin.eventos.adminshow", [$usuario->id, $evento->id]) }}'"><i class="fa fa-file-text-o"></i> Detalhar</button></td>
                                     </tr>
                                     @php
                                         $cont++;
@@ -75,8 +76,6 @@
                                 </tbody>
                             </table>
                         </div>
-                        
-
                     </div>
                 </div>
             </div>

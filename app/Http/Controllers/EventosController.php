@@ -280,9 +280,10 @@ class EventosController extends Controller
         return $request->banne;
     }
 
-    public function adminshow($id)
+    public function adminshow($user_id, $even_id)
     {
-        $evento = $this->repository->find($id);
+        $evento = $this->repository->find($even_id);
+        $usuario = $this->usersrepository->find($user_id);
         $categorias = $this->eventocategoriasrepository->findWhere(['evento_id'=>$evento->id]);
         $parecer =  $this->pareceres->scopeQuery(function($query){
             return $query->orderBy('id', 'desc');
@@ -290,15 +291,14 @@ class EventosController extends Controller
         $evento->data_inicio = Carbon::createFromFormat('Y-m-d H:i:s', $evento->data_inicio)->format('d/m/Y H:i:s');
         $evento->data_fim = Carbon::createFromFormat('Y-m-d H:i:s', $evento->data_fim)->format('d/m/Y H:i:s');
 
-        return view('admin.eventos.adminshow', compact('evento','categorias', 'parecer'));
+        return view('admin.eventos.adminshow', compact('evento','categorias', 'parecer', 'usuario'));
     }
 
-    public function adminedit(Request $request,$id)
+    public function adminedit(Request $request,$user_id, $even_id)
     {
         $data = $request->all();
-        $returnevent = $data['returnevent'];
-        $redirect_to = $data['redirect_to'];
-        $evento = $this->repository->find($id);
+        $evento = $this->repository->find($even_id);
+        $usuario = $this->usersrepository->find($user_id);
         $paises = $this->paisesrepository->pluck('descricao','id');
         $paises->prepend('Selecione o País', '');
         $estados = $this->estadosrepository->findWhere(['pais_id' => $evento->pais_id])->pluck('descricao','id');
@@ -307,7 +307,7 @@ class EventosController extends Controller
         $cidades->prepend('Selecione a Cidade', '');
         $evento->data_inicio = Carbon::createFromFormat('Y-m-d H:i:s', $evento->data_inicio)->format('Y-m-d\TH:i:s');
         $evento->data_fim = Carbon::createFromFormat('Y-m-d H:i:s', $evento->data_fim)->format('Y-m-d\TH:i:s');
-        return view('admin.eventos.adminedit', compact('evento', 'paises', 'estados', 'cidades','returnevent', 'redirect_to'));
+        return view('admin.eventos.adminedit', compact('evento', 'paises', 'estados', 'cidades','usuario'));
     }
 
     /**
@@ -317,11 +317,11 @@ class EventosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function adminupdate(Request $request, $id)
+    public function adminupdate(Request $request, $user_id, $id)
     {
         $evento = $this->repository->find($id);
+        $usuario = $this->usersrepository->find($user_id);
         $data = $request->all();
-        $returnevent = $data['returnevent'];
         if($data['imagem1_crop']!=""){
             @unlink($evento->imagem1);
             $numero_aux = rand(1, 9999);
@@ -355,7 +355,15 @@ class EventosController extends Controller
         $this->repository->update($data, $id);
         \Session::flash('message', ' Dados atualizados com sucesso.');
 
-        return redirect()->route('admin.eventos.adminshow', ['id' => $evento, 'returnevent' => $returnevent]);
+        return redirect()->route('admin.eventos.adminshow', [$usuario->id, $evento->id]);
+    }
+
+    public function usereven($user_id){
+        $usuario = $this->usersrepository->find($user_id);
+        $eventos = $this->repository->findWhere([
+            'user_id'=>$usuario->id
+        ]);
+        return view('admin.eventos.usereven', compact('eventos','usuario'));
     }
 
     public function analise(Request $request)

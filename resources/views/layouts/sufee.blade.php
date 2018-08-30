@@ -86,7 +86,7 @@
                     </li>
                     @if(Auth::user()->tipo==1)
                     <li class="menu-item-has-children dropdown {{ request()->is('cursos*') ? 'active' : '' }}">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-book"></i>Infoprodutos</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-shopping-cart"></i>Infoprodutos</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class="fa fa-id-card-o"></i><a href="{{route('cursos.create')}}">Novo</a></li>
                             <li><i class="fa fa-file-text-o"></i><a href="{{route('cursos.index')}}">Cadastrados</a></li>
@@ -122,7 +122,7 @@
                         </ul>
                     </li>
                     <li class="menu-item-has-children dropdown {{ request()->is('admin/cursos*') ? 'active' : '' }}">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-book"></i>Infoprodutos</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-shopping-cart"></i>Infoprodutos</a>
                         <ul class="sub-menu children dropdown-menu">
                             <li><i class="fa fa-mail-forward"></i><a href="{{route('admin.cursos.enviados')}}">Enviados</a></li>
                             <li><i class="fa fa-check"></i><a href="{{route('admin.cursos.aprovados')}}">Aprovados</a></li>

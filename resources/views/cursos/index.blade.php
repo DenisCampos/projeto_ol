@@ -45,7 +45,7 @@
                         <div class="col-lg-4"></div>
                         <div class="col-lg-4">
                             <div class="mx-auto d-block text-center">
-                                <button type="button" class="btn btn-primary" onclick="window.location='{{ route("cursos.create") }}'"><i class="fa fa-book"></i>&nbsp;Novo infoprodutos</button>
+                                <button type="button" class="btn btn-primary" onclick="window.location='{{ route("cursos.create") }}'"><i class="fa fa-shopping-cart"></i>&nbsp;Novo infoprodutos</button>
                             </div>
                         </div>
                         <div class="col-lg-4"></div><br><br>

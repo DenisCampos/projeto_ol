@@ -58,7 +58,7 @@
     <div class="col-lg-12">
         <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
         {!! Form::label('descricao', 'Descrição*', ['class' => 'control-label']) !!}
-        {!! Form::textarea('descricao', null,['class' => 'form-control my-editor', 'rows'=>40]) !!}
+        {!! Form::textarea('descricao', null,['class' => 'form-control my-editor', 'rows'=>20]) !!}
         <script>
             var editor_config = {
                 path_absolute : "/oloyfit/public/",

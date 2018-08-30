@@ -26,15 +26,15 @@ class PostCategoriasController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($post)
+    public function index($post_id)
     {
 
-        $postid = $post;
+        $post = $this->postsrepository->find($post_id);
 
         $categorias = DB::table('categorias')
-            ->leftJoin('post_categorias', function ($join) use ($post) {
+            ->leftJoin('post_categorias', function ($join) use ($post_id) {
                 $join->on('categorias.id', '=', 'post_categorias.categoria_id')
-                    ->where('post_categorias.post_id', '=', $post);
+                    ->where('post_categorias.post_id', '=', $post_id);
             })
 
             ->orderBy('categorias.descricao', 'asc')
@@ -43,7 +43,7 @@ class PostCategoriasController extends Controller
 
         //dd($categorias);
 
-        return view('admin.postcategorias.index', compact('categorias','postid'));
+        return view('admin.postcategorias.index', compact('categorias','post'));
     }
 
     /**

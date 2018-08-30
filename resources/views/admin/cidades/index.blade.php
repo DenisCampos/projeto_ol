@@ -1,28 +1,10 @@
 @extends('layouts.sufee')
 
-@section('content')
-<div class="breadcrumbs">
-    <div class="col-sm-4">
-        <div class="page-header float-left">
-            <div class="page-title">
-                <h1>Cidades</h1>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-8">
-        <div class="page-header float-right">
-            <div class="page-title">
-                <ol class="breadcrumb text-right">
-                    <li><a href="{{route('home')}}">Home</a></li>
-                    <li><a href="{{route('admin.paises.index')}}">Países</a></li>
-                    <li><a href="{{route('admin.estados.index',['pais'=>$pais])}}">Estados</a></li>
-                    <li class="active">Cidades</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</div>
+@section('page_name', 'Cidades')
 
+@section('breadcrumbs', Breadcrumbs::render('admin.cidades.index', $pais, $estado))
+
+@section('content')
 <div class="content mt-3">
     @if(Session::has('message'))
     <div class="row">
@@ -50,7 +32,7 @@
                         <hr>
                         <div class="col-md-6 offset-md-3">
                             <div class="mx-auto d-block text-center">
-                                <button type="button" class="btn btn-primary" onclick="window.location='{{ route("admin.cidades.create", ['pais' => $pais, 'estado' => $estado]) }}'"><i class="fa fa-table"></i>&nbsp;Nova cidade</button>
+                                <button type="button" class="btn btn-primary" onclick="window.location='{{ route("admin.cidades.create", ['pais' => $pais->id, 'estado' => $estado->id]) }}'"><i class="fa fa-table"></i>&nbsp;Nova cidade</button>
                             </div>
                         </div>
                         <div class="table-responsive">
@@ -71,8 +53,8 @@
                                     <tr>
                                         <td>{{$cont}}</td>
                                         <td>{{$cidade->descricao}}</td>
-                                        <td class="text-center"><button type="button" class="btn btn-warning" onclick="window.location='{{ route("admin.cidades.edit", ['pais'=>$pais ,'estado'=>$estado ,'id' => $cidade->id]) }}'"><i class="fa fa-pencil-square-o"></i> Editar</button></td>
-                                        <td class="text-center"><button type="button" class="btn btn-danger" onclick="window.location='{{ route("admin.cidades.destroy", ['pais'=>$pais ,'estado'=>$estado ,'id' => $cidade->id]) }}'"><i class="fa fa-trash-o"></i> Excluir</button></td>
+                                        <td class="text-center"><button type="button" class="btn btn-warning" onclick="window.location='{{ route("admin.cidades.edit", ['pais'=>$pais->id ,'estado'=>$estado->id ,'id' => $cidade->id]) }}'"><i class="fa fa-pencil-square-o"></i> Editar</button></td>
+                                        <td class="text-center"><button type="button" class="btn btn-danger" onclick="window.location='{{ route("admin.cidades.destroy", ['pais'=>$pais->id ,'estado'=>$estado->id ,'id' => $cidade->id]) }}'"><i class="fa fa-trash-o"></i> Excluir</button></td>
                                     </tr>
                                     @php
                                         $cont++;

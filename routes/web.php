@@ -190,12 +190,12 @@ Route::group(['middleware'=>'auth'], function () {
         Route::get('/atuacoes/destroy/{atuacao}', 'AtuacoesController@destroy')->name('atuacoes.destroy');
 
         //subatuacoes
-        Route::get('/{atuacao}/subatuacoes', 'SubAtuacoesController@index')->name('subatuacoes.index');
-        Route::get('/{atuacao}/subatuacoes/novo', 'SubAtuacoesController@create')->name('subatuacoes.create');
-        Route::post('/{atuacao}/subatuacoes/store', 'SubAtuacoesController@store')->name('subatuacoes.store');
-        Route::put('/{atuacao}/subatuacoes/update/{subatuacao}', 'SubAtuacoesController@update')->name('subatuacoes.update');
-        Route::get('/{atuacao}/subatuacoes/edit/{subatuacao}', 'SubAtuacoesController@edit')->name('subatuacoes.edit');
-        Route::get('/{atuacao}/subatuacoes/destroy/{subatuacao}', 'SubAtuacoesController@destroy')->name('subatuacoes.destroy');
+        Route::get('/atuacoes/{atuacao}/subatuacoes', 'SubAtuacoesController@index')->name('subatuacoes.index');
+        Route::get('/atuacoes/{atuacao}/subatuacoes/novo', 'SubAtuacoesController@create')->name('subatuacoes.create');
+        Route::post('/atuacoes/{atuacao}/subatuacoes/store', 'SubAtuacoesController@store')->name('subatuacoes.store');
+        Route::put('/atuacoes/{atuacao}/subatuacoes/update/{subatuacao}', 'SubAtuacoesController@update')->name('subatuacoes.update');
+        Route::get('/atuacoes/{atuacao}/subatuacoes/edit/{subatuacao}', 'SubAtuacoesController@edit')->name('subatuacoes.edit');
+        Route::get('/atuacoes/{atuacao}/subatuacoes/destroy/{subatuacao}', 'SubAtuacoesController@destroy')->name('subatuacoes.destroy');
 
         //paises
         Route::get('/paises', 'PaisesController@index')->name('paises.index');
@@ -206,20 +206,20 @@ Route::group(['middleware'=>'auth'], function () {
         Route::get('/paises/destroy/{pais}', 'PaisesController@destroy')->name('paises.destroy');
 
         //estados
-        Route::get('/{pais}/estados', 'EstadosController@index')->name('estados.index');
-        Route::get('/{pais}/estados/novo', 'EstadosController@create')->name('estados.create');
-        Route::post('/{pais}/estados/store', 'EstadosController@store')->name('estados.store');
-        Route::put('/{pais}/estados/update/{estado}', 'EstadosController@update')->name('estados.update');
-        Route::get('/{pais}/estados/edit/{estado}', 'EstadosController@edit')->name('estados.edit');
-        Route::get('/{pais}/estados/destroy/{estado}', 'EstadosController@destroy')->name('estados.destroy');
+        Route::get('/paises/{pais}/estados', 'EstadosController@index')->name('estados.index');
+        Route::get('/paises/{pais}/estados/novo', 'EstadosController@create')->name('estados.create');
+        Route::post('/paises/{pais}/estados/store', 'EstadosController@store')->name('estados.store');
+        Route::put('/paises/{pais}/estados/update/{estado}', 'EstadosController@update')->name('estados.update');
+        Route::get('/paises/{pais}/estados/edit/{estado}', 'EstadosController@edit')->name('estados.edit');
+        Route::get('/paises/{pais}/estados/destroy/{estado}', 'EstadosController@destroy')->name('estados.destroy');
 
         //cidades
-        Route::get('/{pais}/{estado}/cidades', 'CidadesController@index')->name('cidades.index');
-        Route::get('/{pais}/{estado}/cidades/novo', 'CidadesController@create')->name('cidades.create');
-        Route::post('/{pais}/{estado}/cidades/store', 'CidadesController@store')->name('cidades.store');
-        Route::put('/{pais}/{estado}/cidades/update/{cidade}', 'CidadesController@update')->name('cidades.update');
-        Route::get('/{pais}/{estado}/cidades/edit/{cidade}', 'CidadesController@edit')->name('cidades.edit');
-        Route::get('/{pais}/{estado}/cidades/destroy/{cidade}', 'CidadesController@destroy')->name('cidades.destroy');
+        Route::get('/paises/{pais}/estados/{estado}/cidades', 'CidadesController@index')->name('cidades.index');
+        Route::get('/paises/{pais}/estados/{estado}/cidades/novo', 'CidadesController@create')->name('cidades.create');
+        Route::post('/paises/{pais}/estados/{estado}/cidades/store', 'CidadesController@store')->name('cidades.store');
+        Route::put('/paises/{pais}/estados/{estado}/cidades/update/{cidade}', 'CidadesController@update')->name('cidades.update');
+        Route::get('/paises/{pais}/estados/{estado}/cidades/edit/{cidade}', 'CidadesController@edit')->name('cidades.edit');
+        Route::get('/paises/{pais}/estados/{estado}/cidades/destroy/{cidade}', 'CidadesController@destroy')->name('cidades.destroy');
 
         //usuariointeresse
         Route::get('/userinteresses/{usuario}', 'UserInteressesController@adminshow')->name('userinteresses.adminshow');
@@ -259,18 +259,20 @@ Route::group(['middleware'=>'auth'], function () {
         Route::put('/empresas/{empresa}/banner/analise', 'EmpresaBannersController@analise')->name('empresabanners.analise');
 
         //cursos admin
+        Route::get('/usuarios/{user}/cursos/usercursos/', 'CursosController@usercursos')->name('cursos.usercursos');
         Route::post('/cursos/liberadestaque', 'CursosController@liberadestaque')->name('cursos.liberadestaque');
-        Route::get('/cursos/adminshow/{curso}', 'CursosController@adminshow')->name('cursos.adminshow');
+        Route::get('/usuarios/{user}/cursos/adminshow/{curso}', 'CursosController@adminshow')->name('cursos.adminshow');
         Route::put('/cursos/analise', 'CursosController@analise')->name('cursos.analise');
         Route::get('/cursos/enviados/', 'CursosController@enviados')->name('cursos.enviados');
         Route::get('/cursos/aprovados/', 'CursosController@aprovados')->name('cursos.aprovados');
         Route::get('/cursos/negados/', 'CursosController@negados')->name('cursos.negados');
 
         //eventos admin
+        Route::get('/usuarios/{user}/eventos/usereven/', 'EventosController@usereven')->name('eventos.usereven');
         Route::post('/eventos/liberadestaque', 'EventosController@liberadestaque')->name('eventos.liberadestaque');
-        Route::get('/eventos/adminshow/{evento}', 'EventosController@adminshow')->name('eventos.adminshow');
-        Route::post('/eventos/adminedit/{evento}', 'EventosController@adminedit')->name('eventos.adminedit');
-        Route::put('/eventos/adminupdate/{evento}', 'EventosController@adminupdate')->name('eventos.adminupdate');
+        Route::get('/usuarios/{user}/eventos/adminshow/{evento}', 'EventosController@adminshow')->name('eventos.adminshow');
+        Route::post('/usuarios/{user}/eventos/adminedit/{evento}', 'EventosController@adminedit')->name('eventos.adminedit');
+        Route::put('/usuarios/{user}/eventos/adminupdate/{evento}', 'EventosController@adminupdate')->name('eventos.adminupdate');
         Route::put('/eventos/analise', 'EventosController@analise')->name('eventos.analise');
         Route::get('/eventos/enviados/', 'EventosController@enviados')->name('eventos.enviados');
         Route::get('/eventos/aprovados/', 'EventosController@aprovados')->name('eventos.aprovados');

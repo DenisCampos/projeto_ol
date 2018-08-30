@@ -288,9 +288,18 @@ class CursosController extends Controller
         return $request->banne;
     }
 
-    public function adminshow($id)
+    public function usercursos($user_id){
+        $usuario = $this->usersrepository->find($user_id);
+        $cursos = $this->repository->findWhere([
+            'user_id'=>$usuario->id
+        ]);
+        return view('admin.cursos.usercursos', compact('cursos','usuario'));
+    }
+
+    public function adminshow($user_id, $cur_id)
     {
-        $curso = $this->repository->find($id);
+        $curso = $this->repository->find($cur_id);
+        $usuario = $this->usersrepository->find($user_id);
         $categorias = $this->cursocategoriasrepository->findWhere(['curso_id'=>$curso->id]);
         $parecer =  $this->pareceres->scopeQuery(function($query){
             return $query->orderBy('id', 'desc');
@@ -303,7 +312,7 @@ class CursosController extends Controller
             $curso->data_fim = Carbon::createFromFormat('Y-m-d H:i:s', $curso->data_fim)->format('d/m/Y H:i:s');
         }
 
-        return view('admin.cursos.adminshow', compact('curso','categorias', 'parecer'));
+        return view('admin.cursos.adminshow', compact('curso','categorias', 'parecer', 'usuario'));
     }
 
     public function analise(Request $request)

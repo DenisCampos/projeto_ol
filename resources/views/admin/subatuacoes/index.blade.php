@@ -1,26 +1,10 @@
 @extends('layouts.sufee')
 
+@section('page_name', 'Sub Atuações')
+
+@section('breadcrumbs', Breadcrumbs::render('admin.subatuacoes.index', $atuacao))
+
 @section('content')
-<div class="breadcrumbs">
-    <div class="col-sm-4">
-        <div class="page-header float-left">
-            <div class="page-title">
-                <h1>SubAtuações</h1>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-8">
-        <div class="page-header float-right">
-            <div class="page-title">
-                <ol class="breadcrumb text-right">
-                    <li><a href="{{route('home')}}">Home</a></li>
-                    <li><a href="{{route('admin.atuacoes.index')}}">Atuações</a></li>
-                    <li class="active">SubAtuações</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="content mt-3">
     @if(Session::has('message'))
@@ -49,7 +33,7 @@
                         <hr>
                         <div class="col-md-6 offset-md-3">
                             <div class="mx-auto d-block text-center">
-                                <button type="button" class="btn btn-primary" onclick="window.location='{{ route("admin.subatuacoes.create", ['id' => $atuacao]) }}'"><i class="fa fa-table"></i>&nbsp;Nova atuação</button>
+                                <button type="button" class="btn btn-primary" onclick="window.location='{{ route("admin.subatuacoes.create", ['id' => $atuacao->id]) }}'"><i class="fa fa-table"></i>&nbsp;Nova sub atuação</button>
                             </div>
                         </div>
                         <div class="table-responsive">
@@ -72,8 +56,8 @@
                                         <td>{{$cont}}</td>
                                         <td>{{$subatuacao->descricao}}</td>
                                         <td>{{$subatuacao->tipo($subatuacao->tipo)}}</td>
-                                        <td class="text-center"><button type="button" class="btn btn-warning" onclick="window.location='{{ route("admin.subatuacoes.edit", ['atuacao'=>$atuacao ,'id' => $subatuacao->id]) }}'"><i class="fa fa-pencil-square-o"></i> Editar</button></td>
-                                        <td class="text-center"><button type="button" class="btn btn-danger" onclick="window.location='{{ route("admin.subatuacoes.destroy", ['atuacao'=>$atuacao ,'id' => $subatuacao->id]) }}'"><i class="fa fa-trash-o"></i> Excluir</button></td>
+                                        <td class="text-center"><button type="button" class="btn btn-warning" onclick="window.location='{{ route("admin.subatuacoes.edit", ['atuacao'=>$atuacao->id ,'id' => $subatuacao->id]) }}'"><i class="fa fa-pencil-square-o"></i> Editar</button></td>
+                                        <td class="text-center"><button type="button" class="btn btn-danger" onclick="window.location='{{ route("admin.subatuacoes.destroy", ['atuacao'=>$atuacao->id ,'id' => $subatuacao->id]) }}'"><i class="fa fa-trash-o"></i> Excluir</button></td>
                                     </tr>
                                     @php
                                         $cont++;

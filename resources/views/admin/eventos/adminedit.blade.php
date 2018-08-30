@@ -4,29 +4,11 @@
 <link rel="stylesheet" href="{{ asset('public/css/custom-sistema.css') }}" type="text/css" />
 @endsection
 
-@section('content')
-<div class="breadcrumbs">
-    <div class="col-sm-4">
-        <div class="page-header float-left">
-            <div class="page-title">
-                <h1>Editar</h1>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-8">
-        <div class="page-header float-right">
-            <div class="page-title">
-                <ol class="breadcrumb text-right">
-                    <li><a href="{{route('home')}}">Home</a></li>
-                    <li><a href="{{url($returnevent)}}">Eventos</a></li>
-                    <li><a href="{{url($redirect_to)}}">Detalhar</a></li>
-                    <li class="active">Editar</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</div>
+@section('page_name', 'Editar')
 
+@section('breadcrumbs', Breadcrumbs::render('admin.eventos.adminedit', $usuario, $evento))
+
+@section('content')
 <div class="content mt-3">
     @if(Session::has('message'))
     <div class="row">
@@ -47,8 +29,7 @@
                     <div class="card-header">
                         <strong class="card-title">Edite seus dados</strong>
                     </div>
-                    {!! Form::model($evento,['route' => ['admin.eventos.adminupdate', 'id' => $evento->id],'class' => 'form', 'method' => 'PUT', 'enctype'=>'multipart/form-data']) !!}
-                    {!! Form::hidden('returnevent', $returnevent) !!}
+                    {!! Form::model($evento,['route' => ['admin.eventos.adminupdate', $usuario->id, $evento->id],'class' => 'form', 'method' => 'PUT', 'enctype'=>'multipart/form-data']) !!}
                     @include('eventos._form')
                     <div class="card-footer" align="center">
                         {!! Form::submit('Salvar', ['class' => 'btn btn-primary btn-block']) !!}                       

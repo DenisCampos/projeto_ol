@@ -1,29 +1,10 @@
 @extends('layouts.sufee')
 
-@section('content')
-<div class="breadcrumbs">
-    <div class="col-sm-4">
-        <div class="page-header float-left">
-            <div class="page-title">
-                <h1>Novo</h1>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-8">
-        <div class="page-header float-right">
-            <div class="page-title">
-                <ol class="breadcrumb text-right">
-                    <li><a href="{{route('home')}}">Home</a></li>
-                    <li><a href="{{route('admin.paises.index')}}">Países</a></li>
-                    <li><a href="{{route('admin.estados.index',['pais'=>$pais])}}">Estados</a></li>
-                    <li><a href="{{route('admin.cidades.index',['pais'=>$pais,'estado'=>$estado])}}">Cidades</a></li>
-                    <li class="active">Novo</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</div>
+@section('page_name', 'Novo')
 
+@section('breadcrumbs', Breadcrumbs::render('admin.cidades.create', $pais, $estado))
+
+@section('content')
 <div class="content mt-3">
     @if(Session::has('message'))
         <div class="col-sm-12">
@@ -42,7 +23,7 @@
                     <div class="card-header">
                         <strong class="card-title">Nova cidade</strong>
                     </div>
-                    {!! Form::open(['route' => ['admin.cidades.store', 'pais' => $pais, 'estado' => $estado],'class' => 'form', 'method' => 'POST']) !!}
+                    {!! Form::open(['route' => ['admin.cidades.store', 'pais' => $pais->id, 'estado' => $estado->id],'class' => 'form', 'method' => 'POST']) !!}
                     <div class="card-body">
                         <div class="card-title">
                             <h3 class="text-center">Cidade</h3>

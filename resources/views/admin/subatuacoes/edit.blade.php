@@ -1,27 +1,10 @@
 @extends('layouts.sufee')
 
+@section('page_name', 'Editar')
+
+@section('breadcrumbs', Breadcrumbs::render('admin.subatuacoes.edit', $atuacao, $subatuacao))
+
 @section('content')
-<div class="breadcrumbs">
-    <div class="col-sm-4">
-        <div class="page-header float-left">
-            <div class="page-title">
-                <h1>Novo</h1>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-8">
-        <div class="page-header float-right">
-            <div class="page-title">
-                <ol class="breadcrumb text-right">
-                    <li><a href="{{route('home')}}">Home</a></li>
-                    <li><a href="{{route('admin.atuacoes.index')}}">Atuações</a></li>
-                    <li><a href="{{route('admin.subatuacoes.index', ['id' => $atuacao])}}">SubAtuações</a></li>
-                    <li class="active">Editar</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="content mt-3">
     @if(Session::has('message'))
@@ -39,17 +22,17 @@
             <div class="col-lg-6">
                 <div class="card">
                     <div class="card-header">
-                        <strong class="card-title">Nova subatuação</strong>
+                        <strong class="card-title">Editar Sub Atuação</strong>
                     </div>
-                    {!! Form::model($subatuacao,['route' => ['admin.subatuacoes.update', 'atuacao' => $atuacao, 'id' => $subatuacao->id],'class' => 'form', 'method' => 'PUT', 'enctype'=>'multipart/form-data']) !!}
+                    {!! Form::model($subatuacao,['route' => ['admin.subatuacoes.update', 'atuacao' => $atuacao->id, 'id' => $subatuacao->id],'class' => 'form', 'method' => 'PUT', 'enctype'=>'multipart/form-data']) !!}
                     <div class="card-body">
                         <div class="card-title">
-                            <h3 class="text-center">SubAtuação</h3>
+                            <h3 class="text-center">Sub Atuação</h3>
                         </div>
                         <hr>
                         {!! Form::label('descricao', 'Descrição*', ['class' => 'control-label']) !!}
                         {!! Form::text('descricao', null, ['class' => 'form-control', 'required' => 'required']) !!}
-                        @if($atuacao_valor->tipo == 3)
+                        @if($atuacao->tipo == 3)
                         {!! Form::label('tipo', 'Tipo*', ['class' => 'control-label']) !!}
                         {!! Form::select('tipo', ['3' => 'Profissional/Empresa', '1' => 'Profissional', '2' => 'Empresa'], null, ['class' => 'form-control', 'required' => 'required']) !!}
                         @endif

@@ -1,33 +1,10 @@
 @extends('layouts.sufee')
 
-@section('content')
-<div class="breadcrumbs">
-    <div class="col-sm-4">
-        <div class="page-header float-left">
-            <div class="page-title">
-                <h1>Detalhar</h1>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-8">
-        <div class="page-header float-right">
-            <div class="page-title">
-                <ol class="breadcrumb text-right">
-                    <li><a href="{{route('home')}}">Home</a></li>
-                    <li><a href="
-                        @if(isset($returnevent)) 
-                            {{url($returnevent)}}
-                        @else 
-                            {{URL::previous()}} 
-                        @endif
-                    ">Eventos</a></li>
-                    <li class="active">Detalhar</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</div>
+@section('page_name', 'Detalhar')
 
+@section('breadcrumbs', Breadcrumbs::render('admin.eventos.adminshow', $usuario, $evento))
+
+@section('content')
 <div class="content mt-3">
     @if(Session::has('message'))
     <div class="row">
@@ -158,7 +135,7 @@
                             @endif
                             <li class="list-group-item">
                                 <div class="col-lg-12 text-center">
-                                    {!! Form::open(['route' => ['admin.eventos.adminedit', 'id' => $evento->id],'class' => 'form', 'method' => 'POST']) !!}
+                                    {!! Form::open(['route' => ['admin.eventos.adminedit', $usuario->id, $evento->id],'class' => 'form', 'method' => 'POST']) !!}
                                         {!! Form::hidden('returnevent', URL::previous()) !!}
                                         {!! Form::hidden('redirect_to', URL::current()) !!}
                                         <button type="submit" class="btn btn-warning"><i class="fa fa-pencil-square-o"></i> Editar informações do evento</button>

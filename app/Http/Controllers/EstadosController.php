@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Repositories\PaisesRepository;
 use App\Repositories\EstadosRepository;
 use Illuminate\Support\Facades\DB;
 
@@ -10,15 +11,17 @@ class EstadosController extends Controller
 {
     protected $repository;
 
-    public function __construct(EstadosRepository $repository){
+    public function __construct(PaisesRepository $paisesrepository, EstadosRepository $repository){
         $this->repository = $repository;
+        $this->paisesrepository = $paisesrepository;
     }
 
-    public function index($pais)
+    public function index($pais_id)
     {
         $estados = $this->repository->orderBy('descricao')->findWhere([
-            'pais_id' => $pais
+            'pais_id' => $pais_id
         ]);
+        $pais = $this->paisesrepository->find($pais_id);
         //dd($estados);
 
         return view('admin.estados.index', compact('pais','estados'));
@@ -29,8 +32,9 @@ class EstadosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($pais)
+    public function create($pais_id)
     {
+        $pais = $this->paisesrepository->find($pais_id);
         return view('admin.estados.create', compact('pais'));
     }
 
@@ -66,9 +70,10 @@ class EstadosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($pais,$id)
+    public function edit($pais_id, $estado_id)
     {
-        $estado = $this->repository->find($id);
+        $estado = $this->repository->find($estado_id);
+        $pais = $this->paisesrepository->find($pais_id);
         return view('admin.estados.edit', compact('pais','estado'));
     }
 

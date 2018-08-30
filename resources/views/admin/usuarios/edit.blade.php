@@ -1,6 +1,6 @@
 @extends('layouts.sufee')
 
-@section('page_name', 'Detalhar')
+@section('page_name', $usuario->name)
 
 @section('breadcrumbs', Breadcrumbs::render('admin.usuarios.edit', $usuario))
 
@@ -83,6 +83,38 @@
                             <h2>Perfil da Empresa</h2>
                             </a>
                             <p>Empresa do usuário</p>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feed-box text-center">
+                    <section class="card">
+                        <div class="card-body">
+                            <div class="corner-ribon black-ribon">
+                                <i class="fa  fa-shopping-cart"></i>
+                            </div>
+                            <a href="{{ route('admin.cursos.usercursos',['usuario' => $usuario->id]) }}">
+                                <img class="align-self-center rounded-circle mr-3" style="width:85px; height:85px;" alt="" src="{{ asset('public/images/infoproduto.jpeg') }}">
+                            <h2>Infoprodutos</h2>
+                            </a>
+                            <p>Infoprodutos do usuário</p>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feed-box text-center">
+                    <section class="card">
+                        <div class="card-body">
+                            <div class="corner-ribon black-ribon">
+                                <i class="fa fa-globe"></i>
+                            </div>
+                            <a href="{{ route('admin.eventos.usereven',['usuario' => $usuario->id]) }}">
+                                <img class="align-self-center rounded-circle mr-3" style="width:85px; height:85px;" alt="" src="{{ asset('public/images/eventos.jpeg') }}">
+                            <h2>Eventos</h2>
+                            </a>
+                            <p>Eventos do usuário</p>
                         </div>
                     </section>
                 </div>

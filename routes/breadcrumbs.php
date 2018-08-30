@@ -309,3 +309,205 @@ Breadcrumbs::for('admin.empresabanners.adminshow', function ($trail, $usuario, $
     $trail->parent('admin.empresabanners.banneremps', $usuario, $empresa);
     $trail->push('Detalhar', route('admin.empresabanners.adminshow', [$usuario->id, $empresa->id, $banner->id]));
 });
+
+
+//cursos admin
+Breadcrumbs::for('admin.cursos.usercursos', function ($trail, $usuario) {
+    $trail->parent('admin.usuarios.edit', $usuario);
+    $trail->push('Infoprodutos', route('admin.cursos.usercursos',$usuario->id));
+});
+
+Breadcrumbs::for('admin.cursos.adminshow', function ($trail, $usuario, $curso) {
+    $trail->parent('admin.cursos.usercursos', $usuario);
+    $trail->push('Detalhar', route('admin.cursos.adminshow', [$usuario->id, $curso->id]));
+});
+
+Breadcrumbs::for('admin.cursos.enviados', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Enviados', route('admin.cursos.enviados'));
+});
+
+Breadcrumbs::for('admin.cursos.aprovados', function ($trail) {
+    $trail->parent('admin.cursos.enviados');
+    $trail->push('Aprovados', route('admin.cursos.aprovados'));
+});
+
+Breadcrumbs::for('admin.cursos.negados', function ($trail) {
+    $trail->parent('admin.cursos.enviados');
+    $trail->push('Negados', route('admin.cursos.negados'));
+});
+
+
+ //eventos admin
+ Breadcrumbs::for('admin.eventos.usereven', function ($trail, $usuario) {
+    $trail->parent('admin.usuarios.edit', $usuario);
+    $trail->push('Eventos', route('admin.eventos.usereven',$usuario->id));
+});
+
+Breadcrumbs::for('admin.eventos.adminshow', function ($trail, $usuario, $evento) {
+    $trail->parent('admin.eventos.usereven', $usuario);
+    $trail->push('Detalhar', route('admin.eventos.adminshow', [$usuario->id, $evento->id]));
+});
+
+Breadcrumbs::for('admin.eventos.adminedit', function ($trail, $usuario, $evento) {
+    $trail->parent('admin.eventos.adminshow', $usuario, $evento);
+    $trail->push('Editar', route('admin.eventos.adminedit', [$usuario->id, $evento->id]));
+});
+
+Breadcrumbs::for('admin.eventos.enviados', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Enviados', route('admin.eventos.enviados'));
+});
+
+Breadcrumbs::for('admin.eventos.aprovados', function ($trail) {
+    $trail->parent('admin.eventos.enviados');
+    $trail->push('Aprovados', route('admin.eventos.aprovados'));
+});
+
+Breadcrumbs::for('admin.eventos.negados', function ($trail) {
+    $trail->parent('admin.eventos.enviados');
+    $trail->push('Negados', route('admin.eventos.negados'));
+});
+
+
+//posts
+Breadcrumbs::for('admin.posts.index', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Posts', route('admin.posts.index'));
+});
+
+Breadcrumbs::for('admin.posts.create', function ($trail) {
+    $trail->parent('admin.posts.index');
+    $trail->push('Novo', route('admin.posts.create'));
+});
+
+Breadcrumbs::for('admin.posts.edit', function ($trail, $post) {
+    $trail->parent('admin.posts.index');
+    $trail->push('Editar', route('admin.posts.edit', $post->id));
+});
+
+
+//posts categorias
+Breadcrumbs::for('admin.postcategorias.index', function ($trail, $post) {
+    $trail->parent('admin.posts.edit', $post);
+    $trail->push('Categorias', route('admin.postcategorias.index', $post->id));
+});
+
+
+//banners principais
+Breadcrumbs::for('admin.bannersprincipais.index', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Banners Principais', route('admin.bannersprincipais.index'));
+});
+
+Breadcrumbs::for('admin.bannersprincipais.create', function ($trail) {
+    $trail->parent('admin.bannersprincipais.index');
+    $trail->push('Novo', route('admin.bannersprincipais.create'));
+});
+
+Breadcrumbs::for('admin.bannersprincipais.edit', function ($trail, $banner) {
+    $trail->parent('admin.bannersprincipais.index');
+    $trail->push('Editar', route('admin.bannersprincipais.edit', $banner->id));
+});
+
+
+//categorias
+Breadcrumbs::for('admin.categorias.index', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Categorias', route('admin.categorias.index'));
+});
+
+Breadcrumbs::for('admin.categorias.create', function ($trail) {
+    $trail->parent('admin.categorias.index');
+    $trail->push('Novo', route('admin.categorias.create'));
+});
+
+Breadcrumbs::for('admin.categorias.edit', function ($trail, $categoria) {
+    $trail->parent('admin.categorias.index');
+    $trail->push($categoria->descricao, route('admin.categorias.edit', $categoria->id));
+});
+
+
+//atuacoes
+Breadcrumbs::for('admin.atuacoes.index', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Atuações', route('admin.atuacoes.index'));
+});
+
+Breadcrumbs::for('admin.atuacoes.create', function ($trail) {
+    $trail->parent('admin.atuacoes.index');
+    $trail->push('Novo', route('admin.atuacoes.create'));
+});
+
+Breadcrumbs::for('admin.atuacoes.edit', function ($trail, $atuacao) {
+    $trail->parent('admin.atuacoes.index');
+    $trail->push($atuacao->descricao, route('admin.atuacoes.edit', $atuacao->id));
+});
+
+
+//subatuacoes
+Breadcrumbs::for('admin.subatuacoes.index', function ($trail, $atuacao) {
+    $trail->parent('admin.atuacoes.edit',$atuacao);
+    $trail->push('Sub Atuações', route('admin.subatuacoes.index',$atuacao->id));
+});
+
+Breadcrumbs::for('admin.subatuacoes.create', function ($trail, $atuacao) {
+    $trail->parent('admin.subatuacoes.index',$atuacao);
+    $trail->push('Novo', route('admin.subatuacoes.create',$atuacao->id));
+});
+
+Breadcrumbs::for('admin.subatuacoes.edit', function ($trail, $atuacao, $subatuacao) {
+    $trail->parent('admin.subatuacoes.index',$atuacao);
+    $trail->push($subatuacao->descricao, route('admin.subatuacoes.edit', [$atuacao->id ,$subatuacao->id]));
+});
+
+
+//paises
+Breadcrumbs::for('admin.paises.index', function ($trail) {
+    $trail->parent('home');
+    $trail->push('Países', route('admin.paises.index'));
+});
+
+Breadcrumbs::for('admin.paises.create', function ($trail) {
+    $trail->parent('admin.paises.index');
+    $trail->push('Novo', route('admin.paises.create'));
+});
+
+Breadcrumbs::for('admin.paises.edit', function ($trail, $pais) {
+    $trail->parent('admin.paises.index');
+    $trail->push($pais->descricao, route('admin.paises.edit', $pais->id));
+});
+
+
+//estados
+Breadcrumbs::for('admin.estados.index', function ($trail, $pais) {
+    $trail->parent('admin.paises.edit',$pais);
+    $trail->push('Estados', route('admin.estados.index',$pais->id));
+});
+
+Breadcrumbs::for('admin.estados.create', function ($trail, $pais) {
+    $trail->parent('admin.estados.index',$pais);
+    $trail->push('Novo', route('admin.estados.create',$pais->id));
+});
+
+Breadcrumbs::for('admin.estados.edit', function ($trail, $pais, $estado) {
+    $trail->parent('admin.estados.index',$pais);
+    $trail->push($estado->descricao, route('admin.estados.edit', [$pais->id ,$estado->id]));
+});
+
+
+//cidades
+Breadcrumbs::for('admin.cidades.index', function ($trail, $pais, $estado) {
+    $trail->parent('admin.estados.edit',$pais, $estado);
+    $trail->push('Cidades', route('admin.estados.index',[$pais->id, $estado->id]));
+});
+
+Breadcrumbs::for('admin.cidades.create', function ($trail, $pais, $estado) {
+    $trail->parent('admin.cidades.index',$pais, $estado);
+    $trail->push('Novo', route('admin.cidades.create',[$pais->id, $estado->id]));
+});
+
+Breadcrumbs::for('admin.cidades.edit', function ($trail, $pais, $estado, $cidade) {
+    $trail->parent('admin.cidades.index',$pais, $estado);
+    $trail->push($cidade->descricao, route('admin.cidades.edit', [$pais->id ,$estado->id, $cidade->id]));
+});

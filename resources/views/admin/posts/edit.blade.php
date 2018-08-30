@@ -1,27 +1,11 @@
 @extends('layouts.sufee')
 
-@section('content')
-<div class="breadcrumbs">
-    <div class="col-sm-4">
-        <div class="page-header float-left">
-            <div class="page-title">
-                <h1>Editar</h1>
-            </div>
-        </div>
-    </div>
-    <div class="col-sm-8">
-        <div class="page-header float-right">
-            <div class="page-title">
-                <ol class="breadcrumb text-right">
-                    <li><a href="{{route('home')}}">Home</a></li>
-                    <li><a href="{{route('admin.posts.index')}}">Posts</a></li>
-                    <li class="active">Editar</li>
-                </ol>
-            </div>
-        </div>
-    </div>
-</div>
 
+@section('page_name', 'Editar')
+
+@section('breadcrumbs', Breadcrumbs::render('admin.posts.edit', $post))
+
+@section('content')
 <div class="content mt-3">
     @if(Session::has('message'))
     <div class="row">

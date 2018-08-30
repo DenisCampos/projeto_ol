@@ -22,11 +22,12 @@ class SubAtuacoesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($atuacao)
+    public function index($atuacao_id)
     {
         $subatuacoes = $this->repository->orderBy('descricao')->findWhere([
-            'atuacao_id' => $atuacao
+            'atuacao_id' => $atuacao_id
         ]);
+        $atuacao = $this->atuacaorepository->find($atuacao_id);
         //dd($subatuacoes);
 
         return view('admin.subatuacoes.index', compact('atuacao','subatuacoes'));
@@ -37,10 +38,10 @@ class SubAtuacoesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($atuacao)
+    public function create($atuacao_id)
     {
-        $atuacao_valor = $this->atuacaorepository->find($atuacao);
-        return view('admin.subatuacoes.create', compact('atuacao','atuacao_valor'));
+        $atuacao = $this->atuacaorepository->find($atuacao_id);
+        return view('admin.subatuacoes.create', compact('atuacao'));
     }
 
     /**
@@ -49,15 +50,15 @@ class SubAtuacoesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $atuacao)
+    public function store(Request $request, $atuacao_id)
     {
         $data = $request->all();
-        $data['atuacao_id'] = $atuacao;
-        $valor = $this->atuacaorepository->find($atuacao);
-        $data['tipo'] = $valor->tipo;
+        $data['atuacao_id'] = $atuacao_id;
+        $atuacao = $this->atuacaorepository->find($atuacao_id);
+        $data['tipo'] = $atuacao->tipo;
         $this->repository->create($data);
-        \Session::flash('message', ' SubAtuação criada com sucesso.');
-        return $this->index($atuacao); 
+        \Session::flash('message', ' Sub Atuação criada com sucesso.');
+        return redirect()->route('admin.subatuacoes.index', $atuacao->id); 
     }
 
     /**
@@ -77,11 +78,11 @@ class SubAtuacoesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($atuacao,$id)
+    public function edit($atuacao_id, $subatuacao_id)
     {
-        $subatuacao = $this->repository->find($id);
-        $atuacao_valor = $this->atuacaorepository->find($atuacao);
-        return view('admin.subatuacoes.edit', compact('atuacao','subatuacao','atuacao_valor'));
+        $subatuacao = $this->repository->find($subatuacao_id);
+        $atuacao = $this->atuacaorepository->find($atuacao_id);
+        return view('admin.subatuacoes.edit', compact('subatuacao','atuacao'));
     }
 
     /**
@@ -91,12 +92,12 @@ class SubAtuacoesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $atuacao, $id)
+    public function update(Request $request, $atuacao_id, $subatuacao_id)
     {
         $data = $request->all();
-        $this->repository->update($data, $id);
-        \Session::flash('message', ' SubAtuação atualizada com sucesso.');
-        return $this->index($atuacao);
+        $this->repository->update($data, $subatuacao_id);
+        \Session::flash('message', ' Sub Atuação atualizada com sucesso.');
+        return redirect()->route('admin.subatuacoes.index', $atuacao_id); 
     }
 
     /**
@@ -105,10 +106,10 @@ class SubAtuacoesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($atuacao, $id)
+    public function destroy($atuacao_id, $subatuacao_id)
     {
-        $this->repository->delete($id);
-        \Session::flash('message', ' SubAtuação deletada com sucesso.');
-        return $this->index($atuacao); 
+        $this->repository->delete($subatuacao_id);
+        \Session::flash('message', ' Sub Atuação deletada com sucesso.');
+        return redirect()->route('admin.subatuacoes.index', $atuacao_id); 
     }
 }

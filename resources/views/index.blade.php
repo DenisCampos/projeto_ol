@@ -79,7 +79,7 @@
                 </div>
                 <div class="col-lg-10">
                     <a href="{{route('quemsomos')}}"><h5>Quem Somos</h5></a>
-                    <p>Somos um Portal que conecta pessoas que buscam um estilo de vida saudável aos profissionais e empresas do segmento fitness, oferecendo conteúdos de valor e informações de produtos e serviços de alta performance que irão potencializar seus resultados.</p>
+                    <p>Somos um Portal que ajuda pessoas que buscam um estilo de vida saudável a encontrar produtos e serviços fitness de alta performance na internet de forma rápida e fácil.</p>
                 </div>
             </div>
         </div>

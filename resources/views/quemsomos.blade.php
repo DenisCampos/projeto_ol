@@ -7,16 +7,16 @@
     <div class="row mt-4">
         <div class="col-lg-8 mb-4">
             <h5>Quem somos:</h5>
-            <p>Somos um Portal que conecta pessoas que buscam um estilo de vida saudável aos profissionais e empresas do segmento fitness, oferecendo conteúdos de valor e informações de produtos e serviços de alta performance que irão potencializar seus resultados.</p>
+            <p>Somos um Portal que ajuda pessoas que buscam um estilo de vida saudável a encontrar produtos e serviços fitness de alta performance na internet de forma rápida e fácil.</p>
             <hr>
             <h5>Missão:</h5>
-            <p>Impactar e transformar o maior número de pessoas através da consolidação da cultura de vida saudável em nosso país, oferecendo a melhor experiência na busca por conteúdos, produtos e serviços fitness de qualidade na internet.</p>
+            <p>Impactar e transformar o maior número de pessoas através da consolidação da cultura de vida saudável em nosso país, levando a melhor experiência na busca por produtos e serviços fitness de qualidade na internet.</p>
             <hr>
             <h5>Visão:</h5>
-            <p>Ser referência nacional como o maior portal de conteúdo fitness e vida saudável até 2020.</p>
+            <p>Ser referência como o maior portal de busca por produtos e serviços fitness de alta performance no Brasil até 2019.</p>
             <hr>
             <h5>Valores:</h5>
-            <p>Vida saudável, Conhecimento, Informação, Resultados, Ética e Transparência.</p>
+            <p>Vida saudável, Informação, Inovação, Integridade.</p>
         </div>
         <!-- Contact Details Column -->
         <div class="col-lg-4">

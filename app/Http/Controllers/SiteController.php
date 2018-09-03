@@ -121,7 +121,7 @@ class SiteController extends Controller
 
         //eventos
         $eventos =  $this->eventosrepository->scopeQuery(function($query){
-            return $query->orderby('destaque_id','desc')->limit(16);
+            return $query->orderby('destaque_id','desc')->orderby('data_inicio')->limit(16);
         })->findWhere(['statu_id' => 2,['data_fim','>=',date('Y-m-d')]]);
         if(count($eventos)>8){
             $eventos = $eventos->random(8); 
@@ -148,9 +148,7 @@ class SiteController extends Controller
                 ->findWhere(['profissional_id' => $profissional->id]);
                 array_push($profatuacoes_array, $profatuacoes);
         }
-        //dd($profatuacoes_array);
-        
-
+                
         //empresas
         $empresas = $this->empresasrepository->scopeQuery(function($query){
             return $query->orderby('destaque_id','desc')->limit(16);

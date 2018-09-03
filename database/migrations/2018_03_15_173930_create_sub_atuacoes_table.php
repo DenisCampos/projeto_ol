@@ -18,6 +18,7 @@ class CreateSubAtuacoesTable extends Migration
 		Schema::create('sub_atuacoes', function(Blueprint $table) {
             $table->increments('id');
 			$table->string('descricao');
+			$table->string('slug')->nullable();
 			$table->integer('atuacao_id')->unsigned();
 			$table->tinyInteger('tipo')->default(3);; //1 - profissional, 2 - empresa, 3 - ambos
             $table->timestamps();

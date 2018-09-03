@@ -18,6 +18,7 @@ class CreateAtuacoesTable extends Migration
 		Schema::create('atuacoes', function(Blueprint $table) {
             $table->increments('id');
 			$table->string('descricao');
+			$table->string('slug')->nullable();
 			$table->tinyInteger('tipo')->default(3); //1 - profissional, 2 - empresa, 3 - ambos
             $table->timestamps();
 		});

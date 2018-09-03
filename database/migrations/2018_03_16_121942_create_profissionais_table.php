@@ -18,6 +18,7 @@ class CreateProfissionaisTable extends Migration
 		Schema::create('profissionais', function(Blueprint $table) {
 			$table->increments('id');
 			$table->string('name');
+			$table->string('slug')->nullable();
 			$table->string('email')->unique();
 			$table->string('foto');
 			$table->string('contato')->nullable();

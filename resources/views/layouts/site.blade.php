@@ -229,14 +229,14 @@
     <footer class="py-4 bg-custom">
         <div class="container" >
             <div class="row">
-                <div class="col-lg-4 mb-2">
+                <div class="col-lg-3 mb-2">
                         <strong style=" color: #e1e7f3;">Sobre:</a></strong><br>
                         <a href="{{route('quemsomos')}}"  style=" color: #e1e7f3;">Quem somos</a><br>
                         <a href="{{route('quemsomos')}}"  style=" color: #e1e7f3;">Missão</a><br>
                         <a href="{{route('quemsomos')}}"  style=" color: #e1e7f3;">Visão</a><br>
                         <a href="{{route('quemsomos')}}"  style=" color: #e1e7f3;">Valores</a>
                 </div>
-                <div class="col-lg-4 mb-2">
+                <div class="col-lg-3 mb-2">
                         <strong style=" color: #e1e7f3;">Aqui você encontra:</a></strong><br>
                         <a href="{{route('profissionais.posts',['atuacao'=>0])}}"  style=" color: #e1e7f3;">Profissionais</a><br>
                         <a href="{{route('empresas.posts',['atuacao'=>0])}}"  style=" color: #e1e7f3;">Empresas</a><br>
@@ -244,12 +244,17 @@
                         <a href="{{route('blog.posts',['categoria'=>0])}}"  style=" color: #e1e7f3;">Blog</a><br>
                         <a href="{{route('cursos.posts',['categoria'=>0])}}"  style=" color: #e1e7f3;">Top Produtos</a>
                 </div>
-                <div class="col-lg-4 mb-2">
+                <div class="col-lg-3 mb-2">
                         <strong style=" color: #e1e7f3;">Contatos:</a></strong><br>
                         <font style=" color: #e1e7f3;">contato@oloyfit.com</font><br>
                         <a href="https://www.facebook.com/oloyfit"><img class="img-fluid" src="{{asset('public/images/face-oloy.png')}}" alt=""></a> <a href="https://www.instagram.com/oloyfit/"><img class="img-fluid" src="{{asset('public/images/oloygram.png')}}" alt=""></a> <a href="https://www.instagram.com/oloyfit/"><img class="img-fluid" src="{{asset('public/images/iGTV-ICONsocial - oloyfit_.png')}}" alt=""></a>
-                        <a href="https://api.whatsapp.com/send?phone=5598983103977&text=Seja%20bem%20vindo%20ao%20WhastApp%20OloyFit!%20Somos%20um%20Portal%20que%20conecta%20pessoas%20que%20buscam%20um%20estilo%20de%20vida%20saud%C3%A1vel%20aos%20profissionais%20e%20empresas%20do%20segmento%20fitness,%20oferecendo%20conte%C3%BAdos%20de%20valor%20e%20informa%C3%A7%C3%B5es%20de%20produtos%20e%20servi%C3%A7os%20de%20alta%20%20performance%20que%20ir%C3%A3o%20potencializar%20seus%20resultados.%20J%C3%A1%20se%20cadastrou%20em%20nosso%20Portal?%20N%C3%A3o%20perca%20tempo%20e%20fique%20por%20dentro%20de%20tudo%20que%20voc%C3%AA%20precisa%20saber%20do%20mundo%20fitness%20pertinho%20de%20voc%C3%AA!%20Equipe%20OloyFit.%0D%0A%E2%80%8B
-                        "><img class="img-fluid" src="{{asset('public/images/insta_icons social - oloyfit_.png')}}" alt=""></a>
+                        <a href="https://api.whatsapp.com/send?phone=5598983103977&text=Seja%20bem%20vindo%20ao%20WhastApp%20OloyFit!%20Somos%20um%20Portal%20que%20conecta%20pessoas%20que%20buscam%20um%20estilo%20de%20vida%20saud%C3%A1vel%20aos%20profissionais%20e%20empresas%20do%20segmento%20fitness,%20oferecendo%20conte%C3%BAdos%20de%20valor%20e%20informa%C3%A7%C3%B5es%20de%20produtos%20e%20servi%C3%A7os%20de%20alta%20%20performance%20que%20ir%C3%A3o%20potencializar%20seus%20resultados.%20J%C3%A1%20se%20cadastrou%20em%20nosso%20Portal?%20N%C3%A3o%20perca%20tempo%20e%20fique%20por%20dentro%20de%20tudo%20que%20voc%C3%AA%20precisa%20saber%20do%20mundo%20fitness%20pertinho%20de%20voc%C3%AA!%20Equipe%20OloyFit.%0D%0A%E2%80%8B">
+                        <img class="img-fluid" src="{{asset('public/images/insta_icons social - oloyfit_.png')}}" alt=""></a>
+                </div>
+                <div class="col-lg-3 mb-2">
+                    <a href="https://abstartups.com.br/">
+                        <img class="img-fluid" src="{{asset('public/images/logo-header-rebranding.png')}}" alt="">
+                    </a>
                 </div>
                 <div class="col-lg-12">
                     <hr>

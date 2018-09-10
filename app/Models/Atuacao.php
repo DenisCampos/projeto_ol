@@ -24,6 +24,7 @@ class Atuacao extends Model implements Transformable
      */
     protected $fillable = [
         'descricao',
+        'slug', 
         'tipo' //1 - profissional, 2 - empresa, 3 - ambos
     ];
 

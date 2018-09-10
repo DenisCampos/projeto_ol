@@ -24,6 +24,7 @@ class Estado extends Model implements Transformable
     protected $fillable = [
         'sigla',
         'descricao',
+        'slug', 
         'pais_id'
     ];
 

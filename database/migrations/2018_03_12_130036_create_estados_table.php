@@ -17,6 +17,7 @@ class CreateEstadosTable extends Migration
             $table->increments('id');
             $table->string('sigla')->nullable();
             $table->string('descricao');
+            $table->string('slug')->nullable();
             $table->integer('pais_id')->unsigned();
             $table->timestamps();
         });

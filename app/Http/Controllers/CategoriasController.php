@@ -28,6 +28,7 @@ class CategoriasController extends Controller
 
     public function store(Request $request){
         $data = $request->all();
+        $data['slug'] = $this->montarSlug($data['descricao'], '');
         $this->repository->create($data);
         \Session::flash('message', ' Categoria criada com sucesso.');
         return redirect()->route('admin.categorias.index');
@@ -41,6 +42,7 @@ class CategoriasController extends Controller
 
     public function update(Request $request, $id){
         $data = $request->all();
+        $data['slug'] = $this->montarSlug($data['descricao'], $id);
         $this->repository->update($data, $id);
         \Session::flash('message', ' Categoria atualizada com sucesso.');
         return redirect()->route('admin.categorias.index');
@@ -50,5 +52,20 @@ class CategoriasController extends Controller
         $this->repository->delete($id);
         \Session::flash('message', ' Categoria deletada com sucesso.');
         return redirect()->route('admin.categorias.index');
+    }
+
+    private function montarSlug($titulo, $id){
+        $slug = str_slug($titulo, '-');
+        $slug_count = $this->repository->findByField('slug',$slug)->where('id', '!=', $id)->count();
+        //dd($slug_count);
+        if($slug_count>0){
+            $vefica_slug = $slug_count;
+            while($vefica_slug>0){
+                $slug_count++;
+                $vefica_slug = $this->repository->findByField('slug',$slug."".$slug_count)->where('id', '!=', $id)->count();                
+            }
+            $slug = $slug."".$slug_count;
+        }
+        return $slug;
     }
 }

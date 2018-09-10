@@ -23,7 +23,8 @@ class Curso extends Model implements Transformable
      * @var array
      */
     protected $fillable = [
-        'titulo', 
+        'titulo',
+        'slug', 
         'sub_titulo',
         'descricao', 
         'imagem1', 

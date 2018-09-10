@@ -24,6 +24,7 @@ class Empresa extends Model implements Transformable
      */
     protected $fillable = [
         'name', 
+        'slug', 
         'email', 
         'imagem1', 
         'imagem2', 

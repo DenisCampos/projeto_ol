@@ -24,6 +24,7 @@ class Profissional extends Model implements Transformable
      */
     protected $fillable = [
         'name', 
+        'slug', 
         'email', 
         'foto', 
         'contato', 

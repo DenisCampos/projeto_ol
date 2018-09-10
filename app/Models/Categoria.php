@@ -24,6 +24,7 @@ class Categoria extends Model implements Transformable
      */
     protected $fillable = [
         'descricao',
+        'slug', 
         'tipo'  
     ];
 

@@ -24,6 +24,7 @@ class Cidade extends Model implements Transformable
      */
     protected $fillable = [
         'descricao',
+        'slug', 
         'estado_id'
     ];
 

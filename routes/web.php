@@ -303,6 +303,9 @@ Route::group(['middleware'=>'auth'], function () {
         //fileuploud
         Route::get('/public/laravel-filemanager', '\Unisharp\Laravelfilemanager\controllers\LfmController@show');
         Route::post('/public/laravel-filemanager/upload', '\Unisharp\Laravelfilemanager\controllers\UploadController@upload');
+
+        //makeslug
+        Route::get('/makeslug', 'MakeSlugController@index')->name('makeslug.index');
     });
 
 });

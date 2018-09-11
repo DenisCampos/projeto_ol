@@ -130,7 +130,7 @@ class UsuariosController extends Controller
             unset($data['foto']);
         }
         //dd($data['foto']);
-
+        $data['slug'] = $this->montarSlug($data['name'], $id);
         $this->repository->update($data, $id);
 
         \Session::flash('message', ' Dados atualizados com sucesso.');
@@ -147,5 +147,20 @@ class UsuariosController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    private function montarSlug($titulo, $id){
+        $slug = str_slug($titulo, '-');
+        $slug_count = $this->repository->findByField('slug',$slug)->where('id', '!=', $id)->count();
+        //dd($slug_count);
+        if($slug_count>0){
+            $vefica_slug = $slug_count;
+            while($vefica_slug>0){
+                $slug_count++;
+                $vefica_slug = $this->repository->findByField('slug',$slug."-".$slug_count)->where('id', '!=', $id)->count();                
+            }
+            $slug = $slug."-".$slug_count;
+        }
+        return $slug;
     }
 }

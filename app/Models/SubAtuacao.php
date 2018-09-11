@@ -23,7 +23,8 @@ class SubAtuacao extends Model implements Transformable
      * @var array
      */
     protected $fillable = [
-        'descricao', 
+        'descricao',
+        'slug',  
         'atuacao_id',
         'tipo' //1 - profissional, 2 - empresa, 3 - ambos
     ];

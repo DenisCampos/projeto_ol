@@ -273,7 +273,7 @@ class SiteController extends Controller
         $vcategorias = $this->categoriasrepository->orderBy('descricao')->findWhereIn('tipo', [7, 8, 9, 10, 11, 12, 13,15]);
       
         $search = $request->get('search');
-        if($categoria==0){
+        if($categoria=='todos'){
             $eventos = $this->eventosrepository->scopeQuery(function($query){
                 return $query->orderby('destaque_id','desc')
                 ->orderby('eventos.updated_at','desc')
@@ -283,16 +283,17 @@ class SiteController extends Controller
                 ]);
             })->paginate(16);
         }else{
-            $eventos = $this->eventosrepository->scopeQuery(function($query) use($categoria){
+            $objtcategoria = $this->categoriasrepository->findByField('slug',$categoria)->first();
+            $eventos = $this->eventosrepository->scopeQuery(function($query) use($objtcategoria){
                 return $query->join('evento_categorias', 'eventos.id', '=', 'evento_categorias.evento_id')
                 ->orderby('destaque_id','desc')
                 ->orderby('eventos.updated_at','desc')
                 ->where([
                     ['statu_id', '=', 2],
                     ['data_fim', '>=', date('Y-m-d')],
-                    ['categoria_id', '=', $categoria],
+                    ['categoria_id', '=', $objtcategoria->id],
                 ])
-                ->select('eventos.id', 'imagem1', 'titulo', 'data_inicio', 'data_fim','cidade_id', 'estado_id');
+                ->select('eventos.id', 'imagem1', 'titulo', 'data_inicio', 'data_fim','cidade_id', 'estado_id', 'eventos.slug');
             })->paginate(16);
         }       
 

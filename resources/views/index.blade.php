@@ -173,7 +173,7 @@
             <h2 class="mb-3 text-custom-titulo">Eventos
                 <small class="text-custom-desc">em destaque</small>
             </h2>
-            <small class="pull-right"><a href="{{route('eventos.posts',['categoria'=>0])}}">Ver todos</a></small>
+            <small class="pull-right"><a href="{{route('eventos.posts',['categoria'=>'todos'])}}">Ver todos</a></small>
             <hr>
         </div>
         <div class="col-lg-12 carrossel-eventos row" style="padding-right: 0px">

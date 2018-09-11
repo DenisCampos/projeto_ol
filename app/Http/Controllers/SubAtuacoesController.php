@@ -54,6 +54,7 @@ class SubAtuacoesController extends Controller
     {
         $data = $request->all();
         $data['atuacao_id'] = $atuacao_id;
+        $data['slug'] = $this->montarSlug($data['descricao'], '');
         $atuacao = $this->atuacaorepository->find($atuacao_id);
         $data['tipo'] = $atuacao->tipo;
         $this->repository->create($data);
@@ -95,6 +96,7 @@ class SubAtuacoesController extends Controller
     public function update(Request $request, $atuacao_id, $subatuacao_id)
     {
         $data = $request->all();
+        $data['slug'] = $this->montarSlug($data['descricao'], $subatuacao_id);
         $this->repository->update($data, $subatuacao_id);
         \Session::flash('message', ' Sub Atuação atualizada com sucesso.');
         return redirect()->route('admin.subatuacoes.index', $atuacao_id); 
@@ -111,5 +113,19 @@ class SubAtuacoesController extends Controller
         $this->repository->delete($subatuacao_id);
         \Session::flash('message', ' Sub Atuação deletada com sucesso.');
         return redirect()->route('admin.subatuacoes.index', $atuacao_id); 
+    }
+
+    private function montarSlug($titulo, $id){
+        $slug = str_slug($titulo, '-');
+        $slug_count = $this->repository->findByField('slug',$slug)->where('id', '!=', $id)->count();
+        if($slug_count>0){
+            $vefica_slug = $slug_count;
+            while($vefica_slug>0){
+                $slug_count++;
+                $vefica_slug = $this->repository->findByField('slug',$slug."-".$slug_count)->where('id', '!=', $id)->count();                
+            }
+            $slug = $slug."-".$slug_count;
+        }
+        return $slug;
     }
 }

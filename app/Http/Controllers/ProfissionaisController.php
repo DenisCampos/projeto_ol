@@ -103,7 +103,7 @@ class ProfissionaisController extends Controller
         $data['statu_id'] = 1;
         $data['situacao_id'] = 1;
         $data['destaque_id'] = 1;
-
+        $data['slug'] = $this->montarSlug($data['name'], '');
         $this->repository->create($data);
         
         \Session::flash('message', ' Profissão criada com sucesso.');
@@ -196,6 +196,7 @@ class ProfissionaisController extends Controller
         $data['statu_id'] = 1;
         $data['situacao_id'] = 1;
         $data['destaque_id'] = 1;
+        $data['slug'] = $this->montarSlug($data['name'], $id);
         $this->repository->update($data, $id);
         \Session::flash('message', ' Dados atualizados com sucesso.');
 
@@ -312,6 +313,7 @@ class ProfissionaisController extends Controller
             unset($data['foto']);
         }
 
+        $data['slug'] = $this->montarSlug($data['name'], $id);
         $this->repository->update($data, $id);
         $profissional = $this->repository->find($id); 
         $usuario = $this->usersrepository->find($profissional->user_id);
@@ -367,5 +369,20 @@ class ProfissionaisController extends Controller
             'situacao_id'=>'4'
         ]);
         return view('admin.profissionais.negados', compact('profissionais'));
+    }
+
+    private function montarSlug($titulo, $id){
+        $slug = str_slug($titulo, '-');
+        $slug_count = $this->repository->findByField('slug',$slug)->where('id', '!=', $id)->count();
+        //dd($slug_count);
+        if($slug_count>0){
+            $vefica_slug = $slug_count;
+            while($vefica_slug>0){
+                $slug_count++;
+                $vefica_slug = $this->repository->findByField('slug',$slug."-".$slug_count)->where('id', '!=', $id)->count();                
+            }
+            $slug = $slug."-".$slug_count;
+        }
+        return $slug;
     }
 }

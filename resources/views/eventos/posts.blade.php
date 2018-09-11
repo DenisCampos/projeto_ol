@@ -16,11 +16,11 @@
     <br>
     <div class="row">
         <div class="col-lg-12" role="group">
-            <button type="button" class="mb-1 btn btn-outline-custom @if($categoria==0) active @endif" onclick="window.open('{{route('eventos.posts',['categoria'=>0])}}','_self')">
+            <button type="button" class="mb-1 btn btn-outline-custom @if($categoria=='todos') active @endif" onclick="window.open('{{route('eventos.posts',['categoria'=>'todos'])}}','_self')">
                 Todos
             </button>
             @foreach($vcategorias as $vcategoria)
-            <button type="button" class="mb-1 btn btn-outline-custom @if($vcategoria->id==$categoria) active @endif" onclick="window.open('{{route('eventos.posts',['categoria'=>$vcategoria->id])}}','_self')">
+            <button type="button" class="mb-1 btn btn-outline-custom @if($vcategoria->slug==$categoria) active @endif" onclick="window.open('{{route('eventos.posts',['categoria'=>$vcategoria->slug])}}','_self')">
                     {{$vcategoria->descricao}} 
             </button>
             @endforeach

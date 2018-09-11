@@ -97,7 +97,7 @@ class PostsController extends Controller
             'user_id'=>$id
         ])->max('id');
 
-
+        $data['slug'] = $this->montarSlug($data['titulo'], '');
         return redirect()->route('admin.postcategorias.index', ['id' => $post]);
     }
 
@@ -164,6 +164,7 @@ class PostsController extends Controller
             unset($data['imagem2']); 
         }
       
+        $data['slug'] = $this->montarSlug($data['titulo'], $id);
         $this->repository->update($data, $id);
         \Session::flash('message', ' Post atualizado com sucesso.');
 
@@ -192,5 +193,20 @@ class PostsController extends Controller
         \Session::flash('message', 'Post excluido com sucesso.');
 
         return redirect()->route('admin.posts.index'); 
+    }
+
+    private function montarSlug($titulo, $id){
+        $slug = str_slug($titulo, '-');
+        $slug_count = $this->repository->findByField('slug',$slug)->where('id', '!=', $id)->count();
+        //dd($slug_count);
+        if($slug_count>0){
+            $vefica_slug = $slug_count;
+            while($vefica_slug>0){
+                $slug_count++;
+                $vefica_slug = $this->repository->findByField('slug',$slug."-".$slug_count)->where('id', '!=', $id)->count();                
+            }
+            $slug = $slug."-".$slug_count;
+        }
+        return $slug;
     }
 }

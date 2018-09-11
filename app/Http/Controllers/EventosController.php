@@ -112,8 +112,8 @@ class EventosController extends Controller
         $data['situacao_id'] = 1;
         $data['destaque_id'] = 1;
 
+        $data['slug'] = $this->montarSlug($data['titulo'], '');
         $this->repository->create($data);
-       
         \Session::flash('message', ' Evento criado com sucesso.');
 
         $id = Auth::user()->id;
@@ -217,6 +217,7 @@ class EventosController extends Controller
         $data['situacao_id'] = 1;
         $data['destaque_id'] = 1;
         $this->repository->update($data, $id);
+        $data['slug'] = $this->montarSlug($data['titulo'], $id);
         \Session::flash('message', ' Dados atualizados com sucesso.');
 
         return redirect()->route('eventos.index');
@@ -352,6 +353,7 @@ class EventosController extends Controller
             unset($data['imagem2']); 
         }
       
+        $data['slug'] = $this->montarSlug($data['titulo'], $id);
         $this->repository->update($data, $id);
         \Session::flash('message', ' Dados atualizados com sucesso.');
 
@@ -413,6 +415,21 @@ class EventosController extends Controller
             'situacao_id'=>'4'
         ]);
         return view('admin.eventos.negados', compact('eventos'));
+    }
+
+    private function montarSlug($titulo, $id){
+        $slug = str_slug($titulo, '-');
+        $slug_count = $this->repository->findByField('slug',$slug)->where('id', '!=', $id)->count();
+        //dd($slug_count);
+        if($slug_count>0){
+            $vefica_slug = $slug_count;
+            while($vefica_slug>0){
+                $slug_count++;
+                $vefica_slug = $this->repository->findByField('slug',$slug."-".$slug_count)->where('id', '!=', $id)->count();                
+            }
+            $slug = $slug."-".$slug_count;
+        }
+        return $slug;
     }
 
 }

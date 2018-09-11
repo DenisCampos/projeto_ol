@@ -53,6 +53,7 @@ class CidadesController extends Controller
     {
         $data = $request->all();
         $data['estado_id'] = $estado;
+        $data['slug'] = $this->montarSlug($data['descricao'], '');
         $this->repository->create($data);
         \Session::flash('message', ' Cidade criada com sucesso.');
         return redirect()->route('admin.cidades.index',['pais' => $pais, 'estado' => $estado]);
@@ -93,6 +94,7 @@ class CidadesController extends Controller
     public function update(Request $request, $pais, $estado, $id)
     {
         $data = $request->all();
+        $data['slug'] = $this->montarSlug($data['descricao'], $id);
         $this->repository->update($data, $id);
         \Session::flash('message', ' Cidade atualizada com sucesso.');
         return redirect()->route('admin.cidades.index',['pais' => $pais, 'estado' => $estado]);
@@ -123,5 +125,19 @@ class CidadesController extends Controller
         
 
         return view('cidades.pegacidades', compact('cidades'));
+    }
+
+    private function montarSlug($titulo, $id){
+        $slug = str_slug($titulo, '-');
+        $slug_count = $this->repository->findByField('slug',$slug)->where('id', '!=', $id)->count();
+        if($slug_count>0){
+            $vefica_slug = $slug_count;
+            while($vefica_slug>0){
+                $slug_count++;
+                $vefica_slug = $this->repository->findByField('slug',$slug."-".$slug_count)->where('id', '!=', $id)->count();                
+            }
+            $slug = $slug."-".$slug_count;
+        }
+        return $slug;
     }
 }

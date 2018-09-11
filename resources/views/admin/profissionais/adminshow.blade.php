@@ -123,6 +123,7 @@
                                 </div>
                                 @endif
                             </li>
+                            @endif
                             <li class="list-group-item"> 
                                 <div class="col-lg-12 text-center">
                                     <button type="submit" class="btn btn-warning" onclick="window.open('{{route('admin.profissionais.adminedit', [$usuario->id, $profissional->id])}}', '_self');">
@@ -130,7 +131,6 @@
                                     </button>
                                 </div>
                             </li>
-                            @endif
                         </ul>
                         @if($profissional->situacao_id==2)
                         <div class="card-footer">

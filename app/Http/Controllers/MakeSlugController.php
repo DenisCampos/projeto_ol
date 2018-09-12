@@ -155,10 +155,10 @@ class MakeSlugController extends Controller
             $this->eventosrepository->update($data, $objeto->id);
         }
 
-        $objetos = $this->eventosrepository->all();
+        $objetos = $this->cursosrepository->all();
         foreach($objetos as $objeto){
-            $data['slug'] = $this->montarSlug($objeto->titulo, $objeto->id, $this->eventosrepository);
-            $this->eventosrepository->update($data, $objeto->id);
+            $data['slug'] = $this->montarSlug($objeto->titulo, $objeto->id, $this->cursosrepository);
+            $this->cursosrepository->update($data, $objeto->id);
         }
 
         return 'Feito';

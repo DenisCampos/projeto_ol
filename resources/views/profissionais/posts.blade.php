@@ -16,7 +16,7 @@
     <br>
     <div class="row">
         <div class="col-lg-12" role="group">
-            <button type="button" class="mb-1 btn btn-outline-custom @if($atuacao==0) active @endif" onclick="window.open('{{route('profissionais.posts',['atuacao'=>0])}}','_self')">
+            <button type="button" class="mb-1 btn btn-outline-custom @if($atuacao=='todos') active @endif" onclick="window.open('{{route('profissionais.posts',['atuacao'=>'todos'])}}','_self')">
                 Todos
             </button>
             @foreach($patuacoes as $patuacao)
@@ -32,11 +32,11 @@
                     @endphp
                 @endforeach
                 @if($possui==true)
-                    <button type="button" class="mb-1 btn btn-outline-custom @if($patuacao->id==$atuacao) active @endif" onclick="window.open('{{route('profissionais.subposts',['atuacao'=>$patuacao->id,'subatuacao'=>0])}}','_self')">
+                    <button type="button" class="mb-1 btn btn-outline-custom @if($patuacao->slug==$atuacao) active @endif" onclick="window.open('{{route('profissionais.subposts',['atuacao'=>$patuacao->slug,'subatuacao'=>'todos'])}}','_self')">
                         {{$patuacao->descricao}} 
                     </button>
                 @else
-                    <button type="button" class="mb-1 btn btn-outline-custom @if($patuacao->id==$atuacao) active @endif" onclick="window.open('{{route('profissionais.posts',['atuacao'=>$patuacao->id])}}','_self')">
+                    <button type="button" class="mb-1 btn btn-outline-custom @if($patuacao->slug==$atuacao) active @endif" onclick="window.open('{{route('profissionais.posts',['atuacao'=>$patuacao->slug])}}','_self')">
                         {{$patuacao->descricao}} 
                     </button>
                 @endif
@@ -48,10 +48,10 @@
         @foreach($profissionais as $profissional)
         <div class="col-lg-3 col-sm-6 portfolio-item">
             <div class="card h-100">
-                <a href="{{route('profissionais.post',['profissional'=>$profissional->id])}}"><img class="card-img-top" src="{{asset($profissional->foto)}}" alt=""></a>
+                <a href="{{route('profissionais.post',['profissional'=>$profissional->slug])}}"><img class="card-img-top" src="{{asset($profissional->foto)}}" alt=""></a>
                 <div class="card-body">
                     <h5 class="card-title text-center">
-                        <a href="{{route('profissionais.post',['profissional'=>$profissional->id])}}">{{$profissional->name}}</a>
+                        <a href="{{route('profissionais.post',['profissional'=>$profissional->slug])}}">{{$profissional->name}}</a>
                     </h5>
                     <p class="text-center"><small>
                         @foreach($profatuacoes_array as $profatuacoes)

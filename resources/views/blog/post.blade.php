@@ -46,14 +46,14 @@
             <div class="container row mb-5">
                 <div class="col-lg-12 text-custom-titulo" style="padding-left: 0px">
                     <h5>Top Produtos 
-                        <button type="buttom" onclick="window.open('{{route('cursos.posts',['categoria'=>0])}}','_self')" class="btn btn-sm btn-custom pull-right">Todos</button>
+                        <button type="buttom" onclick="window.open('{{route('cursos.posts',['categoria'=>'todos'])}}','_self')" class="btn btn-sm btn-custom pull-right">Todos</button>
                     </h5>
                     <hr>
                 </div>
                 @foreach($cursos as $curso)
                 <div class="row align-items-center">
                     <div class="col-md-4 mb-3">
-                        <a href="{{route('cursos.post',['post'=>$curso->id])}}">
+                        <a href="{{route('cursos.post',['post'=>$curso->slug])}}">
                         <img class="img-fluid rounded mb-3 mb-md-0" src="{{asset($curso->imagem1)}}" alt="">
                         </a>
                     </div>
@@ -83,13 +83,13 @@
                     @endforeach
                     @if($possui==true)
                     <div class="col-md-12">
-                        <a href="{{route('profissionais.subposts',['atuacao'=>$patuacao->id,'subatuacao'=>0])}}">
+                        <a href="{{route('profissionais.subposts',['atuacao'=>$patuacao->slug,'subatuacao'=>'todos'])}}">
                             {{$patuacao->descricao}}
                         </a>
                     </div>
                     @else
                         <div class="col-md-12">
-                            <a  href="{{route('profissionais.posts',['atuacao'=>$patuacao->id])}}">
+                            <a  href="{{route('profissionais.posts',['atuacao'=>$patuacao->slug])}}">
                                 {{$patuacao->descricao}}
                             </a>
                         </div>
@@ -106,10 +106,10 @@
                 @foreach($posts as $post)
                 <div class="col-lg-3 col-sm-6 portfolio-item">
                     <div class="card h-100">
-                        <a href="{{route('blog.post',['post'=>$post->id])}}"><img class="card-img-top" src="{{asset($post->imagem1)}}" alt=""></a>
+                        <a href="{{route('blog.post',['post'=>$post->slug])}}"><img class="card-img-top" src="{{asset($post->imagem1)}}" alt=""></a>
                         <div class="card-body">
                             <h5 class="card-title">
-                                <a href="{{route('blog.post',['post'=>$post->id])}}">{{$post->titulo}}</a>
+                                <a href="{{route('blog.post',['post'=>$post->slug])}}">{{$post->titulo}}</a>
                             </h5>
                         </div>
                     </div>

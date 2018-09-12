@@ -31,10 +31,10 @@
         @foreach($eventos as $evento)
         <div class="col-lg-3 col-sm-6 portfolio-item">
             <div class="card h-100">
-                <a href="{{route('eventos.post',['evento'=>$evento->id])}}"><img class="card-img-top" src="{{asset($evento->imagem1)}}" alt=""></a>
+                <a href="{{route('eventos.post',['evento'=>$evento->slug])}}"><img class="card-img-top" src="{{asset($evento->imagem1)}}" alt=""></a>
                 <div class="card-body">
                     <h5 class="card-title text-center">
-                        <a href="{{route('eventos.post',['evento'=>$evento->id])}}">{{$evento->titulo}}</a>
+                        <a href="{{route('eventos.post',['evento'=>$evento->slug])}}">{{$evento->titulo}}</a>
                     </h5>
                     <p class="card-text text-center"><small>
                         Data: {{$evento->getData($evento->data_inicio) }}<br>

@@ -16,7 +16,7 @@
     <br>
     <div class="row">
         <div class="col-lg-12" role="group">
-            <button type="button" class="mb-1 btn btn-outline-custom @if($atuacao==0) active @endif" onclick="window.open('{{route('empresas.posts',['atuacao'=>0])}}','_self')">
+            <button type="button" class="mb-1 btn btn-outline-custom @if($atuacao=='todos') active @endif" onclick="window.open('{{route('empresas.posts',['atuacao'=>'todos'])}}','_self')">
                 Todos
             </button>
             @foreach($eatuacoes as $eatuacao)
@@ -32,11 +32,11 @@
                     @endphp
                 @endforeach
                 @if($possui==true)
-                    <button type="button" class="mb-1 btn btn-outline-custom @if($eatuacao->id==$atuacao) active @endif" onclick="window.open('{{route('empresas.subposts',['atuacao'=>$eatuacao->id,'subatuacao'=>0])}}','_self')">
+                    <button type="button" class="mb-1 btn btn-outline-custom @if($eatuacao->slug==$atuacao) active @endif" onclick="window.open('{{route('empresas.subposts',['atuacao'=>$eatuacao->slug,'subatuacao'=>'todos'])}}','_self')">
                         {{$eatuacao->descricao}} 
                     </button>
                 @else
-                    <button type="button" class="mb-1 btn btn-outline-custom @if($eatuacao->id==$atuacao) active @endif" onclick="window.open('{{route('empresas.posts',['atuacao'=>$eatuacao->id])}}','_self')">
+                    <button type="button" class="mb-1 btn btn-outline-custom @if($eatuacao->slug==$atuacao) active @endif" onclick="window.open('{{route('empresas.posts',['atuacao'=>$eatuacao->slug])}}','_self')">
                         {{$eatuacao->descricao}} 
                     </button>
                 @endif
@@ -48,10 +48,10 @@
         @foreach($empresas as $empresa)
         <div class="col-lg-3 col-sm-6 portfolio-item">
             <div class="card h-100">
-                <a href="{{route('empresas.post',['empresa'=>$empresa->id])}}"><img class="card-img-top" src="{{asset($empresa->imagem1)}}" alt=""></a>
+                <a href="{{route('empresas.post',['empresa'=>$empresa->slug])}}"><img class="card-img-top" src="{{asset($empresa->imagem1)}}" alt=""></a>
                 <div class="card-body">
                     <h5 class="card-title text-center">
-                        <a href="{{route('empresas.post',['empresa'=>$empresa->id])}}">{{$empresa->name}}</a>
+                        <a href="{{route('empresas.post',['empresa'=>$empresa->slug])}}">{{$empresa->name}}</a>
                     </h5>
                     <p class="text-center"><small>
                         @foreach($empatuacoes_array as $empatuacoes)

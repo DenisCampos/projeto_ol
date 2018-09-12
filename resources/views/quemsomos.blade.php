@@ -22,14 +22,14 @@
         <div class="col-lg-4">
             <div class="col-lg-12 text-custom-titulo" style="padding-left: 0px">
                     <h5>Top Produtos 
-                        <button type="buttom" onclick="window.open('{{route('cursos.posts',['categoria'=>0])}}','_self')" class="btn btn-sm btn-custom pull-right">Todos</button>
+                        <button type="buttom" onclick="window.open('{{route('cursos.posts',['categoria'=>'todos'])}}','_self')" class="btn btn-sm btn-custom pull-right">Todos</button>
                     </h5>
                     <hr>
                 </div>
                 @foreach($cursos as $curso)
                 <div class="row align-items-center">
                     <div class="col-md-4 mb-3">
-                        <a href="{{route('cursos.post',['post'=>$curso->id])}}">
+                        <a href="{{route('cursos.post',['post'=>$curso->slug])}}">
                         <img class="img-fluid rounded mb-3 mb-md-0" src="{{asset($curso->imagem1)}}" alt="">
                         </a>
                     </div>

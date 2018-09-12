@@ -124,7 +124,7 @@
                             Profissionais
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="profissionaismenu">
-                            <div><a class="dropdown-item" href="{{route('profissionais.posts',['atuacao'=>0])}}">Todos</a></div>
+                            <div><a class="dropdown-item" href="{{route('profissionais.posts',['atuacao'=>'todos'])}}">Todos</a></div>
                             @foreach($patuacoes as $patuacao)
                                 @php
                                 $possui=false;
@@ -145,13 +145,13 @@
                                     <ul class="dropdown-menu">
                                         @foreach($psubatuacoes as $psubatuacao)
                                         @if($patuacao->id==$psubatuacao->atuacao_id)
-                                        <li><a class="dropdown-item" href="{{route('profissionais.subposts',['atuacao'=>$patuacao->id,'subatuacao'=>$psubatuacao->id])}}">{{$psubatuacao->descricao}}</a></li>
+                                        <li><a class="dropdown-item" href="{{route('profissionais.subposts',['atuacao'=>$patuacao->slug,'subatuacao'=>$psubatuacao->slug])}}">{{$psubatuacao->descricao}}</a></li>
                                         @endif
                                         @endforeach
                                     </ul>
                                 </div>
                                 @else
-                                <div><a class="dropdown-item" href="{{route('profissionais.posts',['atuacao'=>$patuacao->id])}}">{{$patuacao->descricao}}</a></div>
+                                <div><a class="dropdown-item" href="{{route('profissionais.posts',['atuacao'=>$patuacao->slug])}}">{{$patuacao->descricao}}</a></div>
                                 @endif
                             @endforeach
                         </div>
@@ -161,7 +161,7 @@
                             Empresas
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="empresassmenu">
-                            <div><a class="dropdown-item" href="{{route('empresas.posts',['atuacao'=>0])}}">Todos</a></div>
+                            <div><a class="dropdown-item" href="{{route('empresas.posts',['atuacao'=>'todos'])}}">Todos</a></div>
                             @foreach($eatuacoes as $eatuacao)
                                 @php
                                 $possui=false;
@@ -182,13 +182,13 @@
                                     <ul class="dropdown-menu">
                                         @foreach($esubatuacoes as $esubatuacao)
                                         @if($eatuacao->id==$esubatuacao->atuacao_id)
-                                        <li><a class="dropdown-item" href="{{route('empresas.subposts',['atuacao'=>$eatuacao->id,'subatuacao'=>$esubatuacao])}}">{{$esubatuacao->descricao}}</a></li>
+                                        <li><a class="dropdown-item" href="{{route('empresas.subposts',['atuacao'=>$eatuacao->slug,'subatuacao'=>$esubatuacao->slug])}}">{{$esubatuacao->descricao}}</a></li>
                                         @endif
                                         @endforeach
                                     </ul>
                                 </div>
                                 @else
-                                <div><a class="dropdown-item" href="{{route('empresas.posts',['atuacao'=>$eatuacao->id])}}">{{$eatuacao->descricao}}</a></div>
+                                <div><a class="dropdown-item" href="{{route('empresas.posts',['atuacao'=>$eatuacao->slug])}}">{{$eatuacao->descricao}}</a></div>
                                 @endif
                             @endforeach
                         </div>
@@ -198,9 +198,9 @@
                             Eventos
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="eventosmenu">
-                            <div><a class="dropdown-item" href="{{route('eventos.posts',['categoria'=>0])}}">Todos</a></div>
+                            <div><a class="dropdown-item" href="{{route('eventos.posts',['categoria'=>'todos'])}}">Todos</a></div>
                             @foreach($vcategorias as $vcategoria)
-                                <div><a class="dropdown-item" href="{{route('eventos.posts',['categoria'=>$vcategoria->id])}}">{{$vcategoria->descricao}}</a></div>
+                                <div><a class="dropdown-item" href="{{route('eventos.posts',['categoria'=>$vcategoria->slug])}}">{{$vcategoria->descricao}}</a></div>
                             @endforeach
                         </div>
                     </li>
@@ -209,13 +209,13 @@
                             Top Produtos
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="produtosmenu">
-                            <div><a class="dropdown-item" href="{{route('cursos.vcposts',['categoria'=>0])}}">Para Você</a></div>
-                            <div><a class="dropdown-item" href="{{route('cursos.profposts',['categoria'=>0])}}">Para Profissionais</a></div>
-                            <div><a class="dropdown-item" href="{{route('cursos.empposts',['categoria'=>0])}}">Para Empresas</a></div>
+                            <div><a class="dropdown-item" href="{{route('cursos.vcposts',['categoria'=>'todos'])}}">Para Você</a></div>
+                            <div><a class="dropdown-item" href="{{route('cursos.profposts',['categoria'=>'todos'])}}">Para Profissionais</a></div>
+                            <div><a class="dropdown-item" href="{{route('cursos.empposts',['categoria'=>'todos'])}}">Para Empresas</a></div>
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('blog.posts',['categoria'=>0])}}">Blog OloyFit</a>
+                        <a class="nav-link" href="{{route('blog.posts',['categoria'=>'todos'])}}">Blog OloyFit</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('faleconosco') }}">Fale Conosco</a>
@@ -238,11 +238,11 @@
                 </div>
                 <div class="col-lg-3 mb-2">
                         <strong style=" color: #e1e7f3;">Aqui você encontra:</a></strong><br>
-                        <a href="{{route('profissionais.posts',['atuacao'=>0])}}"  style=" color: #e1e7f3;">Profissionais</a><br>
-                        <a href="{{route('empresas.posts',['atuacao'=>0])}}"  style=" color: #e1e7f3;">Empresas</a><br>
-                        <a href="{{route('eventos.posts',['categoria'=>0])}}"  style=" color: #e1e7f3;">Eventos</a><br>
-                        <a href="{{route('blog.posts',['categoria'=>0])}}"  style=" color: #e1e7f3;">Blog</a><br>
-                        <a href="{{route('cursos.posts',['categoria'=>0])}}"  style=" color: #e1e7f3;">Top Produtos</a>
+                        <a href="{{route('profissionais.posts',['atuacao'=>'todos'])}}"  style=" color: #e1e7f3;">Profissionais</a><br>
+                        <a href="{{route('empresas.posts',['atuacao'=>'todos'])}}"  style=" color: #e1e7f3;">Empresas</a><br>
+                        <a href="{{route('eventos.posts',['categoria'=>'todos'])}}"  style=" color: #e1e7f3;">Eventos</a><br>
+                        <a href="{{route('blog.posts',['categoria'=>'todos'])}}"  style=" color: #e1e7f3;">Blog</a><br>
+                        <a href="{{route('cursos.posts',['categoria'=>'todos'])}}"  style=" color: #e1e7f3;">Top Produtos</a>
                 </div>
                 <div class="col-lg-3 mb-2">
                         <strong style=" color: #e1e7f3;">Contatos:</a></strong><br>

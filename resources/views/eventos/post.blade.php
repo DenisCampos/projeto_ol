@@ -104,14 +104,14 @@
             <div class="container row mb-5">
                 <div class="col-lg-12 text-custom-titulo" style="padding-left: 0px">
                     <h5>Top Produtos 
-                        <button type="buttom" onclick="window.open('{{route('cursos.posts',['categoria'=>0])}}','_self')" class="btn btn-sm btn-custom pull-right">Todos</button>
+                        <button type="buttom" onclick="window.open('{{route('cursos.posts',['categoria'=>'todos'])}}','_self')" class="btn btn-sm btn-custom pull-right">Todos</button>
                     </h5>
                     <hr>
                 </div>
                 @foreach($cursos as $curso)
                 <div class="row align-items-center">
                     <div class="col-md-4 mb-3">
-                        <a href="{{route('cursos.post',['post'=>$curso->id])}}">
+                        <a href="{{route('cursos.post',['post'=>$curso->slug])}}">
                         <img class="img-fluid rounded mb-3 mb-md-0" src="{{asset($curso->imagem1)}}" alt="">
                         </a>
                     </div>
@@ -128,7 +128,7 @@
                     <hr>
                 </div>
                 @foreach($vcategorias as $vcategoria)
-                    <div class="col-md-12"><a href="{{route('eventos.posts',['categoria'=>$vcategoria->id])}}">{{$vcategoria->descricao}}</a></div>
+                    <div class="col-md-12"><a href="{{route('eventos.posts',['categoria'=>$vcategoria->slug])}}">{{$vcategoria->descricao}}</a></div>
                 @endforeach
             </div>
         </div>
@@ -141,10 +141,10 @@
             @foreach($eventos as $evento)
             <div class="col-lg-3 col-sm-6 portfolio-item">
                 <div class="card h-100">
-                    <a href="{{route('eventos.post',['evento'=>$evento->id])}}"><img class="card-img-top" src="{{asset($evento->imagem1)}}" alt=""></a>
+                    <a href="{{route('eventos.post',['evento'=>$evento->slug])}}"><img class="card-img-top" src="{{asset($evento->imagem1)}}" alt=""></a>
                     <div class="card-body">
                         <h5 class="card-title text-center">
-                            <a href="{{route('eventos.post',['evento'=>$evento->id])}}">{{$evento->titulo}}</a>
+                            <a href="{{route('eventos.post',['evento'=>$evento->slug])}}">{{$evento->titulo}}</a>
                         </h5>
                         <p class="card-text text-center"><small>
                             Data: {{$evento->getData($evento->data_inicio) }}<br>

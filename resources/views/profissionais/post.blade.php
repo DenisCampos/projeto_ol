@@ -158,13 +158,13 @@
                     @endforeach
                     @if($possui==true)
                     <div class="col-md-12">
-                        <a href="{{route('profissionais.subposts',['atuacao'=>$patuacao->id,'subatuacao'=>0])}}">
+                        <a href="{{route('profissionais.subposts',['atuacao'=>$patuacao->slug,'subatuacao'=>'todos'])}}">
                             {{$patuacao->descricao}}
                         </a>
                     </div>
                     @else
                         <div class="col-md-12">
-                            <a  href="{{route('profissionais.posts',['atuacao'=>$patuacao->id])}}">
+                            <a  href="{{route('profissionais.posts',['atuacao'=>$patuacao->slug])}}">
                                 {{$patuacao->descricao}}
                             </a>
                         </div>
@@ -182,10 +182,10 @@
             @foreach($profissionais as $profissional)
             <div class="col-lg-3 col-sm-6 portfolio-item">
                 <div class="card h-100">
-                    <a href="{{route('profissionais.post',['profissional'=>$profissional->id])}}"><img class="card-img-top" src="{{asset($profissional->foto)}}" alt=""></a>
+                    <a href="{{route('profissionais.post',['profissional'=>$profissional->slug])}}"><img class="card-img-top" src="{{asset($profissional->foto)}}" alt=""></a>
                     <div class="card-body">
                         <h5 class="card-title text-center">
-                            <a href="{{route('profissionais.post',['profissional'=>$profissional->id])}}">{{$profissional->name}}</a>
+                            <a href="{{route('profissionais.post',['profissional'=>$profissional->slug])}}">{{$profissional->name}}</a>
                         </h5>
                         <p class="text-center"><small>
                             @foreach($profatuacoes_array as $profatuacoes)

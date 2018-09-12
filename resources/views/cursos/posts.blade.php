@@ -16,11 +16,11 @@
     <br>
     <div class="row">
         <div class="col-lg-12" role="group">
-            <button type="button" class="mb-1 btn btn-outline-custom @if($categoria==0) active @endif" onclick="window.open('{{route('cursos.posts',['categoria'=>0])}}','_self')">
+            <button type="button" class="mb-1 btn btn-outline-custom @if($categoria=='todos') active @endif" onclick="window.open('{{route('cursos.posts',['categoria'=>'todos'])}}','_self')">
                 Todos
             </button>
             @foreach($opcoescategorias as $opcoescategoria)
-            <button type="button" class="mb-1 btn btn-outline-custom @if($opcoescategoria->id==$categoria) active @endif" onclick="window.open('{{route('cursos.posts',['categoria'=>$opcoescategoria->id])}}','_self')">
+            <button type="button" class="mb-1 btn btn-outline-custom @if($opcoescategoria->slug==$categoria) active @endif" onclick="window.open('{{route('cursos.posts',['categoria'=>$opcoescategoria->slug])}}','_self')">
                     {{$opcoescategoria->descricao}} 
             </button>
             @endforeach
@@ -31,19 +31,15 @@
         @foreach($cursos as $curso)
         <div class="col-lg-3 col-sm-6 portfolio-item">
             <div class="card h-100">
-                <a href="{{route('cursos.post',['curso'=>$curso->id])}}"><img class="card-img-top" src="{{asset($curso->imagem1)}}" alt=""></a>
+                <a href="{{route('cursos.post',['curso'=>$curso->slug])}}"><img class="card-img-top" src="{{asset($curso->imagem1)}}" alt=""></a>
                 <div class="card-body">
                     <h5 class="card-title text-center">
-                        <a href="{{route('cursos.post',['curso'=>$curso->id])}}">{{$curso->titulo}}</a>
+                        <a href="{{route('cursos.post',['curso'=>$curso->slug])}}">{{$curso->titulo}}</a>
                     </h5>
                     @if($curso->sub_titulo!="")
                     <p class="card-text text-center">{{$curso->sub_titulo}}</p>
                     @endif
                 </div>
-               <!--<div class="text-center mb-3">
-                    <hr style="margin-top: 0px;">
-                    <button type="buttom" onclick="window.open('{{route('cursos.post',['id'=>$curso->id])}}','_self')" class="btn btn-sm btn-custom">Saiba mais</button>
-                </div>-->
             </div>
         </div>
         @endforeach

@@ -16,11 +16,11 @@
     <br>
     <div class="row">
         <div class="col-lg-12" role="group">
-            <button type="button" class="mb-1 btn btn-outline-custom @if($categoria==0) active @endif" onclick="window.open('{{route('blog.posts',['categoria'=>0])}}','_self')">
+            <button type="button" class="mb-1 btn btn-outline-custom @if($categoria=='todos') active @endif" onclick="window.open('{{route('blog.posts',['categoria'=>'todos'])}}','_self')">
                 Todos
             </button>
             @foreach($vcategorias as $vcategoria)
-            <button type="button" class="mb-1 btn btn-outline-custom @if($vcategoria->id==$categoria) active @endif" onclick="window.open('{{route('blog.posts',['categoria'=>$vcategoria->id])}}','_self')">
+            <button type="button" class="mb-1 btn btn-outline-custom @if($vcategoria->slug==$categoria) active @endif" onclick="window.open('{{route('blog.posts',['categoria'=>$vcategoria->slug])}}','_self')">
                     {{$vcategoria->descricao}} 
             </button>
             @endforeach
@@ -31,10 +31,10 @@
         @foreach($posts as $post)
         <div class="col-lg-3 col-sm-6 portfolio-item">
             <div class="card h-100">
-                <a href="{{route('blog.post',['post'=>$post->id])}}"><img class="card-img-top image-apresentacao" src="{{asset($post->imagem1)}}" alt=""></a>
+                <a href="{{route('blog.post',['post'=>$post->slug])}}"><img class="card-img-top image-apresentacao" src="{{asset($post->imagem1)}}" alt=""></a>
                 <div class="card-body">
                     <h5 class="card-title text-center">
-                        <a href="{{route('blog.post',['post'=>$post->id])}}">{{$post->titulo}}</a>
+                        <a href="{{route('blog.post',['post'=>$post->slug])}}">{{$post->titulo}}</a>
                     </h5>
                 </div>
             </div>

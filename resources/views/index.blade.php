@@ -89,7 +89,7 @@
                     <img class="img-fluid" src="{{asset('public/images/prof.png')}}" alt="">
                 </div>
                 <div class="col-lg-10">
-                    <a href="{{route('profissionais.posts',['atuacao'=>0])}}"><h5>Profissionais de Alta Performance</h5></a>
+                    <a href="{{route('profissionais.posts',['atuacao'=>'todos'])}}"><h5>Profissionais de Alta Performance</h5></a>
                     <p>Aqui você encontra profissionais de alta performance que irão te levar para o próximo nível. Os top nutrólogos, nutricionistas, personais e coaches estão aqui.</p>
                 </div>
             </div>
@@ -100,7 +100,7 @@
                     <img class="img-fluid" src="{{asset('public/images/empresas.png')}}" alt="">
                 </div>
                 <div class="col-lg-10">
-                    <a href="{{route('empresas.posts',['atuacao'=>0])}}"><h5>Empresas Especializadas</h5></a>
+                    <a href="{{route('empresas.posts',['atuacao'=>'todos'])}}"><h5>Empresas Especializadas</h5></a>
                     <p>Saiba onde encontrar Empresas especializadas no mercado fitness com os melhores produtos e serviços disponíveis em sua região.</p>
                 </div>
             </div>
@@ -111,7 +111,7 @@
                     <img class="img-fluid" src="{{asset('public/images/eventos.png')}}" alt="">
                 </div>
                 <div class="col-lg-10">
-                    <a href="{{route('eventos.posts',['categoria'=>0])}}"><h5>Eventos</h5></a>
+                    <a href="{{route('eventos.posts',['categoria'=>'todos'])}}"><h5>Eventos</h5></a>
                     <p>Oferecemos uma área exclusiva de eventos fitness para que você não perca o foco e possa encontrar os principais eventos da sua região e compartilhar conhecimentos, habilidades, experiências e diversão.</p>
                 </div>
             </div>
@@ -122,7 +122,7 @@
                     <img class="img-fluid" src="{{asset('public/images/blog.png')}}" alt="">
                 </div>
                 <div class="col-lg-10">
-                    <a href="{{route('blog.posts',['categoria'=>0])}}"><h5>Blog</h5></a>
+                    <a href="{{route('blog.posts',['categoria'=>'todos'])}}"><h5>Blog</h5></a>
                     <p>Você encontrará aqui o melhor do conteúdo fitness na internet assinado por especialistas, com artigos, notícias e informações de tudo que você precisa para se manter bem informado e com alto rendimento.</p>
                 </div>
             </div>
@@ -133,7 +133,7 @@
                     <img class="img-fluid" src="{{asset('public/images/infopro.png')}}" alt="">
                 </div>
                     <div class="col-lg-10">
-                    <a href="{{route('cursos.posts',['categoria'=>0])}}"><h5>Top Produtos</h5></a>
+                    <a href="{{route('cursos.posts',['categoria'=>'todos'])}}"><h5>Top Produtos</h5></a>
                     <p>​Tenha acesso ao que há de melhor e mais avançado do mundo fitness sem sair de casa com os Produtos Digitais “Para Você”, “Para Profissionais” e “Para Empresas”, através dos maiores especialistas do país.​</p>
                 </div>
             </div>
@@ -146,17 +146,17 @@
             <h2 class="mb-3 text-custom-titulo">Conteúdos
                 <small class="text-custom-desc">em destaque</small>
             </h2>
-            <small class="pull-right"><a href="{{route('blog.posts',['categoria'=>0])}}">Ver todos</a></small>
+            <small class="pull-right"><a href="{{route('blog.posts',['categoria'=>'todos'])}}">Ver todos</a></small>
             <hr>
         </div>
         <div class="col-lg-12 carrossel-posts row" style="padding-right: 0px">
             @foreach($posts as $post)
                 <div class="col-md-12 col-sm-6 ">
                     <div class="card h-100">
-                        <a href="{{route('blog.post',['post'=>$post->id])}}"><img class="card-img-top img-fluid" src="{{asset($post->imagem1)}}" alt=""></a>
+                        <a href="{{route('blog.post',['post'=>$post->slug])}}"><img class="card-img-top img-fluid" src="{{asset($post->imagem1)}}" alt=""></a>
                         <div class="card-body">
                             <h5 class="card-title text-center">
-                                <a href="{{route('blog.post',['post'=>$post->id])}}">{{$post->titulo}}</a>
+                                <a href="{{route('blog.post',['post'=>$post->slug])}}">{{$post->titulo}}</a>
                             </h5>
                         </div>
                     </div>
@@ -180,10 +180,10 @@
             @foreach($eventos as $evento)
             <div class="col-md-12 ">
                 <div class="card h-100">
-                    <a href="{{route('eventos.post',['evento'=>$evento->id])}}"><img class="card-img-top" src="{{asset($evento->imagem1)}}" alt=""></a>
+                    <a href="{{route('eventos.post',['evento'=>$evento->slug])}}"><img class="card-img-top" src="{{asset($evento->imagem1)}}" alt=""></a>
                     <div class="card-body">
                         <h5 class="card-title text-center">
-                            <a href="{{route('eventos.post',['evento'=>$evento->id])}}">{{$evento->titulo}}</a>
+                            <a href="{{route('eventos.post',['evento'=>$evento->slug])}}">{{$evento->titulo}}</a>
                         </h5>
                         <p class="card-text text-center"><small>
                             Data: {{$evento->getData($evento->data_inicio) }}<br>
@@ -205,17 +205,17 @@
             <h2 class="mb-3 text-custom-titulo">Profissionais
                 <small class="text-custom-desc">parceiros</small>
             </h2>
-            <small class="pull-right"><a href="{{route('profissionais.posts',['atuacao'=>0])}}">Ver todos</a></small>
+            <small class="pull-right"><a href="{{route('profissionais.posts',['atuacao'=>'todos'])}}">Ver todos</a></small>
             <hr>
         </div>
         <div class="col-lg-12 carrossel-profissionais row" style="padding-right: 0px">
             @foreach($profissionais as $profissional)
             <div class="col-md-12 ">
                 <div class="card h-100">
-                    <a href="{{route('profissionais.post',['profissional'=>$profissional->id])}}"><img class="card-img-top" src="{{asset($profissional->foto)}}" alt=""></a>
+                    <a href="{{route('profissionais.post',['profissional'=>$profissional->slug])}}"><img class="card-img-top" src="{{asset($profissional->foto)}}" alt=""></a>
                     <div class="card-body">
                         <h5 class="card-title text-center">
-                            <a href="{{route('profissionais.post',['profissional'=>$profissional->id])}}">{{$profissional->name}}</a>
+                            <a href="{{route('profissionais.post',['profissional'=>$profissional->slug])}}">{{$profissional->name}}</a>
                         </h5>
                         <p class="text-center"><small>
                             @foreach($profatuacoes_array as $profatuacoes)
@@ -249,17 +249,17 @@
             <h2 class="mb-3 text-custom-titulo">Empresas
                 <small class="text-custom-desc">parceiras</small>
             </h2>
-            <small class="pull-right"><a href="{{route('empresas.posts',['atuacao'=>0])}}">Ver todos</a></small>
+            <small class="pull-right"><a href="{{route('empresas.posts',['atuacao'=>'todos'])}}">Ver todos</a></small>
             <hr>
         </div>
         <div class="col-lg-12 carrossel-empresas row" style="padding-right: 0px">
             @foreach($empresas as $empresa)
             <div class="col-md-12 ">
                 <div class="card h-100">
-                    <a href="{{route('empresas.post',['empresa'=>$empresa->id])}}"><img class="card-img-top" src="{{asset($empresa->imagem1)}}" alt=""></a>
+                    <a href="{{route('empresas.post',['empresa'=>$empresa->slug])}}"><img class="card-img-top" src="{{asset($empresa->imagem1)}}" alt=""></a>
                     <div class="card-body">
                         <h5 class="card-title text-center">
-                            <a href="{{route('empresas.post',['empresa'=>$empresa->id])}}">{{$empresa->name}}</a>
+                            <a href="{{route('empresas.post',['empresa'=>$empresa->slug])}}">{{$empresa->name}}</a>
                         </h5>
                         <p class="text-center"><small>
                             @foreach($empatuacoes_array as $empatuacoes)
@@ -294,26 +294,22 @@
             <h2 class="mb-3 text-custom-titulo">Top Produtos
                 <small class="text-custom-desc">em destaque</small>
             </h2>
-            <small class="pull-right"><a href="{{route('cursos.posts',['categoria'=>0])}}">Ver todos</a></small>
+            <small class="pull-right"><a href="{{route('cursos.posts',['categoria'=>'todos'])}}">Ver todos</a></small>
             <hr>
         </div>
         <div class="col-lg-12 carrossel-cursos row" style="padding-right: 0px">
             @foreach($cursos as $curso)
             <div class="col-md-12 ">
                 <div class="card h-100">
-                    <a href="{{route('cursos.post',['curso'=>$curso->id])}}"><img class="card-img-top" src="{{asset($curso->imagem1)}}" alt=""></a>
+                    <a href="{{route('cursos.post',['curso'=>$curso->slug])}}"><img class="card-img-top" src="{{asset($curso->imagem1)}}" alt=""></a>
                     <div class="card-body">
                         <h5 class="card-title text-center">
-                            <a href="{{route('cursos.post',['curso'=>$curso->id])}}">{{$curso->titulo}}</a>
+                            <a href="{{route('cursos.post',['curso'=>$curso->slug])}}">{{$curso->titulo}}</a>
                         </h5>
                         @if($curso->sub_titulo!="")
                         <p class="card-text text-center"><small>{{$curso->sub_titulo}}</small></p>
                         @endif
                     </div>
-                    <!--<div class="text-center mb-3 mt-0">
-                        <hr style="margin-top: 0px;">
-                        <button type="buttom" onclick="window.open('{{route('cursos.post',['id'=>$curso->id])}}','_self')" class="btn btn-sm btn-custom">Saiba mais</button>
-                    </div>-->
                 </div>
             </div>
             @endforeach

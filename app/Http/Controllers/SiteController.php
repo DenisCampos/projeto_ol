@@ -303,7 +303,7 @@ class SiteController extends Controller
         return view('eventos.posts', compact('patuacoes','psubatuacoes','eatuacoes','esubatuacoes','vcategorias','bannersprincipais','eventos','categoria'));
     }
 
-    public function eventospost($id)
+    public function eventospost($slug)
     {
         //menus
         $patuacoes = $this->atuacoesrepository->orderBy('descricao')->findWhereIn('tipo', [1,3]);
@@ -312,7 +312,7 @@ class SiteController extends Controller
         $esubatuacoes = $this->subatuacoesrepository->orderBy('descricao')->findWhereIn('tipo', [2,3]);
         $vcategorias = $this->categoriasrepository->orderBy('descricao')->findWhereIn('tipo', [7, 8, 9, 10, 11, 12, 13,15]);
       
-        $evento = $this->eventosrepository->find($id);
+        $evento = $this->eventosrepository->findByField('slug',$slug)->first();
         $evento->data_inicio = Carbon::createFromFormat('Y-m-d H:i:s', $evento->data_inicio)->format('d/m/Y H:i:s');
         $evento->data_fim = Carbon::createFromFormat('Y-m-d H:i:s', $evento->data_fim)->format('d/m/Y H:i:s');
 
@@ -341,7 +341,7 @@ class SiteController extends Controller
          $esubatuacoes = $this->subatuacoesrepository->orderBy('descricao')->findWhereIn('tipo', [2,3]);
          $vcategorias = $this->categoriasrepository->orderBy('descricao')->findWhereIn('tipo', [7, 8, 9, 10, 11, 12, 13,15]);
 
-        if($categoria==0){
+        if($categoria=='todos'){
             $cursos = $this->cursosrepository->scopeQuery(function($query) use($categoria){
                 return $query->join('curso_categorias', 'cursos.id', '=', 'curso_categorias.curso_id')
                 ->join('categorias', 'curso_categorias.categoria_id', '=', 'categorias.id')
@@ -351,20 +351,21 @@ class SiteController extends Controller
                     ['statu_id', '=', 2]
                 ])
                 ->whereIn('categorias.tipo', [1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14, 15])
-                ->select('cursos.id', 'imagem1', 'titulo', 'sub_titulo')
+                ->select('cursos.id', 'imagem1', 'titulo', 'sub_titulo', 'cursos.slug')
                 ->groupBy('cursos.id');
             })->paginate(16);
         }else{
-            $cursos = $this->cursosrepository->scopeQuery(function($query) use($categoria){
+            $objtcategoria = $this->categoriasrepository->findByField('slug',$categoria)->first();
+            $cursos = $this->cursosrepository->scopeQuery(function($query) use($objtcategoria){
                 return $query->join('curso_categorias', 'cursos.id', '=', 'curso_categorias.curso_id')
                 ->join('categorias', 'curso_categorias.categoria_id', '=', 'categorias.id')
                 ->orderby('destaque_id','desc')
                 ->orderby('cursos.updated_at','desc')
                 ->where([
                     ['statu_id', '=', 2],
-                    ['categoria_id', '=', $categoria]
+                    ['categoria_id', '=', $objtcategoria->id]
                 ])
-                ->select('cursos.id', 'imagem1', 'titulo', 'sub_titulo')
+                ->select('cursos.id', 'imagem1', 'titulo', 'sub_titulo', 'cursos.slug')
                 ->groupBy('cursos.id');
             })->paginate(16);
         }
@@ -381,8 +382,8 @@ class SiteController extends Controller
          $esubatuacoes = $this->subatuacoesrepository->orderBy('descricao')->findWhereIn('tipo', [2,3]);
          $vcategorias = $this->categoriasrepository->orderBy('descricao')->findWhereIn('tipo', [7, 8, 9, 10, 11, 12, 13,15]);
 
-        if($categoria==0){
-            $cursos = $this->cursosrepository->scopeQuery(function($query) use($categoria){
+        if($categoria=='todos'){
+            $cursos = $this->cursosrepository->scopeQuery(function($query){
                 return $query->join('curso_categorias', 'cursos.id', '=', 'curso_categorias.curso_id')
                 ->join('categorias', 'curso_categorias.categoria_id', '=', 'categorias.id')
                 ->orderby('destaque_id','desc')
@@ -390,20 +391,21 @@ class SiteController extends Controller
                 ->where([
                     ['statu_id', '=', 2]
                 ])->whereIn('categorias.tipo', [1, 4, 5, 8, 11, 12, 14, 15])
-                ->select('cursos.id', 'imagem1', 'titulo', 'sub_titulo')
+                ->select('cursos.id', 'imagem1', 'titulo', 'sub_titulo', 'cursos.slug')
                 ->groupBy('cursos.id');
             })->paginate(16);
         }else{
-            $cursos = $this->cursosrepository->scopeQuery(function($query) use($categoria){
+            $objtcategoria = $this->categoriasrepository->findByField('slug',$categoria)->first();
+            $cursos = $this->cursosrepository->scopeQuery(function($query) use($objtcategoria){
                 return $query->join('curso_categorias', 'cursos.id', '=', 'curso_categorias.curso_id')
                 ->join('categorias', 'curso_categorias.categoria_id', '=', 'categorias.id')
                 ->orderby('destaque_id','desc')
                 ->orderby('cursos.updated_at','desc')
                 ->where([
                     ['statu_id', '=', 2],
-                    ['categoria_id', '=', $categoria]
+                    ['categoria_id', '=', $objtcategoria->id]
                 ])->whereIn('categorias.tipo', [1, 4, 5, 8, 11, 12, 14, 15])
-                ->select('cursos.id', 'imagem1', 'titulo', 'sub_titulo')
+                ->select('cursos.id', 'imagem1', 'titulo', 'sub_titulo', 'cursos.slug')
                 ->groupBy('cursos.id');
             })->paginate(16);
         }
@@ -421,8 +423,8 @@ class SiteController extends Controller
          $esubatuacoes = $this->subatuacoesrepository->orderBy('descricao')->findWhereIn('tipo', [2,3]);
          $vcategorias = $this->categoriasrepository->orderBy('descricao')->findWhereIn('tipo', [7, 8, 9, 10, 11, 12, 13,15]);
 
-        if($categoria==0){
-            $cursos = $this->cursosrepository->scopeQuery(function($query) use($categoria){
+        if($categoria=='todos'){
+            $cursos = $this->cursosrepository->scopeQuery(function($query){
                 return $query->join('curso_categorias', 'cursos.id', '=', 'curso_categorias.curso_id')
                 ->join('categorias', 'curso_categorias.categoria_id', '=', 'categorias.id')
                 ->orderby('destaque_id','desc')
@@ -430,20 +432,21 @@ class SiteController extends Controller
                 ->where([
                     ['statu_id', '=', 2]
                 ])->whereIn('categorias.tipo', [2, 4, 6, 9, 11, 13, 14, 15])
-                ->select('cursos.id', 'imagem1', 'titulo', 'sub_titulo')
+                ->select('cursos.id', 'imagem1', 'titulo', 'sub_titulo', 'cursos.slug')
                 ->groupBy('cursos.id');
             })->paginate(16);
         }else{
-            $cursos = $this->cursosrepository->scopeQuery(function($query) use($categoria){
+            $objtcategoria = $this->categoriasrepository->findByField('slug',$categoria)->first();
+            $cursos = $this->cursosrepository->scopeQuery(function($query) use($objtcategoria){
                 return $query->join('curso_categorias', 'cursos.id', '=', 'curso_categorias.curso_id')
                 ->join('categorias', 'curso_categorias.categoria_id', '=', 'categorias.id')
                 ->orderby('destaque_id','desc')
                 ->orderby('cursos.updated_at','desc')
                 ->where([
                     ['statu_id', '=', 2],
-                    ['categoria_id', '=', $categoria]
+                    ['categoria_id', '=', $objtcategoria->id]
                 ])->whereIn('categorias.tipo', [2, 4, 6, 9, 11, 13, 14, 15])
-                ->select('cursos.id', 'imagem1', 'titulo', 'sub_titulo')
+                ->select('cursos.id', 'imagem1', 'titulo', 'sub_titulo', 'cursos.slug')
                 ->groupBy('cursos.id');
             })->paginate(16);
         }
@@ -461,8 +464,8 @@ class SiteController extends Controller
          $esubatuacoes = $this->subatuacoesrepository->orderBy('descricao')->findWhereIn('tipo', [2,3]);
          $vcategorias = $this->categoriasrepository->orderBy('descricao')->findWhereIn('tipo', [7, 8, 9, 10, 11, 12, 13,15]);
 
-        if($categoria==0){
-            $cursos = $this->cursosrepository->scopeQuery(function($query) use($categoria){
+        if($categoria=='todos'){
+            $cursos = $this->cursosrepository->scopeQuery(function($query){
                 return $query->join('curso_categorias', 'cursos.id', '=', 'curso_categorias.curso_id')
                 ->join('categorias', 'curso_categorias.categoria_id', '=', 'categorias.id')
                 ->orderby('destaque_id','desc')
@@ -470,20 +473,21 @@ class SiteController extends Controller
                 ->where([
                     ['statu_id', '=', 2]
                 ])->whereIn('categorias.tipo', [3, 5, 6, 10, 12, 13, 14, 15])
-                ->select('cursos.id', 'imagem1', 'titulo', 'sub_titulo')
+                ->select('cursos.id', 'imagem1', 'titulo', 'sub_titulo', 'cursos.slug')
                 ->groupBy('cursos.id');
             })->paginate(16);
         }else{
-            $cursos = $this->cursosrepository->scopeQuery(function($query) use($categoria){
+            $objtcategoria = $this->categoriasrepository->findByField('slug',$categoria)->first();
+            $cursos = $this->cursosrepository->scopeQuery(function($query) use($objtcategoria){
                 return $query->join('curso_categorias', 'cursos.id', '=', 'curso_categorias.curso_id')
                 ->join('categorias', 'curso_categorias.categoria_id', '=', 'categorias.id')
                 ->orderby('destaque_id','desc')
                 ->orderby('cursos.updated_at','desc')
                 ->where([
                     ['statu_id', '=', 2],
-                    ['categoria_id', '=', $categoria]
+                    ['categoria_id', '=', $objtcategoria->id]
                 ])->whereIn('categorias.tipo', [3, 5, 6, 10, 12, 13, 14, 15])
-                ->select('cursos.id', 'imagem1', 'titulo', 'sub_titulo')
+                ->select('cursos.id', 'imagem1', 'titulo', 'sub_titulo', 'cursos.slug')
                 ->groupBy('cursos.id');
             })->paginate(16);
         }
@@ -492,7 +496,7 @@ class SiteController extends Controller
         return view('cursos.empposts', compact('patuacoes','psubatuacoes','eatuacoes','esubatuacoes','vcategorias','bannersprincipais','cursos','categoria','opcoescategorias'));
     }
 
-    public function cursospost($id)
+    public function cursospost($slug)
     {
         //menus
         $patuacoes = $this->atuacoesrepository->orderBy('descricao')->findWhereIn('tipo', [1,3]);
@@ -501,7 +505,7 @@ class SiteController extends Controller
         $esubatuacoes = $this->subatuacoesrepository->orderBy('descricao')->findWhereIn('tipo', [2,3]);
         $vcategorias = $this->categoriasrepository->orderBy('descricao')->findWhereIn('tipo', [7, 8, 9, 10, 11, 12, 13,15]);
       
-        $curso = $this->cursosrepository->find($id);
+        $curso = $this->cursosrepository->findByField('slug',$slug)->first();
         if($curso->data_inicio!=""){
             $curso->data_inicio = Carbon::createFromFormat('Y-m-d H:i:s', $curso->data_inicio)->format('d/m/Y H:i:s');
         }
@@ -529,19 +533,20 @@ class SiteController extends Controller
       
 
         $search = $request->get('search');
-        if($categoria==0){
+        if($categoria=='todos'){
             $posts = $this->postsrepository->scopeQuery(function($query){
                 return $query->where([
                     ['statu_id', '=', 2]
                 ]);
             })->paginate(16);
         }else{
-            $posts = $this->postsrepository->scopeQuery(function($query) use($categoria){
+            $objtcategoria = $this->categoriasrepository->findByField('slug',$categoria)->first();
+            $posts = $this->postsrepository->scopeQuery(function($query) use($objtcategoria){
                 return $query->join('post_categorias', 'posts.id', '=', 'post_categorias.post_id')
                 ->where([
                     ['statu_id', '=', 2],
-                    ['categoria_id', '=', $categoria]
-                ])->select('posts.id', 'imagem1', 'titulo');
+                    ['categoria_id', '=', $objtcategoria->id]
+                ])->select('posts.id', 'imagem1', 'titulo', 'posts.slug');
             })->paginate(16);
         }
        
@@ -549,7 +554,7 @@ class SiteController extends Controller
         return view('blog.posts', compact('patuacoes','psubatuacoes','eatuacoes','esubatuacoes','vcategorias','bannersprincipais','posts','categoria'));
     }
 
-    public function blogpost($id)
+    public function blogpost($slug)
     {
         //menus
         $patuacoes = $this->atuacoesrepository->orderBy('descricao')->findWhereIn('tipo', [1,3]);
@@ -558,7 +563,7 @@ class SiteController extends Controller
         $esubatuacoes = $this->subatuacoesrepository->orderBy('descricao')->findWhereIn('tipo', [2,3]);
         $vcategorias = $this->categoriasrepository->orderBy('descricao')->findWhereIn('tipo', [7, 8, 9, 10, 11, 12, 13,15]);
       
-        $post = $this->postsrepository->find($id);
+        $post = $this->postsrepository->findByField('slug',$slug)->first();
         $posts =  $this->postsrepository->findWhere(['statu_id' => 2,['id','<>',$post->id]]);
         if(count($posts)>4){
             $posts = $posts->random(4); 
@@ -586,7 +591,7 @@ class SiteController extends Controller
       
 
         $search = $request->get('search');
-        if($atuacao==0){
+        if($atuacao=='todos'){
             $profissionais = $this->profissionaisrepository->scopeQuery(function($query){
                 return $query->orderby('destaque_id','desc')
                 ->orderby('updated_at','desc')
@@ -595,14 +600,15 @@ class SiteController extends Controller
                 ]);
             })->paginate(16);
         }else{
-            $profissionais = $this->profissionaisrepository->scopeQuery(function($query) use($atuacao){
+            $objtatuacao = $this->atuacoesrepository->findByField('slug',$atuacao)->first();
+            $profissionais = $this->profissionaisrepository->scopeQuery(function($query) use($objtatuacao){
                 return $query->join('profissional_atuacoes', 'profissionais.id', '=', 'profissional_atuacoes.profissional_id')
                 ->orderby('destaque_id','desc')
                 ->orderby('profissionais.updated_at','desc')
                 ->where([
                     ['statu_id', '=', 2],
-                    ['atuacao_id', '=', $atuacao]
-                ])->select('profissionais.id', 'foto', 'name');
+                    ['atuacao_id', '=', $objtatuacao->id]
+                ])->select('profissionais.id', 'foto', 'name', 'profissionais.slug');
             })->paginate(16);
         }
 
@@ -629,35 +635,37 @@ class SiteController extends Controller
         $esubatuacoes = $this->subatuacoesrepository->orderBy('descricao')->findWhereIn('tipo', [2,3]);
         $vcategorias = $this->categoriasrepository->orderBy('descricao')->findWhereIn('tipo', [7, 8, 9, 10, 11, 12, 13,15]);
 
-        $opcoessubatuacoes = $this->subatuacoesrepository->scopeQuery(function($query) use($atuacao){
+        $objtatuacao = $this->atuacoesrepository->findByField('slug',$atuacao)->first();
+        $objtsubatuacao = $this->subatuacoesrepository->findByField('slug',$subatuacao)->first();
+        $opcoessubatuacoes = $this->subatuacoesrepository->scopeQuery(function($query) use($objtatuacao){
             return $query->where([
-                ['atuacao_id', '=', $atuacao]
+                ['atuacao_id', '=', $objtatuacao->id]
             ])->orderBy('descricao');
         })->findWhereIn('tipo', [1,3]);
 
 
         $search = $request->get('search');
-        if($subatuacao==0){
-            $profissionais = $this->profissionaisrepository->scopeQuery(function($query) use($atuacao){
+        if($subatuacao=='todos'){
+            $profissionais = $this->profissionaisrepository->scopeQuery(function($query) use($objtatuacao){
                 return $query->join('profissional_atuacoes', 'profissionais.id', '=', 'profissional_atuacoes.profissional_id')
                 ->orderby('destaque_id','desc')
                 ->orderby('profissionais.updated_at','desc')
                 ->where([
                     ['statu_id', '=', 2],
-                    ['atuacao_id', '=', $atuacao]
-                ])->select('profissionais.id', 'foto', 'name');
+                    ['atuacao_id', '=', $objtatuacao->id]
+                ])->select('profissionais.id', 'foto', 'name', 'profissionais.slug');
             })->paginate(16);
         }else{
-            $profissionais = $this->profissionaisrepository->scopeQuery(function($query) use($atuacao, $subatuacao){
+            $profissionais = $this->profissionaisrepository->scopeQuery(function($query) use($objtatuacao, $objtsubatuacao){
                 return $query->join('profissional_atuacoes', 'profissionais.id', '=', 'profissional_atuacoes.profissional_id')
                 ->join('profissional_sub_atuacoes', 'profissionais.id', '=', 'profissional_sub_atuacoes.profissional_id')
                 ->orderby('destaque_id','desc')
                 ->orderby('profissionais.updated_at','desc')
                 ->where([
                     ['statu_id', '=', 2],
-                    ['atuacao_id', '=', $atuacao],
-                    ['subatuacao_id', '=', $subatuacao]
-                ])->select('profissionais.id', 'foto', 'name');
+                    ['atuacao_id', '=', $objtatuacao->id],
+                    ['subatuacao_id', '=', $objtsubatuacao->id]
+                ])->select('profissionais.id', 'foto', 'name', 'profissionais.slug');
             })->paginate(16);
         }
 
@@ -675,7 +683,7 @@ class SiteController extends Controller
         return view('profissionais.subposts', compact('patuacoes','psubatuacoes','eatuacoes','esubatuacoes','vcategorias','bannersprincipais','profissionais','atuacao','subatuacao','opcoessubatuacoes','profatuacoes_array'));
     }
 
-    public function profpost($id)
+    public function profpost($slug)
     {
         //menus
         $patuacoes = $this->atuacoesrepository->orderBy('descricao')->findWhereIn('tipo', [1,3]);
@@ -684,7 +692,7 @@ class SiteController extends Controller
         $esubatuacoes = $this->subatuacoesrepository->orderBy('descricao')->findWhereIn('tipo', [2,3]);
         $vcategorias = $this->categoriasrepository->orderBy('descricao')->findWhereIn('tipo', [7, 8, 9, 10, 11, 12, 13,15]);
       
-        $profissional = $this->profissionaisrepository->find($id);
+        $profissional = $this->profissionaisrepository->findByField('slug',$slug)->first();
         $profatuacoes = $this->profissionalatuacoesrepository->scopeQuery(function($query){
             return $query->join('atuacoes', 'atuacoes.id', '=', 'profissional_atuacoes.atuacao_id')
                 ->orderBy('descricao');
@@ -725,7 +733,7 @@ class SiteController extends Controller
       
 
         $search = $request->get('search');
-        if($atuacao==0){
+        if($atuacao=='todos'){
             $empresas = $this->empresasrepository->scopeQuery(function($query){
                 return $query->orderby('destaque_id','desc')
                 ->orderby('empresas.updated_at','desc')
@@ -734,14 +742,15 @@ class SiteController extends Controller
                 ]);
             })->paginate(16);
         }else{
-            $empresas = $this->empresasrepository->scopeQuery(function($query) use($atuacao){
+            $objtatuacao = $this->atuacoesrepository->findByField('slug',$atuacao)->first();
+            $empresas = $this->empresasrepository->scopeQuery(function($query) use($objtatuacao){
                 return $query->join('empresa_atuacoes', 'empresas.id', '=', 'empresa_atuacoes.empresa_id')
                 ->orderby('destaque_id','desc')
                 ->orderby('empresas.updated_at','desc')
                 ->where([
                     ['statu_id', '=', 2],
-                    ['atuacao_id', '=', $atuacao]
-                ])->select('empresas.id', 'imagem1', 'name');
+                    ['atuacao_id', '=', $objtatuacao->id]
+                ])->select('empresas.id', 'imagem1', 'name', 'empresas.slug');
             })->paginate(16);
         }
        
@@ -767,35 +776,37 @@ class SiteController extends Controller
         $esubatuacoes = $this->subatuacoesrepository->orderBy('descricao')->findWhereIn('tipo', [2,3]);
         $vcategorias = $this->categoriasrepository->orderBy('descricao')->findWhereIn('tipo', [7, 8, 9, 10, 11, 12, 13,15]);
         
-        $opcoessubatuacoes = $this->subatuacoesrepository->scopeQuery(function($query) use($atuacao){
+        $objtatuacao = $this->atuacoesrepository->findByField('slug',$atuacao)->first();
+        $objtsubatuacao = $this->subatuacoesrepository->findByField('slug',$subatuacao)->first();
+        $opcoessubatuacoes = $this->subatuacoesrepository->scopeQuery(function($query) use($objtatuacao){
             return $query->where([
-                ['atuacao_id', '=', $atuacao]
+                ['atuacao_id', '=', $objtatuacao->id]
             ])->orderBy('descricao');
         })->findWhereIn('tipo', [2,3]);
 
 
         $search = $request->get('search');
-        if($subatuacao==0){
-            $empresas = $this->empresasrepository->scopeQuery(function($query) use($atuacao){
+        if($subatuacao=='todos'){
+            $empresas = $this->empresasrepository->scopeQuery(function($query) use($objtatuacao){
                 return $query->join('empresa_atuacoes', 'empresas.id', '=', 'empresa_atuacoes.empresa_id')
                 ->orderby('destaque_id','desc')
                 ->orderby('empresas.updated_at','desc')
                 ->where([
                     ['statu_id', '=', 2],
-                    ['atuacao_id', '=', $atuacao]
-                ])->select('empresas.id', 'imagem1', 'name');
+                    ['atuacao_id', '=', $objtatuacao->id]
+                ])->select('empresas.id', 'imagem1', 'name', 'empresas.slug');
             })->paginate(16);
         }else{
-            $empresas = $this->empresasrepository->scopeQuery(function($query) use($atuacao, $subatuacao){
+            $empresas = $this->empresasrepository->scopeQuery(function($query) use($objtatuacao, $objtsubatuacao){
                 return $query->join('empresa_atuacoes', 'empresas.id', '=', 'empresa_atuacoes.empresa_id')
                 ->join('empresa_sub_atuacoes', 'empresas.id', '=', 'empresa_sub_atuacoes.empresa_id')
                 ->orderby('destaque_id','desc')
                 ->orderby('empresas.updated_at','desc')
                 ->where([
                     ['statu_id', '=', 2],
-                    ['atuacao_id', '=', $atuacao],
-                    ['subatuacao_id', '=', $subatuacao]
-                ])->select('empresas.id', 'imagem1', 'name');
+                    ['atuacao_id', '=', $objtatuacao->id],
+                    ['subatuacao_id', '=', $objtsubatuacao->id]
+                ])->select('empresas.id', 'imagem1', 'name', 'empresas.slug');
             })->paginate(16);
         }
 
@@ -813,7 +824,7 @@ class SiteController extends Controller
         return view('empresas.subposts', compact('patuacoes','psubatuacoes','eatuacoes','esubatuacoes','vcategorias','bannersprincipais','empresas','atuacao','subatuacao','opcoessubatuacoes', 'empatuacoes_array'));
     }
 
-    public function emppost($id)
+    public function emppost($slug)
     {
         //menus
         $patuacoes = $this->atuacoesrepository->orderBy('descricao')->findWhereIn('tipo', [1,3]);
@@ -822,7 +833,7 @@ class SiteController extends Controller
         $esubatuacoes = $this->subatuacoesrepository->orderBy('descricao')->findWhereIn('tipo', [2,3]);
         $vcategorias = $this->categoriasrepository->orderBy('descricao')->findWhereIn('tipo', [7, 8, 9, 10, 11, 12, 13,15]);
       
-        $empresa = $this->empresasrepository->find($id);
+        $empresa = $this->empresasrepository->findByField('slug',$slug)->first();
 
         $banners = $this->empresabannersrepository->findWhere([
             'empresa_id'=>$empresa->id,

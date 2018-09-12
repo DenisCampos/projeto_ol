@@ -146,13 +146,13 @@
                     @endforeach
                     @if($possui==true)
                     <div class="col-md-12">
-                        <a href="{{route('empresas.subposts',['atuacao'=>$eatuacao->id,'subatuacao'=>0])}}">
+                        <a href="{{route('empresas.subposts',['atuacao'=>$eatuacao->slug,'subatuacao'=>'todos'])}}">
                             {{$eatuacao->descricao}}
                         </a>
                     </div>
                     @else
                         <div class="col-md-12">
-                            <a  href="{{route('empresas.posts',['atuacao'=>$eatuacao->id])}}">
+                            <a  href="{{route('empresas.posts',['atuacao'=>$eatuacao->slug])}}">
                                 {{$eatuacao->descricao}}
                             </a>
                         </div>
@@ -169,10 +169,10 @@
                 @foreach($empresas as $empresa)
                 <div class="col-lg-3 col-sm-6 portfolio-item">
                     <div class="card h-100">
-                        <a href="{{route('empresas.post',['empresa'=>$empresa->id])}}"><img class="card-img-top" src="{{asset($empresa->imagem2)}}" alt=""></a>
+                        <a href="{{route('empresas.post',['empresa'=>$empresa->slug])}}"><img class="card-img-top" src="{{asset($empresa->imagem2)}}" alt=""></a>
                         <div class="card-body">
                             <h5 class="card-title text-center">
-                                <a href="{{route('empresas.post',['empresa'=>$empresa->id])}}">{{$empresa->name}}</a>
+                                <a href="{{route('empresas.post',['empresa'=>$empresa->slug])}}">{{$empresa->name}}</a>
                             </h5>
                             <p class="text-center"><small>
                                 @foreach($empatuacoes_array as $empatuacoes)

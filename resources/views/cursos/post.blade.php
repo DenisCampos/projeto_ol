@@ -94,9 +94,9 @@
                     <h5>Top Produtos</h5>
                     <hr>
                 </div>
-                <div class="col-md-12"><a href="{{route('cursos.vcposts',['categoria'=>0])}}">Para Você</a></div>
-                <div class="col-md-12"><a href="{{route('cursos.profposts',['categoria'=>0])}}">Para Profissionais</a></div>
-                <div class="col-md-12"><a href="{{route('cursos.empposts',['categoria'=>0])}}">Para Empresas</a></div>
+                <div class="col-md-12"><a href="{{route('cursos.vcposts',['categoria'=>'todos'])}}">Para Você</a></div>
+                <div class="col-md-12"><a href="{{route('cursos.profposts',['categoria'=>'todos'])}}">Para Profissionais</a></div>
+                <div class="col-md-12"><a href="{{route('cursos.empposts',['categoria'=>'todos'])}}">Para Empresas</a></div>
             </div>
             <div class="container row">
                 <div class="col-lg-12 text-custom-titulo" style="padding-left: 0px">
@@ -117,13 +117,13 @@
                     @endforeach
                     @if($possui==true)
                     <div class="col-md-12">
-                        <a href="{{route('profissionais.subposts',['atuacao'=>$patuacao->id,'subatuacao'=>0])}}">
+                        <a href="{{route('profissionais.subposts',['atuacao'=>$patuacao->slug,'subatuacao'=>'todos'])}}">
                             {{$patuacao->descricao}}
                         </a>
                     </div>
                     @else
                         <div class="col-md-12">
-                            <a  href="{{route('profissionais.posts',['atuacao'=>$patuacao->id])}}">
+                            <a  href="{{route('profissionais.posts',['atuacao'=>$patuacao->slug])}}">
                                 {{$patuacao->descricao}}
                             </a>
                         </div>
@@ -141,10 +141,10 @@
                 @foreach($cursos as $curso)
                 <div class="col-lg-4 col-sm-6 portfolio-item">
                     <div class="card h-100">
-                        <a href="{{route('cursos.post',['curso'=>$curso->id])}}"><img class="card-img-top" src="{{asset($curso->imagem1)}}" alt=""></a>
+                        <a href="{{route('cursos.post',['curso'=>$curso->slug])}}"><img class="card-img-top" src="{{asset($curso->imagem1)}}" alt=""></a>
                         <div class="card-body">
                             <h4 class="card-title">
-                                <a href="{{route('cursos.post',['curso'=>$curso->id])}}">{{$curso->titulo}}</a>
+                                <a href="{{route('cursos.post',['curso'=>$curso->slug])}}">{{$curso->titulo}}</a>
                             </h4>
                         </div>
                     </div>

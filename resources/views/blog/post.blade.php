@@ -18,7 +18,7 @@
 @endsection
 
 @section('descricao')
-    InfoProduto OloyFit: {{$post->titulo}}
+    Blog OloyFit: {{$post->titulo}}
 @endsection
 
 @section('content')

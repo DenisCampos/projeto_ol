@@ -284,6 +284,9 @@ class SiteController extends Controller
             })->paginate(16);
         }else{
             $objtcategoria = $this->categoriasrepository->findByField('slug',$categoria)->first();
+            if(empty($objtcategoria)){
+                abort(404);
+            }
             $eventos = $this->eventosrepository->scopeQuery(function($query) use($objtcategoria){
                 return $query->join('evento_categorias', 'eventos.id', '=', 'evento_categorias.evento_id')
                 ->orderby('destaque_id','desc')
@@ -313,6 +316,9 @@ class SiteController extends Controller
         $vcategorias = $this->categoriasrepository->orderBy('descricao')->findWhereIn('tipo', [7, 8, 9, 10, 11, 12, 13,15]);
       
         $evento = $this->eventosrepository->findByField('slug',$slug)->first();
+        if(empty($evento)){
+            abort(404);
+        }
         $evento->data_inicio = Carbon::createFromFormat('Y-m-d H:i:s', $evento->data_inicio)->format('d/m/Y H:i:s');
         $evento->data_fim = Carbon::createFromFormat('Y-m-d H:i:s', $evento->data_fim)->format('d/m/Y H:i:s');
 
@@ -356,6 +362,9 @@ class SiteController extends Controller
             })->paginate(16);
         }else{
             $objtcategoria = $this->categoriasrepository->findByField('slug',$categoria)->first();
+            if(empty($objtcategoria)){
+                abort(404);
+            }
             $cursos = $this->cursosrepository->scopeQuery(function($query) use($objtcategoria){
                 return $query->join('curso_categorias', 'cursos.id', '=', 'curso_categorias.curso_id')
                 ->join('categorias', 'curso_categorias.categoria_id', '=', 'categorias.id')
@@ -396,6 +405,9 @@ class SiteController extends Controller
             })->paginate(16);
         }else{
             $objtcategoria = $this->categoriasrepository->findByField('slug',$categoria)->first();
+            if(empty($objtcategoria)){
+                abort(404);
+            }
             $cursos = $this->cursosrepository->scopeQuery(function($query) use($objtcategoria){
                 return $query->join('curso_categorias', 'cursos.id', '=', 'curso_categorias.curso_id')
                 ->join('categorias', 'curso_categorias.categoria_id', '=', 'categorias.id')
@@ -437,6 +449,9 @@ class SiteController extends Controller
             })->paginate(16);
         }else{
             $objtcategoria = $this->categoriasrepository->findByField('slug',$categoria)->first();
+            if(empty($objtcategoria)){
+                abort(404);
+            }
             $cursos = $this->cursosrepository->scopeQuery(function($query) use($objtcategoria){
                 return $query->join('curso_categorias', 'cursos.id', '=', 'curso_categorias.curso_id')
                 ->join('categorias', 'curso_categorias.categoria_id', '=', 'categorias.id')
@@ -478,6 +493,9 @@ class SiteController extends Controller
             })->paginate(16);
         }else{
             $objtcategoria = $this->categoriasrepository->findByField('slug',$categoria)->first();
+            if(empty($objtcategoria)){
+                abort(404);
+            }
             $cursos = $this->cursosrepository->scopeQuery(function($query) use($objtcategoria){
                 return $query->join('curso_categorias', 'cursos.id', '=', 'curso_categorias.curso_id')
                 ->join('categorias', 'curso_categorias.categoria_id', '=', 'categorias.id')
@@ -506,6 +524,9 @@ class SiteController extends Controller
         $vcategorias = $this->categoriasrepository->orderBy('descricao')->findWhereIn('tipo', [7, 8, 9, 10, 11, 12, 13,15]);
       
         $curso = $this->cursosrepository->findByField('slug',$slug)->first();
+        if(empty($curso)){
+            abort(404);
+        }
         if($curso->data_inicio!=""){
             $curso->data_inicio = Carbon::createFromFormat('Y-m-d H:i:s', $curso->data_inicio)->format('d/m/Y H:i:s');
         }
@@ -541,6 +562,9 @@ class SiteController extends Controller
             })->paginate(16);
         }else{
             $objtcategoria = $this->categoriasrepository->findByField('slug',$categoria)->first();
+            if(empty($objtcategoria)){
+                abort(404);
+            }
             $posts = $this->postsrepository->scopeQuery(function($query) use($objtcategoria){
                 return $query->join('post_categorias', 'posts.id', '=', 'post_categorias.post_id')
                 ->where([
@@ -564,6 +588,9 @@ class SiteController extends Controller
         $vcategorias = $this->categoriasrepository->orderBy('descricao')->findWhereIn('tipo', [7, 8, 9, 10, 11, 12, 13,15]);
       
         $post = $this->postsrepository->findByField('slug',$slug)->first();
+        if(empty($post)){
+            abort(404);
+        }
         $posts =  $this->postsrepository->findWhere(['statu_id' => 2,['id','<>',$post->id]]);
         if(count($posts)>4){
             $posts = $posts->random(4); 
@@ -601,6 +628,9 @@ class SiteController extends Controller
             })->paginate(16);
         }else{
             $objtatuacao = $this->atuacoesrepository->findByField('slug',$atuacao)->first();
+            if(empty($objtatuacao)){
+                abort(404);
+            }
             $profissionais = $this->profissionaisrepository->scopeQuery(function($query) use($objtatuacao){
                 return $query->join('profissional_atuacoes', 'profissionais.id', '=', 'profissional_atuacoes.profissional_id')
                 ->orderby('destaque_id','desc')
@@ -636,7 +666,13 @@ class SiteController extends Controller
         $vcategorias = $this->categoriasrepository->orderBy('descricao')->findWhereIn('tipo', [7, 8, 9, 10, 11, 12, 13,15]);
 
         $objtatuacao = $this->atuacoesrepository->findByField('slug',$atuacao)->first();
+        if(empty($objtatuacao)){
+            abort(404);
+        }
         $objtsubatuacao = $this->subatuacoesrepository->findByField('slug',$subatuacao)->first();
+        if(empty($objtsubatuacao)){
+            abort(404);
+        }
         $opcoessubatuacoes = $this->subatuacoesrepository->scopeQuery(function($query) use($objtatuacao){
             return $query->where([
                 ['atuacao_id', '=', $objtatuacao->id]
@@ -693,6 +729,9 @@ class SiteController extends Controller
         $vcategorias = $this->categoriasrepository->orderBy('descricao')->findWhereIn('tipo', [7, 8, 9, 10, 11, 12, 13,15]);
       
         $profissional = $this->profissionaisrepository->findByField('slug',$slug)->first();
+        if(empty($profissional)){
+            abort(404);
+        }
         $profatuacoes = $this->profissionalatuacoesrepository->scopeQuery(function($query){
             return $query->join('atuacoes', 'atuacoes.id', '=', 'profissional_atuacoes.atuacao_id')
                 ->orderBy('descricao');
@@ -743,6 +782,9 @@ class SiteController extends Controller
             })->paginate(16);
         }else{
             $objtatuacao = $this->atuacoesrepository->findByField('slug',$atuacao)->first();
+            if(empty($objtatuacao)){
+                abort(404);
+            }
             $empresas = $this->empresasrepository->scopeQuery(function($query) use($objtatuacao){
                 return $query->join('empresa_atuacoes', 'empresas.id', '=', 'empresa_atuacoes.empresa_id')
                 ->orderby('destaque_id','desc')
@@ -777,7 +819,13 @@ class SiteController extends Controller
         $vcategorias = $this->categoriasrepository->orderBy('descricao')->findWhereIn('tipo', [7, 8, 9, 10, 11, 12, 13,15]);
         
         $objtatuacao = $this->atuacoesrepository->findByField('slug',$atuacao)->first();
+        if(empty($objtatuacao)){
+            abort(404);
+        }
         $objtsubatuacao = $this->subatuacoesrepository->findByField('slug',$subatuacao)->first();
+        if(empty($objtsubatuacao)){
+            abort(404);
+        }
         $opcoessubatuacoes = $this->subatuacoesrepository->scopeQuery(function($query) use($objtatuacao){
             return $query->where([
                 ['atuacao_id', '=', $objtatuacao->id]
@@ -834,6 +882,9 @@ class SiteController extends Controller
         $vcategorias = $this->categoriasrepository->orderBy('descricao')->findWhereIn('tipo', [7, 8, 9, 10, 11, 12, 13,15]);
       
         $empresa = $this->empresasrepository->findByField('slug',$slug)->first();
+        if(empty($empresa)){
+            abort(404);
+        }
 
         $banners = $this->empresabannersrepository->findWhere([
             'empresa_id'=>$empresa->id,

@@ -66,11 +66,9 @@
         </div>
     </div>
 </div> <!-- .content -->
+@endsection
+@section('assets_scripts')
 <script>
-     $(document).ready(function() {
-        $('#bootstrap-data-table-export').DataTable();
-    } );
-
     function selecionar_subatuacao(subatuacao, empresa) {
         
         var classe = document.getElementById(subatuacao).getAttribute('class');

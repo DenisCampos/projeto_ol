@@ -181,9 +181,12 @@
         </div>
     </div>
 </div> <!-- .content -->
+@endsection
+@section('assets_scripts')
 <script>
     function coloca_analise(pvalor){
         $("#analise").val(pvalor);
     }
 </script>
 @endsection
+

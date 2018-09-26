@@ -73,11 +73,10 @@
         </div>
     </div>
 </div> <!-- .content -->
-<script>
-    $(document).ready(function() {
-        $('#bootstrap-data-table-export').DataTable();
-    } );
+@endsection
 
+@section('assets_scripts')
+<script>
     function selecionar_tipo(usuario) {
         
         var classe = document.getElementById(usuario).getAttribute('class');

@@ -83,13 +83,12 @@
         </div>
     </div>
 </div> <!-- .content -->
+@endsection
+@section('assets_scripts')
 <script>
-    $(document).ready(function() {
-       $('#bootstrap-data-table-export').DataTable();
-   } );
 
-   function liberar_destaque(evento) {
-        
+    function liberar_destaque(evento) {
+            
         var classe = document.getElementById('destaque'+evento).getAttribute('class');
         var acao, valor;
         
@@ -119,5 +118,5 @@
         });	
     };
 </script>
-
+     
 @endsection

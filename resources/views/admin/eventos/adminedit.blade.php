@@ -40,128 +40,6 @@
         </div>
     </div>
 </div>
-<script>
-    function pega_estados(pais) {
-        jQuery.ajax({
-            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            type:"POST",
-            url: "{{route('estados.pegaestados')}}",
-            data: {id: pais},
-            success: function (res)
-            {  
-                if(res)
-                {
-                    $('#carrega_estados').html(res);
-                }
-            }
-        });	
-    };
-    
-    function pega_cidades(estado) {
-        jQuery.ajax({
-            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            type:"POST",
-            url: "{{route('cidades.pegacidades')}}",
-            data: {id: estado},
-            success: function (res)
-            {  
-                if(res)
-                {
-                    $('#carrega_cidades').html(res);
-                }
-            }
-        });	
-    };
-
-    function initMap() {
-
-    var myLatLng = {lat: -2.5680909, lng: -44.3812118};
-    var count_marker = 0;
-
-    var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 14,
-    center: myLatLng
-    });
-
-    @if($evento->latitude!="")
-        myLatLng = new google.maps.LatLng({{$evento->latitude}}, {{$evento->longitude}});
-        addMarker(myLatLng);
-        map.setCenter(myLatLng);
-        count_marker++;
-    @else
-        // Try HTML5 geolocation.
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                var pos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                };
-                map.setCenter(pos);
-                map.setZoom(20);
-            });
-        } 
-    @endif
-
-    var geocoder = new google.maps.Geocoder();
-
-    document.getElementById('buscar').addEventListener('click', function() {
-        geocodeAddress(geocoder, map);
-    });
-
-
-    // This event listener will call addMarker() when the map is clicked.
-    map.addListener('click', function(event) {
-        addMarker(event.latLng);
-    });
-
-    function geocodeAddress(geocoder, resultsMap) {
-        var endereco = document.getElementById('endereco').value;
-        var bairro = document.getElementById('bairro').value;
-        var address = endereco+' '+bairro;
-        geocoder.geocode({'address': address}, function(results, status) {
-        if (status === 'OK') {
-            resultsMap.setCenter(results[0].geometry.location);
-            map.setZoom(18);
-        } else {
-            alert('Endereço não encontrado: ' + status);
-        }
-        });
-    }
-
-    function addMarker(location) {
-        if(count_marker==0){
-            var marker = new google.maps.Marker({
-                position: location,
-                map: map,
-                id: 1
-            });
-
-            marker.addListener('click', function() {
-                removerMarkers(marker);
-            });
-            $("#latitude").val(location.lat());
-            $("#longitude").val(location.lng());
-            count_marker++;
-        }else{
-            alert("Exclua a localização anterior");
-        }
-    }
-
-    function removerMarkers(marker){
-        var r = confirm("Deseja Remover?");
-        var x;
-        if (r == true) {
-            marker.setMap(null);
-            $("#latitude").val('');
-            $("#longitude").val('');
-            count_marker=0;
-        } 
-        
-    }
-
-}
-</script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2UTdk-E7kWhTX-YUDQXUVc5FnQiaYIuA&callback=initMap" type="text/javascript"></script>
 @endsection
 
 @section('assets_scripts')
@@ -242,5 +120,127 @@
         document.querySelector('.cropped'+id).innerHTML = '<img src="'+img+'">';
         $("#imagem"+id+"_crop").val(img);
     }
+
+    function pega_estados(pais) {
+        jQuery.ajax({
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            type:"POST",
+            url: "{{route('estados.pegaestados')}}",
+            data: {id: pais},
+            success: function (res)
+            {  
+                if(res)
+                {
+                    $('#carrega_estados').html(res);
+                }
+            }
+        });	
+    };
+    
+    function pega_cidades(estado) {
+        jQuery.ajax({
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            type:"POST",
+            url: "{{route('cidades.pegacidades')}}",
+            data: {id: estado},
+            success: function (res)
+            {  
+                if(res)
+                {
+                    $('#carrega_cidades').html(res);
+                }
+            }
+        });	
+    };
+
+    function initMap() {
+
+        var myLatLng = {lat: -2.5680909, lng: -44.3812118};
+        var count_marker = 0;
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 14,
+        center: myLatLng
+        });
+
+        @if($evento->latitude!="")
+            myLatLng = new google.maps.LatLng({{$evento->latitude}}, {{$evento->longitude}});
+            addMarker(myLatLng);
+            map.setCenter(myLatLng);
+            count_marker++;
+        @else
+            // Try HTML5 geolocation.
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    map.setCenter(pos);
+                    map.setZoom(20);
+                });
+            } 
+        @endif
+
+        var geocoder = new google.maps.Geocoder();
+
+        document.getElementById('buscar').addEventListener('click', function() {
+            geocodeAddress(geocoder, map);
+        });
+
+
+        // This event listener will call addMarker() when the map is clicked.
+        map.addListener('click', function(event) {
+            addMarker(event.latLng);
+        });
+
+        function geocodeAddress(geocoder, resultsMap) {
+            var endereco = document.getElementById('endereco').value;
+            var bairro = document.getElementById('bairro').value;
+            var address = endereco+' '+bairro;
+            geocoder.geocode({'address': address}, function(results, status) {
+            if (status === 'OK') {
+                resultsMap.setCenter(results[0].geometry.location);
+                map.setZoom(18);
+            } else {
+                alert('Endereço não encontrado: ' + status);
+            }
+            });
+        }
+
+        function addMarker(location) {
+            if(count_marker==0){
+                var marker = new google.maps.Marker({
+                    position: location,
+                    map: map,
+                    id: 1
+                });
+
+                marker.addListener('click', function() {
+                    removerMarkers(marker);
+                });
+                $("#latitude").val(location.lat());
+                $("#longitude").val(location.lng());
+                count_marker++;
+            }else{
+                alert("Exclua a localização anterior");
+            }
+        }
+
+        function removerMarkers(marker){
+            var r = confirm("Deseja Remover?");
+            var x;
+            if (r == true) {
+                marker.setMap(null);
+                $("#latitude").val('');
+                $("#longitude").val('');
+                count_marker=0;
+            } 
+            
+        }
+
+    }
 </script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2UTdk-E7kWhTX-YUDQXUVc5FnQiaYIuA&callback=initMap" type="text/javascript"></script>
+
 @endsection

@@ -69,10 +69,4 @@
         </div>
     </div>
 </div> <!-- .content -->
-<script>
-    $(document).ready(function() {
-       $('#bootstrap-data-table-export').DataTable();
-   } );
-</script>
-
 @endsection

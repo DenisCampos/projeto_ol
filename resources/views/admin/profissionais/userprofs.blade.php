@@ -99,6 +99,8 @@
         </div>
     </div>
 </div> <!-- .content -->
+@endsection
+@section('assets_scripts')
 <script>
     function liberar_banner(profissional) {
         
@@ -131,7 +133,7 @@
         });	
     };
 
-     function liberar_destaque(profissional) {
+        function liberar_destaque(profissional) {
         
         var classe = document.getElementById('destaque'+profissional).getAttribute('class');
         var acao, valor;

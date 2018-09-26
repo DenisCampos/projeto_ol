@@ -72,11 +72,9 @@
         </div>
     </div>
 </div> <!-- .content -->
+@endsection
+@section('assets_scripts')
 <script>
-     $(document).ready(function() {
-        $('#bootstrap-data-table-export').DataTable();
-    } );
-
     function selecionar_atuacao(atuacao, empresa) {
         
         var classe = document.getElementById(atuacao).getAttribute('class');

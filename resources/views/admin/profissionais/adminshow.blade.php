@@ -157,13 +157,14 @@
         </div>
     </div>
 </div> <!-- .content -->
+@endsection
+@section('assets_scripts')
 <script>
     function coloca_analise(pvalor){
         $("#analise").val(pvalor);
     }
-</script>
-@if($profissional->latitude!="")
-<script>
+    @if($profissional->latitude!="")
+
     function initMap() {
 
         var myLatLng = {lat: {{$profissional->latitude}}, lng: {{$profissional->longitude}}};
@@ -181,7 +182,8 @@
         });
 
     }
+    @endif
+
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2UTdk-E7kWhTX-YUDQXUVc5FnQiaYIuA&callback=initMap" type="text/javascript"></script>
-@endif
 @endsection

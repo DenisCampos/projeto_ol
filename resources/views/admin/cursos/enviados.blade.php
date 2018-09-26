@@ -82,40 +82,39 @@
         </div>
     </div>
 </div> <!-- .content -->
+@endsection
+@section('assets_scripts')
 <script>
-    $(document).ready(function() {
-       $('#bootstrap-data-table-export').DataTable();
-   } );
-   function liberar_destaque(curso) {
-        
-        var classe = document.getElementById('destaque'+curso).getAttribute('class');
-        var acao, valor;
-        
-        if (classe == 'fa fa-toggle-on fa-2x'){
-            document.getElementById('destaque'+curso).setAttribute('class', 'fa fa-toggle-off fa-2x');
-            document.getElementById('destaque'+curso).setAttribute('style', 'color:#d9534f');
-            valor = 1;
-        }else{
-            document.getElementById('destaque'+curso).setAttribute('class', 'fa fa-toggle-on fa-2x');
-            document.getElementById('destaque'+curso).setAttribute('style', 'color:#5cb85c');
-            valor = 2;
-        }
-
-        jQuery.ajax({
-            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            type:"POST",
-            url: "{{route('admin.cursos.liberadestaque')}}",
-            data: { id: curso, destaque_id: valor},
-            dataType: 'json',
-            success: function (res)
-            {  
-                if(res)
-                {
-                                            
-                }
-            }
-        });	
-    };
-</script>
-
+        function liberar_destaque(curso) {
+             
+             var classe = document.getElementById('destaque'+curso).getAttribute('class');
+             var acao, valor;
+             
+             if (classe == 'fa fa-toggle-on fa-2x'){
+                 document.getElementById('destaque'+curso).setAttribute('class', 'fa fa-toggle-off fa-2x');
+                 document.getElementById('destaque'+curso).setAttribute('style', 'color:#d9534f');
+                 valor = 1;
+             }else{
+                 document.getElementById('destaque'+curso).setAttribute('class', 'fa fa-toggle-on fa-2x');
+                 document.getElementById('destaque'+curso).setAttribute('style', 'color:#5cb85c');
+                 valor = 2;
+             }
+     
+             jQuery.ajax({
+                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                 type:"POST",
+                 url: "{{route('admin.cursos.liberadestaque')}}",
+                 data: { id: curso, destaque_id: valor},
+                 dataType: 'json',
+                 success: function (res)
+                 {  
+                     if(res)
+                     {
+                                                 
+                     }
+                 }
+             });	
+         };
+     </script>
+     
 @endsection

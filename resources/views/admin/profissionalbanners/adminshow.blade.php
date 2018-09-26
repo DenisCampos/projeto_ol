@@ -86,6 +86,8 @@
         </div>
     </div>
 </div> <!-- .content -->
+@endsection
+@section('assets_scripts')
 <script>
     function coloca_analise(bvalor){
         $("#analise").val(bvalor);

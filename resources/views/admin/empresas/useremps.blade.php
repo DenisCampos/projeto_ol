@@ -94,6 +94,8 @@
         </div>
     </div>
 </div> <!-- .content -->
+@endsection
+@section('assets_scripts')
 <script>
     function liberar_banner(empresa) {
         

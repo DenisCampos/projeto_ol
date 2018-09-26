@@ -96,12 +96,10 @@
         </div>
     </div>
 </div> <!-- .content -->
+@endsection
+@section('assets_scripts')
 <script>
-    $(document).ready(function() {
-       $('#bootstrap-data-table-export').DataTable();
-    });
-
-   function liberar_banner(profissional) {
+    function liberar_banner(profissional) {
         
         var classe = document.getElementById('banner'+profissional).getAttribute('class');
         var valor;
@@ -163,5 +161,4 @@
         });	
     };
 </script>
-
 @endsection

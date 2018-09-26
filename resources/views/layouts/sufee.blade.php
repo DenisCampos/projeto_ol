@@ -255,7 +255,6 @@
     <script src="{{ asset('public/assets/js/lib/vector-map/jquery.vmap.sampledata.js') }}"></script>
     <script src="{{ asset('public/assets/js/lib/vector-map/country/jquery.vmap.world.js') }}"></script>
     <script>
-
         $(document).ready(function() {
             jQuery.ajax({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -269,8 +268,9 @@
                     }
                 }
             });	
+
+            $('#bootstrap-data-table-export').DataTable();
         });
-     
     </script>
     @yield('assets_scripts')
 </body>

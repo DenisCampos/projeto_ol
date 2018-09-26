@@ -65,11 +65,10 @@
         </div>
     </div>
 </div> <!-- .content -->
-<script>
-     $(document).ready(function() {
-        $('#bootstrap-data-table-export').DataTable();
-    } );
 
+@endsection
+@section('assets_scripts')
+<script>
     function selecionar_categoria(categoria, evento) {
         
         var classe = document.getElementById(categoria).getAttribute('class');

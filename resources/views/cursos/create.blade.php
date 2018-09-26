@@ -39,39 +39,6 @@
         </div>
     </div>
 </div>
-<script>
-    function pega_estados(pais) {
-        jQuery.ajax({
-            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            type:"POST",
-            url: "{{route('estados.pegaestados')}}",
-            data: {id: pais},
-            success: function (res)
-            {  
-                if(res)
-                {
-                    $('#carrega_estados').html(res);
-                }
-            }
-        });	
-    };
-    
-    function pega_cidades(estado) {
-        jQuery.ajax({
-            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            type:"POST",
-            url: "{{route('cidades.pegacidades')}}",
-            data: {id: estado},
-            success: function (res)
-            {  
-                if(res)
-                {
-                    $('#carrega_cidades').html(res);
-                }
-            }
-        });	
-    };
-</script>
 @endsection
 
 @section('assets_scripts')
@@ -146,6 +113,38 @@
         document.querySelector('.cropped'+id).innerHTML = '<img src="'+img+'">';
         $("#imagem"+id+"_crop").val(img);
     }
+
+     function pega_estados(pais) {
+        jQuery.ajax({
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            type:"POST",
+            url: "{{route('estados.pegaestados')}}",
+            data: {id: pais},
+            success: function (res)
+            {  
+                if(res)
+                {
+                    $('#carrega_estados').html(res);
+                }
+            }
+        });	
+    };
+    
+    function pega_cidades(estado) {
+        jQuery.ajax({
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            type:"POST",
+            url: "{{route('cidades.pegacidades')}}",
+            data: {id: estado},
+            success: function (res)
+            {  
+                if(res)
+                {
+                    $('#carrega_cidades').html(res);
+                }
+            }
+        });	
+    };
     
 </script>
 @endsection

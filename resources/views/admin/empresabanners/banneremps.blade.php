@@ -84,6 +84,8 @@
         </div>
     </div>
 </div> <!-- .content -->
+@endsection
+@section('assets_scripts')
 <script>
     function liberar_banner(empresa) {
         
@@ -116,7 +118,7 @@
         });	
     };
 
-     function liberar_destaque(empresa) {
+    function liberar_destaque(empresa) {
         
         var classe = document.getElementById('destaque'+empresa).getAttribute('class');
         var acao, valor;

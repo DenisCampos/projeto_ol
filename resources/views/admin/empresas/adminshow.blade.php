@@ -180,13 +180,13 @@
         </div>
     </div>
 </div> <!-- .content -->
+@endsection
+@section('assets_scripts')
 <script>
     function coloca_analise(pvalor){
         $("#analise").val(pvalor);
     }
-</script>
-@if($empresa->latitude!="")
-<script>
+    @if($empresa->latitude!="")
     function initMap() {
 
         var myLatLng = {lat: {{$empresa->latitude}}, lng: {{$empresa->longitude}}};
@@ -204,7 +204,8 @@
         });
 
     }
+    @endif
+
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2UTdk-E7kWhTX-YUDQXUVc5FnQiaYIuA&callback=initMap" type="text/javascript"></script>
-@endif
 @endsection

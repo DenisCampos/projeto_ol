@@ -80,11 +80,10 @@
         </div>
     </div>
 </div> <!-- .content -->
+@endsection
+@section('assets_scripts')
 <script>
-    $(document).ready(function() {
-       $('#bootstrap-data-table-export').DataTable();
-   } );
-   function liberar_destaque(curso) {
+    function liberar_destaque(curso) {
         
         var classe = document.getElementById('destaque'+curso).getAttribute('class');
         var acao, valor;
@@ -116,3 +115,4 @@
     };
 </script>
 @endsection
+

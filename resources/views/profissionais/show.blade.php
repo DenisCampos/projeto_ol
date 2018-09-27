@@ -152,6 +152,9 @@
         </div>
     </div>
 </div> <!-- .content -->
+@endsection
+
+@section('assets_scripts')
 @if($profissional->latitude!="")
 <script>
     function initMap() {

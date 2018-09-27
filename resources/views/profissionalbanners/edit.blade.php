@@ -43,6 +43,9 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('assets_scripts')
 <script>
     function pega_estados(pais) {
         jQuery.ajax({

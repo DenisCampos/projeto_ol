@@ -47,8 +47,56 @@
         </div>
     </div>
 </div>
-<script>
-    function pega_estados(pais) {
+@endsection
+
+@section('assets_scripts')
+<script src="{{ asset('public/js/cropbox.js') }}"></script>
+<script type="text/javascript">
+    window.onload = function() {
+        var options =
+        {
+            imageBox: '.imageBoxProf',
+            thumbBox: '.thumbBoxProf',
+            spinner: '.spinnerProf',
+            @if($profissional->foto=="")
+                imgSrc: '{{ asset("public/images/260x300.jpg") }}'
+            @else
+                imgSrc: '{{ asset($profissional->foto) }}'
+            @endif
+        }
+        var cropper = new cropbox(options);
+        document.querySelector('#foto').addEventListener('change', function(){
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                options.imgSrc = e.target.result;
+                cropper = new cropbox(options);
+            }
+            reader.readAsDataURL(this.files[0]);
+            setTimeout(function(){ autocrop(cropper, '1'); }, 300);
+            this.files = [];
+        })
+
+        document.querySelector('#btnCropProf').addEventListener('click', function(){
+            var img = cropper.getDataURL();
+            document.querySelector('.croppedProf').innerHTML = '<img src="'+img+'">';
+            $("#foto_crop").val(img);
+        })
+        document.querySelector('#btnZoomInProf').addEventListener('click', function(){
+            cropper.zoomIn();
+        })
+        document.querySelector('#btnZoomOutProf').addEventListener('click', function(){
+            cropper.zoomOut();
+        })
+
+    };
+
+    function autocrop(cropper, id){
+        var img = cropper.getDataURL();
+        document.querySelector('.croppedProf').innerHTML = '<img src="'+img+'">';
+        $("#foto_crop").val(img);
+    }
+
+     function pega_estados(pais) {
         jQuery.ajax({
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             type:"POST",
@@ -166,56 +214,8 @@
         }
 
     }
-</script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2UTdk-E7kWhTX-YUDQXUVc5FnQiaYIuA&callback=initMap" type="text/javascript"></script>
-@endsection
-
-@section('assets_scripts')
-<script src="{{ asset('public/js/cropbox.js') }}"></script>
-<script type="text/javascript">
-    window.onload = function() {
-        var options =
-        {
-            imageBox: '.imageBoxProf',
-            thumbBox: '.thumbBoxProf',
-            spinner: '.spinnerProf',
-            @if($profissional->foto=="")
-                imgSrc: '{{ asset("public/images/260x300.jpg") }}'
-            @else
-                imgSrc: '{{ asset($profissional->foto) }}'
-            @endif
-        }
-        var cropper = new cropbox(options);
-        document.querySelector('#foto').addEventListener('change', function(){
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                options.imgSrc = e.target.result;
-                cropper = new cropbox(options);
-            }
-            reader.readAsDataURL(this.files[0]);
-            setTimeout(function(){ autocrop(cropper, '1'); }, 300);
-            this.files = [];
-        })
-
-        document.querySelector('#btnCropProf').addEventListener('click', function(){
-            var img = cropper.getDataURL();
-            document.querySelector('.croppedProf').innerHTML = '<img src="'+img+'">';
-            $("#foto_crop").val(img);
-        })
-        document.querySelector('#btnZoomInProf').addEventListener('click', function(){
-            cropper.zoomIn();
-        })
-        document.querySelector('#btnZoomOutProf').addEventListener('click', function(){
-            cropper.zoomOut();
-        })
-
-    };
-
-    function autocrop(cropper, id){
-        var img = cropper.getDataURL();
-        document.querySelector('.croppedProf').innerHTML = '<img src="'+img+'">';
-        $("#foto_crop").val(img);
-    }
     
 </script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2UTdk-E7kWhTX-YUDQXUVc5FnQiaYIuA&callback=initMap" type="text/javascript"></script>
+
 @endsection

@@ -154,6 +154,8 @@
         </div>
     </div>
 </div> <!-- .content -->
+@endsection
+@section('assets_scripts')
 @if($empresa->latitude!="")
 <script>
     function initMap() {
@@ -176,4 +178,5 @@
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC2UTdk-E7kWhTX-YUDQXUVc5FnQiaYIuA&callback=initMap" type="text/javascript"></script>
 @endif
+
 @endsection

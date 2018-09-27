@@ -66,40 +66,39 @@
         </div>
     </div>
 </div> <!-- .content -->
+@endsection
+
+@section('assets_scripts')
 <script>
-     $(document).ready(function() {
-        $('#bootstrap-data-table-export').DataTable();
-    } );
+   function selecionar_categoria(categoria) {
+       
+       var classe = document.getElementById(categoria).getAttribute('class');
+       var acao;
+       
+       if (classe == 'fa fa-toggle-on fa-2x'){
+           document.getElementById(categoria).setAttribute('class', 'fa fa-toggle-off fa-2x');
+           document.getElementById(categoria).setAttribute('style', 'color:#d9534f');
+           acao = "{{route('userinteresses.destroy')}}";
+       }else{
+           document.getElementById(categoria).setAttribute('class', 'fa fa-toggle-on fa-2x');
+           document.getElementById(categoria).setAttribute('style', 'color:#5cb85c');
+           acao = "{{route('userinteresses.store')}}";
+       }
 
-    function selecionar_categoria(categoria) {
-        
-        var classe = document.getElementById(categoria).getAttribute('class');
-        var acao;
-        
-        if (classe == 'fa fa-toggle-on fa-2x'){
-            document.getElementById(categoria).setAttribute('class', 'fa fa-toggle-off fa-2x');
-            document.getElementById(categoria).setAttribute('style', 'color:#d9534f');
-            acao = "{{route('userinteresses.destroy')}}";
-        }else{
-            document.getElementById(categoria).setAttribute('class', 'fa fa-toggle-on fa-2x');
-            document.getElementById(categoria).setAttribute('style', 'color:#5cb85c');
-            acao = "{{route('userinteresses.store')}}";
-        }
-
-        jQuery.ajax({
-            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            type:"POST",
-            url: acao,
-            data: { id: categoria},
-            dataType: 'json',
-            success: function (res)
-            {  
-                if(res)
-                {
-                                            
-                }
-            }
-        });	
-    };
+       jQuery.ajax({
+           headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+           type:"POST",
+           url: acao,
+           data: { id: categoria},
+           dataType: 'json',
+           success: function (res)
+           {  
+               if(res)
+               {
+                                           
+               }
+           }
+       });	
+   };
 </script>
 @endsection

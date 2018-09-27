@@ -72,40 +72,38 @@
         </div>
     </div>
 </div> <!-- .content -->
+@endsection
+@section('assets_scripts')
 <script>
-     $(document).ready(function() {
-        $('#bootstrap-data-table-export').DataTable();
-    } );
+   function selecionar_atuacao(atuacao, profissional) {
+       
+       var classe = document.getElementById(atuacao).getAttribute('class');
+       var acao;
+       
+       if (classe == 'fa fa-toggle-on fa-2x'){
+           document.getElementById(atuacao).setAttribute('class', 'fa fa-toggle-off fa-2x');
+           document.getElementById(atuacao).setAttribute('style', 'color:#d9534f');
+           acao = "{{route('profissionalatuacoes.destroy')}}";
+       }else{
+           document.getElementById(atuacao).setAttribute('class', 'fa fa-toggle-on fa-2x');
+           document.getElementById(atuacao).setAttribute('style', 'color:#5cb85c');
+           acao = "{{route('profissionalatuacoes.store')}}";
+       }
 
-    function selecionar_atuacao(atuacao, profissional) {
-        
-        var classe = document.getElementById(atuacao).getAttribute('class');
-        var acao;
-        
-        if (classe == 'fa fa-toggle-on fa-2x'){
-            document.getElementById(atuacao).setAttribute('class', 'fa fa-toggle-off fa-2x');
-            document.getElementById(atuacao).setAttribute('style', 'color:#d9534f');
-            acao = "{{route('profissionalatuacoes.destroy')}}";
-        }else{
-            document.getElementById(atuacao).setAttribute('class', 'fa fa-toggle-on fa-2x');
-            document.getElementById(atuacao).setAttribute('style', 'color:#5cb85c');
-            acao = "{{route('profissionalatuacoes.store')}}";
-        }
-
-        jQuery.ajax({
-            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            type:"POST",
-            url: acao,
-            data: { id: atuacao, pid: profissional},
-            dataType: 'json',
-            success: function (res)
-            {  
-                if(res)
-                {
-                    console.log(res);
-                }
-            }
-        });	
-    };
+       jQuery.ajax({
+           headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+           type:"POST",
+           url: acao,
+           data: { id: atuacao, pid: profissional},
+           dataType: 'json',
+           success: function (res)
+           {  
+               if(res)
+               {
+                   console.log(res);
+               }
+           }
+       });	
+   };
 </script>
 @endsection

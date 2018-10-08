@@ -277,6 +277,7 @@ class SiteController extends Controller
             $eventos = $this->eventosrepository->scopeQuery(function($query){
                 return $query->orderby('destaque_id','desc')
                 ->orderby('eventos.updated_at','desc')
+                ->orderby('eventos.id','desc')
                 ->where([
                     ['statu_id', '=', 2],
                     ['data_fim', '>=', date('Y-m-d')]
@@ -291,6 +292,7 @@ class SiteController extends Controller
                 return $query->join('evento_categorias', 'eventos.id', '=', 'evento_categorias.evento_id')
                 ->orderby('destaque_id','desc')
                 ->orderby('eventos.updated_at','desc')
+                ->orderby('eventos.id','desc')
                 ->where([
                     ['statu_id', '=', 2],
                     ['data_fim', '>=', date('Y-m-d')],
@@ -353,6 +355,7 @@ class SiteController extends Controller
                 ->join('categorias', 'curso_categorias.categoria_id', '=', 'categorias.id')
                 ->orderby('destaque_id','desc')
                 ->orderby('cursos.updated_at','desc')
+                ->orderby('cursos.id','desc')
                 ->where([
                     ['statu_id', '=', 2]
                 ])
@@ -370,6 +373,7 @@ class SiteController extends Controller
                 ->join('categorias', 'curso_categorias.categoria_id', '=', 'categorias.id')
                 ->orderby('destaque_id','desc')
                 ->orderby('cursos.updated_at','desc')
+                ->orderby('cursos.id','desc')
                 ->where([
                     ['statu_id', '=', 2],
                     ['categoria_id', '=', $objtcategoria->id]
@@ -397,6 +401,7 @@ class SiteController extends Controller
                 ->join('categorias', 'curso_categorias.categoria_id', '=', 'categorias.id')
                 ->orderby('destaque_id','desc')
                 ->orderby('cursos.updated_at','desc')
+                ->orderby('cursos.id','desc')
                 ->where([
                     ['statu_id', '=', 2]
                 ])->whereIn('categorias.tipo', [1, 4, 5, 8, 11, 12, 14, 15])
@@ -413,6 +418,7 @@ class SiteController extends Controller
                 ->join('categorias', 'curso_categorias.categoria_id', '=', 'categorias.id')
                 ->orderby('destaque_id','desc')
                 ->orderby('cursos.updated_at','desc')
+                ->orderby('cursos.id','desc')
                 ->where([
                     ['statu_id', '=', 2],
                     ['categoria_id', '=', $objtcategoria->id]
@@ -441,6 +447,7 @@ class SiteController extends Controller
                 ->join('categorias', 'curso_categorias.categoria_id', '=', 'categorias.id')
                 ->orderby('destaque_id','desc')
                 ->orderby('cursos.updated_at','desc')
+                ->orderby('cursos.id','desc')
                 ->where([
                     ['statu_id', '=', 2]
                 ])->whereIn('categorias.tipo', [2, 4, 6, 9, 11, 13, 14, 15])
@@ -457,6 +464,7 @@ class SiteController extends Controller
                 ->join('categorias', 'curso_categorias.categoria_id', '=', 'categorias.id')
                 ->orderby('destaque_id','desc')
                 ->orderby('cursos.updated_at','desc')
+                ->orderby('cursos.id','desc')
                 ->where([
                     ['statu_id', '=', 2],
                     ['categoria_id', '=', $objtcategoria->id]
@@ -485,6 +493,7 @@ class SiteController extends Controller
                 ->join('categorias', 'curso_categorias.categoria_id', '=', 'categorias.id')
                 ->orderby('destaque_id','desc')
                 ->orderby('cursos.updated_at','desc')
+                ->orderby('cursos.id','desc')
                 ->where([
                     ['statu_id', '=', 2]
                 ])->whereIn('categorias.tipo', [3, 5, 6, 10, 12, 13, 14, 15])
@@ -501,6 +510,7 @@ class SiteController extends Controller
                 ->join('categorias', 'curso_categorias.categoria_id', '=', 'categorias.id')
                 ->orderby('destaque_id','desc')
                 ->orderby('cursos.updated_at','desc')
+                ->orderby('cursos.id','desc')
                 ->where([
                     ['statu_id', '=', 2],
                     ['categoria_id', '=', $objtcategoria->id]
@@ -622,6 +632,7 @@ class SiteController extends Controller
             $profissionais = $this->profissionaisrepository->scopeQuery(function($query){
                 return $query->orderby('destaque_id','desc')
                 ->orderby('updated_at','desc')
+                ->orderby('profissionais.id','desc')
                 ->where([
                     ['statu_id', '=', 2]
                 ]);
@@ -635,6 +646,7 @@ class SiteController extends Controller
                 return $query->join('profissional_atuacoes', 'profissionais.id', '=', 'profissional_atuacoes.profissional_id')
                 ->orderby('destaque_id','desc')
                 ->orderby('profissionais.updated_at','desc')
+                ->orderby('profissionais.id','desc')
                 ->where([
                     ['statu_id', '=', 2],
                     ['atuacao_id', '=', $objtatuacao->id]
@@ -670,7 +682,7 @@ class SiteController extends Controller
             abort(404);
         }
         $objtsubatuacao = $this->subatuacoesrepository->findByField('slug',$subatuacao)->first();
-        if(empty($objtsubatuacao)){
+        if(empty($objtsubatuacao)&&$subatuacao!="todos"){
             abort(404);
         }
         $opcoessubatuacoes = $this->subatuacoesrepository->scopeQuery(function($query) use($objtatuacao){
@@ -686,6 +698,7 @@ class SiteController extends Controller
                 return $query->join('profissional_atuacoes', 'profissionais.id', '=', 'profissional_atuacoes.profissional_id')
                 ->orderby('destaque_id','desc')
                 ->orderby('profissionais.updated_at','desc')
+                ->orderby('profissionais.id','desc')
                 ->where([
                     ['statu_id', '=', 2],
                     ['atuacao_id', '=', $objtatuacao->id]
@@ -697,6 +710,7 @@ class SiteController extends Controller
                 ->join('profissional_sub_atuacoes', 'profissionais.id', '=', 'profissional_sub_atuacoes.profissional_id')
                 ->orderby('destaque_id','desc')
                 ->orderby('profissionais.updated_at','desc')
+                ->orderby('profissionais.id','desc')
                 ->where([
                     ['statu_id', '=', 2],
                     ['atuacao_id', '=', $objtatuacao->id],
@@ -789,6 +803,7 @@ class SiteController extends Controller
                 return $query->join('empresa_atuacoes', 'empresas.id', '=', 'empresa_atuacoes.empresa_id')
                 ->orderby('destaque_id','desc')
                 ->orderby('empresas.updated_at','desc')
+                ->orderby('empresas.id','desc')
                 ->where([
                     ['statu_id', '=', 2],
                     ['atuacao_id', '=', $objtatuacao->id]
@@ -823,7 +838,7 @@ class SiteController extends Controller
             abort(404);
         }
         $objtsubatuacao = $this->subatuacoesrepository->findByField('slug',$subatuacao)->first();
-        if(empty($objtsubatuacao)){
+        if(empty($objtsubatuacao)&&$subatuacao!="todos"){
             abort(404);
         }
         $opcoessubatuacoes = $this->subatuacoesrepository->scopeQuery(function($query) use($objtatuacao){
@@ -839,6 +854,7 @@ class SiteController extends Controller
                 return $query->join('empresa_atuacoes', 'empresas.id', '=', 'empresa_atuacoes.empresa_id')
                 ->orderby('destaque_id','desc')
                 ->orderby('empresas.updated_at','desc')
+                ->orderby('empresas.id','desc')
                 ->where([
                     ['statu_id', '=', 2],
                     ['atuacao_id', '=', $objtatuacao->id]
@@ -850,6 +866,7 @@ class SiteController extends Controller
                 ->join('empresa_sub_atuacoes', 'empresas.id', '=', 'empresa_sub_atuacoes.empresa_id')
                 ->orderby('destaque_id','desc')
                 ->orderby('empresas.updated_at','desc')
+                ->orderby('empresas.id','desc')
                 ->where([
                     ['statu_id', '=', 2],
                     ['atuacao_id', '=', $objtatuacao->id],

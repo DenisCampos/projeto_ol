@@ -226,6 +226,8 @@ Route::group(['middleware'=>'auth'], function () {
 
         //profissional admin
         Route::get('/usuarios/{user}/profissionais/userprofs', 'ProfissionaisController@userprofs')->name('profissionais.userprofs');
+        Route::get('/usuarios/{user}/profissionais/novo', 'ProfissionaisController@create')->name('profissionais.admincreate');
+        Route::post('/usuarios/{user}/profissionais/store', 'ProfissionaisController@store')->name('profissionais.adminstore');    
         Route::post('/profissionais/liberabanner', 'ProfissionaisController@liberabanner')->name('profissionais.liberabanner');
         Route::post('/profissionais/liberadestaque', 'ProfissionaisController@liberadestaque')->name('profissionais.liberadestaque');
         Route::get('/usuarios/{user}/profissionais/adminshow/{profissional}', 'ProfissionaisController@adminshow')->name('profissionais.adminshow');

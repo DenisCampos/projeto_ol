@@ -229,6 +229,11 @@ Breadcrumbs::for('admin.profissionais.userprofs', function ($trail, $usuario) {
     $trail->push('Profissionais', route('admin.profissionais.userprofs', $usuario->id));
 });
 
+Breadcrumbs::for('admin.profissionais.admincreate', function ($trail, $usuario) {
+    $trail->parent('admin.profissionais.userprofs', $usuario);
+    $trail->push('Novo', route('admin.profissionais.admincreate', $usuario->id));
+});
+
 Breadcrumbs::for('admin.profissionais.adminshow', function ($trail, $usuario, $profissional) {
     $trail->parent('admin.profissionais.userprofs', $usuario);
     $trail->push($profissional->name, route('admin.profissionais.adminshow', [$usuario, $profissional->id]));

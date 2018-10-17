@@ -31,6 +31,11 @@
                             <h3 class="text-center">Perfil Profissional</h3>
                         </div>
                         <hr>
+                        <div class="col-md-6 offset-md-3 pb-2">
+                            <div class="mx-auto d-block text-center">
+                                <button type="button" class="btn btn-primary" onclick="window.location='{{ route("admin.profissionais.admincreate", [$usuario->id]) }}'"><i class="fa fa-user"></i>&nbsp;Novo perfil</button>
+                            </div>
+                        </div>
                         <table class="table table-responsive">
                             <thead class="thead-dark">
                             <tr>

@@ -270,6 +270,58 @@ class ProfissionaisController extends Controller
         return $request->banne;
     }
 
+    public function admincreate($user_id)
+    {
+        $usuario = $this->usersrepository->find($user_id);
+        $paises = $this->paisesrepository->pluck('descricao','id');
+        $paises->prepend('Selecione o País', '');
+        $estados = $this->estadosrepository->findWhere(['pais_id' => $usuario->pais_id])->pluck('descricao','id');
+        $estados->prepend('Selecione o Estado', '');
+        $cidades = $this->cidadesrepository->findWhere(['estado_id' => $usuario->estado_id])->pluck('descricao','id');
+        $cidades->prepend('Selecione a Cidade', '');
+        return view('admin.profissionais.admincreate', compact('usuario','paises','estados','cidades'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function adminstore(Request $request, $user_id)
+    {
+        $data = $request->all();
+        if($data['foto_crop']!=""){
+            $numero_aux = rand(1, 9999);
+            $img = $data['foto_crop'];
+            $img = str_replace('data:image/png;base64,', '', $img);
+            $img = str_replace(' ', '+', $img);
+            $arquivo = base64_decode($img);
+            $file = 'public/profissionais_perfil/profissional'.$user_id."_".$numero_aux.".png";
+            $success = file_put_contents($file, $arquivo);
+            $url = 'public/profissionais_perfil/profissional'.$user_id."_".$numero_aux.".png";
+            $data['foto'] = $url;
+        }else{
+            unset($data['foto']);
+        }
+
+
+        $data['user_id'] = $user_id;
+        $data['statu_id'] = 1;
+        $data['situacao_id'] = 1;
+        $data['destaque_id'] = 1;
+        $data['slug'] = $this->montarSlug($data['name'], '');
+        $this->repository->create($data);
+        
+        \Session::flash('message', ' Profissão criada com sucesso.');
+
+        $profissional = $this->repository->findWhere([
+            'user_id'=>$user_id
+        ])->max('id');
+
+        return redirect()->route('admin.profissionalatuacoes.index', ['id' => $profissional]);
+    }
+
     public function adminshow($user_id, $prof_id)
     {
         $profissional = $this->repository->find($prof_id);

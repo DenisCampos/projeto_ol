@@ -226,8 +226,8 @@ Route::group(['middleware'=>'auth'], function () {
 
         //profissional admin
         Route::get('/usuarios/{user}/profissionais/userprofs', 'ProfissionaisController@userprofs')->name('profissionais.userprofs');
-        Route::get('/usuarios/{user}/profissionais/novo', 'ProfissionaisController@create')->name('profissionais.admincreate');
-        Route::post('/usuarios/{user}/profissionais/store', 'ProfissionaisController@store')->name('profissionais.adminstore');    
+        Route::get('/usuarios/{user}/profissionais/novo', 'ProfissionaisController@admincreate')->name('profissionais.admincreate');
+        Route::post('/usuarios/{user}/profissionais/store', 'ProfissionaisController@adminstore')->name('profissionais.adminstore');    
         Route::post('/profissionais/liberabanner', 'ProfissionaisController@liberabanner')->name('profissionais.liberabanner');
         Route::post('/profissionais/liberadestaque', 'ProfissionaisController@liberadestaque')->name('profissionais.liberadestaque');
         Route::get('/usuarios/{user}/profissionais/adminshow/{profissional}', 'ProfissionaisController@adminshow')->name('profissionais.adminshow');
@@ -237,6 +237,16 @@ Route::group(['middleware'=>'auth'], function () {
         Route::get('/profissionais/enviados/', 'ProfissionaisController@enviados')->name('profissionais.enviados');
         Route::get('/profissionais/aprovados/', 'ProfissionaisController@aprovados')->name('profissionais.aprovados');
         Route::get('/profissionais/negados/', 'ProfissionaisController@negados')->name('profissionais.negados');
+
+        //profissional admin atuacoes
+        Route::get('/usuarios/{user}/profissionais/adminedit/{profissional}/profissionalatuacoes', 'ProfissionalAtuacoesController@adminindex')->name('profissionalatuacoes.adminindex');
+        Route::post('/profissionalatuacoes/store', 'ProfissionalAtuacoesController@adminstore')->name('profissionalatuacoes.adminstore');
+        Route::post('/profissionalatuacoes/destroy', 'ProfissionalAtuacoesController@admindestroy')->name('profissionalatuacoes.admindestroy');
+
+        //profissional admin sub atuacoes
+        Route::get('/usuarios/{user}/profissionais/adminedit/{profissional}/profissionalatuacoes/{atuacao}', 'ProfissionalSubAtuacoesController@adminindex')->name('profissionalsubatuacoes.adminindex');
+        Route::post('/profissionalsubatuacoes/store', 'ProfissionalSubAtuacoesController@adminstore')->name('profissionalsubatuacoes.adminstore');
+        Route::post('/profissionalsubatuacoes/destroy', 'ProfissionalSubAtuacoesController@admindestroy')->name('profissionalsubatuacoes.admindestroy');
 
         //profissional banner admin
         Route::get('/usuarios/{user}/profissionais/{profissional}/banner', 'ProfissionalBannersController@bannerprofs')->name('profissionalbanners.bannerprofs');

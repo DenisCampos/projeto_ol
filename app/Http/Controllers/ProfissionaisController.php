@@ -319,7 +319,9 @@ class ProfissionaisController extends Controller
             'user_id'=>$user_id
         ])->max('id');
 
-        return redirect()->route('admin.profissionalatuacoes.index', ['id' => $profissional]);
+        $usuario = $this->usersrepository->find($user_id);
+
+        return redirect()->route('admin.profissionalatuacoes.adminindex', ['id' => $profissional]);
     }
 
     public function adminshow($user_id, $prof_id)

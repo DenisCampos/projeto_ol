@@ -259,6 +259,17 @@ Breadcrumbs::for('admin.profissionais.negados', function ($trail) {
     $trail->push('Negados', route('admin.profissionais.negados'));
 });
 
+//profissional admin atuacoes
+Breadcrumbs::for('admin.profissionalatuacoes.adminindex', function ($trail, $usuario, $profissional) {
+    $trail->parent('admin.profissionais.adminedit', $usuario, $profissional);
+    $trail->push('Atuações', route('admin.profissionalatuacoes.adminindex',[$usuario->id, $profissional->id]));
+});
+
+//profissional admin sub atuacoes
+Breadcrumbs::for('admin.profissionalsubatuacoes.adminindex', function ($trail, $usuario, $profissional, $atuacao) {
+    $trail->parent('admin.profissionalatuacoes.adminindex', $usuario, $profissional);
+    $trail->push('Atuações', route('admin.profissionalsubatuacoes.adminindex', [$usuario->id, $profissional->id, $atuacao->id]));
+});
 
 //profissional banner admin
 Breadcrumbs::for('admin.profissionalbanners.bannerprofs', function ($trail, $usuario, $profissional) {

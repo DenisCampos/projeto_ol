@@ -2,7 +2,7 @@
 
 @section('page_name', 'Sub Atuações')
 
-@section('breadcrumbs', Breadcrumbs::render('profissionalsubatuacoes.index', $profissional,$atuacao))
+@section('breadcrumbs', Breadcrumbs::render('admin.profissionalsubatuacoes.adminindex', $usuario,$profissional,$atuacao))
 
 @section('content')
 
@@ -59,7 +59,7 @@
                         </table>
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-primary btn-block" onclick="window.open('{{route('profissionais.index')}}', '_self')">Finalizar</button>
+                        <button class="btn btn-primary btn-block" onclick="window.open('{{route('admin.profissionais.userprofs', ['user'=>$usuario->id])}}', '_self')">Finalizar</button>
                     </div>
                 </div>
             </div>
@@ -80,11 +80,11 @@
         if (classe == 'fa fa-toggle-on fa-2x'){
             document.getElementById(subatuacao).setAttribute('class', 'fa fa-toggle-off fa-2x');
             document.getElementById(subatuacao).setAttribute('style', 'color:#d9534f');
-            acao = "{{route('profissionalsubatuacoes.destroy')}}";
+            acao = "{{route('admin.profissionalsubatuacoes.admindestroy')}}";
         }else{
             document.getElementById(subatuacao).setAttribute('class', 'fa fa-toggle-on fa-2x');
             document.getElementById(subatuacao).setAttribute('style', 'color:#5cb85c');
-            acao = "{{route('profissionalsubatuacoes.store')}}";
+            acao = "{{route('admin.profissionalsubatuacoes.adminstore')}}";
         }
 
         jQuery.ajax({

@@ -119,6 +119,16 @@
         {!! Form::select('cidade_id', ['' => 'Selecione a Cidade'], null, ['class' => 'form-control']) !!}
         @endif
     </div>
+    @if(Auth::user()->tipo==1)
+        <div class="col-lg-6">
+            {!! Form::label('statu_id', 'Status*', ['class' => 'control-label']) !!}
+            {!! Form::select('statu_id', ['1' => 'Despublicado', '2' => 'Publicado'], null, ['class' => 'form-control', 'required' => 'required']) !!}
+        </div>
+        <div class="col-lg-6">
+            {!! Form::label('situacao_id', 'Situação*', ['class' => 'control-label']) !!}
+            {!! Form::select('situacao_id', ['1' => 'Criado', '2' => 'Enviado', '3' => 'Aceito', '4' => 'Negado'], null, ['class' => 'form-control', 'required' => 'required']) !!}
+        </div>
+    @endif
     <div class="col-lg-12 mb-2 mt-2">
         {!! Form::label('map', 'Clique no mapa para adicionar sua localização', ['class' => 'control-label']) !!} ou <input type="button" id="buscar" name="buscar" class="btn btn-primary btn-sm" value="Procure endereço/bairro cadastrados" > 
     </div>

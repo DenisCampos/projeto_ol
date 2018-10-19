@@ -321,7 +321,7 @@ class ProfissionaisController extends Controller
 
         $usuario = $this->usersrepository->find($user_id);
 
-        return redirect()->route('admin.profissionalatuacoes.adminindex', ['id' => $profissional]);
+        return redirect()->route('admin.profissionalatuacoes.adminindex', [$usuario, $profissional]);
     }
 
     public function adminshow($user_id, $prof_id)
@@ -373,7 +373,7 @@ class ProfissionaisController extends Controller
         $usuario = $this->usersrepository->find($profissional->user_id);
         \Session::flash('message', ' Dados atualizados com sucesso.');
 
-        return redirect()->route('admin.profissionais.adminshow', [$profissional, $usuario]); 
+        return redirect()->route('admin.profissionais.adminshow', [$usuario, $profissional]); 
     }
 
     public function analise(Request $request)

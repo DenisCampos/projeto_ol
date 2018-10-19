@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Repositories\UsersRepository;
 use App\Repositories\ProfissionalSubAtuacoesRepository;
 use App\Repositories\ProfissionaisRepository;
 use App\Repositories\AtuacoesRepository;
@@ -13,13 +14,20 @@ use Illuminate\Support\Facades\DB;
 class ProfissionalSubAtuacoesController extends Controller
 {
     protected $repository;
-    private $atuacoesrepository, $subatuacoesrepository, $profissionaisrepository;
+    private $atuacoesrepository, $subatuacoesrepository, $profissionaisrepository, $usersrepository;
 
-    public function __construct(ProfissionalSubAtuacoesRepository $repository, AtuacoesRepository $atuacoesrepository, SubAtuacoesRepository $subatuacoesrepository, ProfissionaisRepository $profissionaisrepository){
+    public function __construct(
+        ProfissionalSubAtuacoesRepository $repository, 
+        AtuacoesRepository $atuacoesrepository, 
+        SubAtuacoesRepository $subatuacoesrepository, 
+        ProfissionaisRepository $profissionaisrepository,
+        UsersRepository $usersrepository
+    ){
         $this->repository = $repository;
         $this->atuacoesrepository = $atuacoesrepository;
         $this->subatuacoesrepository = $subatuacoesrepository;
         $this->profissionaisrepository = $profissionaisrepository;
+        $this->usersrepository = $usersrepository;
     }
 
     public function index($id, $atuacao){
@@ -68,6 +76,46 @@ class ProfissionalSubAtuacoesController extends Controller
         $prof['situacao_id'] = '1';
         $prof['destaque_id'] = '1';
         $this->profissionaisrepository->update($prof, $request->pid);
+        return \Response::json($request->id); 
+    }
+
+    public function adminindex($user_id, $prof_id ,$atuacao_id){
+
+
+        $subatuacoes = DB::table('sub_atuacoes')
+            ->leftJoin('profissional_sub_atuacoes', function ($join) use ($prof_id) {
+                $join->on('sub_atuacoes.id', '=', 'profissional_sub_atuacoes.subatuacao_id')
+                    ->where('profissional_sub_atuacoes.profissional_id', '=', $prof_id);
+            })
+            ->join('atuacoes', function ($join) use ($atuacao_id){
+                $join->on('atuacoes.id', '=', 'sub_atuacoes.atuacao_id')
+                     ->where('sub_atuacoes.atuacao_id', '=', $atuacao_id)
+                     ->whereIn('atuacoes.tipo', [1, 3]);
+            })
+            ->whereIn('sub_atuacoes.tipo', [1, 3])
+            ->orderBy('sub_atuacoes.descricao', 'asc')
+            ->select('sub_atuacoes.id as sub_atuacoesid', 'sub_atuacoes.descricao', 'profissional_sub_atuacoes.id as psubatuacaoid')
+            ->get();
+        $profissional = $this->profissionaisrepository->find($prof_id);
+        $usuario = $this->usersrepository->find($user_id);
+        $atuacao = $this->atuacoesrepository->find($atuacao_id);
+        //dd($atuacoes);
+
+        return view('admin.profissionalsubatuacoes.adminindex', compact('usuario', 'profissional', 'subatuacoes', 'atuacao'));
+    }
+
+    public function adminstore(Request $request){
+        $data['subatuacao_id'] = $request->id;
+        $data['profissional_id'] = $request->pid;
+        $this->repository->create($data);
+        return \Response::json($request->id); 
+    }
+
+    public function admindestroy(Request $request){
+        $this->repository->deleteWhere([
+            'subatuacao_id'=>$request->id,
+            'profissional_id'=>$request->pid,
+        ]);
         return \Response::json($request->id); 
     }
 

@@ -268,7 +268,7 @@ Breadcrumbs::for('admin.profissionalatuacoes.adminindex', function ($trail, $usu
 //profissional admin sub atuacoes
 Breadcrumbs::for('admin.profissionalsubatuacoes.adminindex', function ($trail, $usuario, $profissional, $atuacao) {
     $trail->parent('admin.profissionalatuacoes.adminindex', $usuario, $profissional);
-    $trail->push('Atuações', route('admin.profissionalsubatuacoes.adminindex', [$usuario->id, $profissional->id, $atuacao->id]));
+    $trail->push('Sub Atuações', route('admin.profissionalsubatuacoes.adminindex', [$usuario->id, $profissional->id, $atuacao->id]));
 });
 
 //profissional banner admin

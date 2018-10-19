@@ -2,7 +2,7 @@
 
 @section('page_name', 'Atuações')
 
-@section('breadcrumbs', Breadcrumbs::render('profissionalatuacoes.index', $profissional))
+@section('breadcrumbs', Breadcrumbs::render('admin.profissionalatuacoes.adminindex', $usuario, $profissional))
 
 @section('content')
 
@@ -53,7 +53,7 @@
                                     </td>
                                     <td class="text-center">
                                         @if($atuacao->subcontador>0)
-                                        <button type="button" class="btn btn-primary" onclick="window.location='{{ route("admin.profissionalsubatuacoes.adminindex", ['user' => $usuario->id, 'prof' => $profissional->id, 'atuacao' => $atuacao->atuacaoid]) }}'"><i class="fa fa-check-square-o"></i> Ações</button>
+                                        <button type="button" class="btn btn-primary" onclick="window.location='{{ route('admin.profissionalsubatuacoes.adminindex', ['user' => $usuario->id, 'prof' => $profissional->id, 'atuacao' => $atuacao->atuacaoid]) }}'"><i class="fa fa-check-square-o"></i> Ações</button>
                                         @endif
                                     </td>
                                 </tr>
@@ -65,7 +65,7 @@
                         </table>
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-primary btn-block" onclick="window.open('{{route('profissionais.index')}}', '_self')">Finalizar</button>
+                        <button class="btn btn-primary btn-block" onclick="window.open('{{route('admin.profissionais.userprofs', ['user'=>$usuario->id])}}', '_self')">Finalizar</button>
                     </div>
                 </div>
             </div>
@@ -83,11 +83,11 @@
        if (classe == 'fa fa-toggle-on fa-2x'){
            document.getElementById(atuacao).setAttribute('class', 'fa fa-toggle-off fa-2x');
            document.getElementById(atuacao).setAttribute('style', 'color:#d9534f');
-           acao = "{{route('profissionalatuacoes.destroy')}}";
+           acao = "{{route('admin.profissionalatuacoes.admindestroy')}}";
        }else{
            document.getElementById(atuacao).setAttribute('class', 'fa fa-toggle-on fa-2x');
            document.getElementById(atuacao).setAttribute('style', 'color:#5cb85c');
-           acao = "{{route('profissionalatuacoes.store')}}";
+           acao = "{{route('admin.profissionalatuacoes.adminstore')}}";
        }
 
        jQuery.ajax({

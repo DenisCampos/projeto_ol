@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Repositories\ProfissionaisRepository;
 use App\Repositories\ProfissionalAtuacoesRepository;
 use App\Repositories\ProfissionalSubAtuacoesRepository;
+use App\Repositories\ProfissionalBannersRepository;
 use App\Repositories\UsersRepository;
 use App\Repositories\AtuacoesRepository;
 use App\Repositories\PaisesRepository;
@@ -19,12 +20,13 @@ class ProfissionaisController extends Controller
 {
 
     protected $repository;
-    private $profissionalatuacoesrepository, $profissionalsubatuacoesrepository, $atuacoesrepository, $paisesrepository, $estadosrepository, $cidadesrepository, $usersrepository, $pareceres;
+    private $profissionalatuacoesrepository, $profissionalsubatuacoesrepository, $profissionalbannersrepository, $atuacoesrepository, $paisesrepository, $estadosrepository, $cidadesrepository, $usersrepository, $pareceres;
 
     public function __construct(
         ProfissionaisRepository $repository, 
         ProfissionalAtuacoesRepository $profissionalatuacoesrepository,
         ProfissionalSubAtuacoesRepository $profissionalsubatuacoesrepository,
+        ProfissionalBannersRepository $profissionalbannersrepository,
         AtuacoesRepository $atuacoesrepository, 
         PaisesRepository $paisesrepository,
         EstadosRepository $estadosrepository,
@@ -35,6 +37,7 @@ class ProfissionaisController extends Controller
         $this->repository = $repository;
         $this->profissionalatuacoesrepository = $profissionalatuacoesrepository;
         $this->profissionalsubatuacoesrepository = $profissionalsubatuacoesrepository;
+        $this->profissionalbannersrepository = $profissionalbannersrepository;
         $this->atuacoesrepository = $atuacoesrepository;
         $this->paisesrepository = $paisesrepository;
         $this->estadosrepository = $estadosrepository;
@@ -240,6 +243,14 @@ class ProfissionaisController extends Controller
         $this->profissionalsubatuacoesrepository->deleteWhere([
             'profissional_id'=>$id,
         ]);
+        $banners = $this->profissionalbannersrepository->findwhere(['profissional_id' => $profissional->id]);
+        foreach($banners as $banner){
+            @unlink($banner->banner);
+        }
+        $this->profissionalbannersrepository->deleteWhere([
+            'profissional_id'=>$id,
+        ]);
+
 
         $this->repository->delete($id);
         \Session::flash('message', 'Profissão excluida com sucesso.');
@@ -373,7 +384,34 @@ class ProfissionaisController extends Controller
         $usuario = $this->usersrepository->find($profissional->user_id);
         \Session::flash('message', ' Dados atualizados com sucesso.');
 
-        return redirect()->route('admin.profissionais.adminshow', [$usuario, $profissional]); 
+        return redirect()->route('admin.profissionalatuacoes.adminindex', [$usuario, $profissional]); 
+    }
+
+    public function admindestroy($user_id, $prof_id)
+    {
+        $usuario = $this->usersrepository->find($user_id);
+        $profissional = $this->repository->find($prof_id); 
+
+        @unlink($profissional->foto);
+        $this->profissionalatuacoesrepository->deleteWhere([
+            'profissional_id'=>$profissional->id,
+        ]);
+        $this->profissionalsubatuacoesrepository->deleteWhere([
+            'profissional_id'=>$profissional->id,
+        ]);
+        $banners = $this->profissionalbannersrepository->findwhere(['profissional_id' => $profissional->id]);
+        foreach($banners as $banner){
+            @unlink($banner->banner);
+        }
+        $this->profissionalbannersrepository->deleteWhere([
+            'profissional_id'=>$profissional->id,
+        ]);
+
+
+        $this->repository->delete($profissional->id);
+        \Session::flash('message', 'Profissão excluida com sucesso.');
+
+        return redirect()->route('admin.profissionais.userprofs', [$usuario, $profissional]); 
     }
 
     public function analise(Request $request)

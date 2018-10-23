@@ -168,6 +168,8 @@ Route::group(['middleware'=>'auth'], function () {
     Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth', 'check.permission']], function () {
         //usuarios
         Route::get('/usuarios', 'UsuariosController@index')->name('usuarios.index');
+        Route::get('/usuarios/novo', 'UsuariosController@create')->name('usuarios.create');
+        Route::post('/usuarios/store', 'UsuariosController@store')->name('usuarios.store');
         Route::get('/usuarios/edit/{usuario}', 'UsuariosController@edit')->name('usuarios.edit');
         Route::put('/usuarios/update/{usuario}', 'UsuariosController@update')->name('usuarios.update');
         Route::post('/usuarios/tipoadmin', 'UsuariosController@tipoadmin')->name('usuarios.tipoadmin');
@@ -233,6 +235,7 @@ Route::group(['middleware'=>'auth'], function () {
         Route::get('/usuarios/{user}/profissionais/adminshow/{profissional}', 'ProfissionaisController@adminshow')->name('profissionais.adminshow');
         Route::get('/usuarios/{user}/profissionais/adminedit/{profissional}', 'ProfissionaisController@adminedit')->name('profissionais.adminedit');  
         Route::put('/profissionais/adminupdate/{profissional}', 'ProfissionaisController@adminupdate')->name('profissionais.adminupdate');
+        Route::get('/usuarios/{user}/profissionais/{profissional}/destroy', 'ProfissionaisController@admindestroy')->name('profissionais.admindestroy');
         Route::put('/profissionais/analise', 'ProfissionaisController@analise')->name('profissionais.analise');
         Route::get('/profissionais/enviados/', 'ProfissionaisController@enviados')->name('profissionais.enviados');
         Route::get('/profissionais/aprovados/', 'ProfissionaisController@aprovados')->name('profissionais.aprovados');

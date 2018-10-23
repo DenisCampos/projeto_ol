@@ -67,7 +67,9 @@ class UsuariosController extends Controller
      */
     public function create()
     {
-        //
+        $paises = $this->paisesrepository->pluck('descricao','id');
+        $paises->prepend('Selecione o País', '');
+        return view('admin.usuarios.create', compact('paises'));
     }
 
     /**
@@ -78,7 +80,23 @@ class UsuariosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        if($request->hasFile('foto')){
+            $extensao = $request->foto->getClientOriginalExtension();
+            $file = $request->foto;
+            $file->move('public/perfils', 'user'.$id.".".$extensao);
+            $url = 'public/perfils/user'.$id.".".$extensao;
+            $data['foto'] = $url;
+        }else{
+            unset($data['foto']);
+        }
+        //dd($data['foto']);
+        $data['slug'] = $this->montarSlug($data['name'], $id);
+        $this->repository->update($data, $id);
+
+        \Session::flash('message', ' Dados atualizados com sucesso.');
+
+        return redirect()->route('admin.usuarios.edit',['id'=>$id]);
     }
 
     /**

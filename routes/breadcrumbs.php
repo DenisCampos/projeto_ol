@@ -210,6 +210,11 @@ Breadcrumbs::for('admin.usuarios.index', function ($trail) {
     $trail->push('Usuários', route('admin.usuarios.index'));
 });
 
+Breadcrumbs::for('admin.usuarios.create', function ($trail) {
+    $trail->parent('admin.usuarios.index');
+    $trail->push('Novo', route('admin.usuarios.create'));
+});
+
 Breadcrumbs::for('admin.usuarios.edit', function ($trail, $usuario) {
     $trail->parent('admin.usuarios.index');
     $trail->push($usuario->name, route('admin.usuarios.edit', $usuario->id));

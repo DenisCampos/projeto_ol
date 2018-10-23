@@ -33,7 +33,7 @@
                         <hr>
                         <div class="col-md-6 offset-md-3 pb-2">
                             <div class="mx-auto d-block text-center">
-                                <button type="button" class="btn btn-primary" onclick="window.location='{{ route("admin.profissionais.admincreate", [$usuario->id]) }}'"><i class="fa fa-user"></i>&nbsp;Novo perfil</button>
+                                <button type="button" class="btn btn-primary" onclick="window.location='{{ route('admin.profissionais.admincreate', [$usuario->id]) }}'"><i class="fa fa-user"></i>&nbsp;Novo perfil</button>
                             </div>
                         </div>
                         <table class="table table-responsive">
@@ -45,6 +45,7 @@
                                 <th scope="col">Situação</th>
                                 <th scope="col" class="text-center">Banners</th>
                                 <th scope="col" class="text-center">Destaque</th>
+                                <th scope="col" class="text-center" width="8%"></th>
                                 <th scope="col" class="text-center" width="8%"></th>
                                 <th scope="col" class="text-center" width="8%"></th>
                             </tr>
@@ -81,13 +82,18 @@
                                         @endif
                                     </td>
                                     <td class="text-center">
-                                        <button type="button" class="btn btn-secondary" onclick="window.location='{{ route("admin.profissionalbanners.bannerprofs", [$usuario->id , $profissional->id]) }}'">
+                                        <button type="button" class="btn btn-secondary" onclick="window.location='{{ route('admin.profissionalbanners.bannerprofs', [$usuario->id , $profissional->id]) }}'">
                                             <i class="fa fa-picture-o"></i> Ver Banners
                                         </button>
                                     </td>
                                     <td class="text-center">
-                                        <button type="button" class="btn btn-info" onclick="window.location='{{ route("admin.profissionais.adminshow", [ $usuario->id , $profissional->id]) }}'">
+                                        <button type="button" class="btn btn-info" onclick="window.location='{{ route('admin.profissionais.adminshow', [ $usuario->id , $profissional->id]) }}'">
                                             <i class="fa fa-file-text-o"></i> Detalhar
+                                        </button>
+                                    </td>
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-danger" onclick="window.location='{{ route('admin.profissionais.admindestroy', [ $usuario->id , $profissional->id]) }}'">
+                                            <i class="fa fa-trash-o"></i> Excluir
                                         </button>
                                     </td>
                                 </tr>

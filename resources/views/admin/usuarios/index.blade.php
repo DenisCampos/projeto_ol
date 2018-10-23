@@ -26,47 +26,60 @@
                         Usuários Cadastrados
                     </div>
                     <div class="card-body">
-                        <table id="bootstrap-data-table" class="table table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Nome</th>
-                                    <th>E-mail</th>
-                                    <th>Detalhar</th>
-                                    <th>Admin</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @php
-                                    $cont=1;
-                                @endphp
-                                @foreach($usuarios as $usuario)
-                                <tr>
-                                    <td>{{$cont}}</td>
-                                    <td>
-                                        @if($usuario->foto!="")
-                                        <img class="user-avatar rounded-circle" src="{{ asset($usuario->foto)}}" style="width:32px; height:32px;">
-                                        @else
-                                        <img class="user-avatar rounded-circle" src="{{ asset('public/images/oloyfit-logo3.png') }}" style="width:32px; height:32px;">
-                                        @endif
-                                        {{$usuario->name}}
-                                    </td>
-                                    <td>{{$usuario->email}}</td>
-                                    <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='{{ route("admin.usuarios.edit", ['id' => $usuario->id]) }}'"><i class="fa fa-file-text-o"></i> Detalhar</button></td>
-                                    <td onclick="selecionar_tipo('{{$usuario->id}}')">
-                                        @if($usuario->tipo=='1')
-                                        <i id="{{$usuario->id}}" style="color:#5cb85c" class="fa fa-toggle-on fa-2x"></i>
-                                        @else
-                                        <i id="{{$usuario->id}}" style="color:#d9534f" class="fa fa-toggle-off fa-2x"></i>
-                                        @endif
-                                    </td>
-                                </tr>
-                                @php
-                                    $cont++;
-                                @endphp
-                                @endforeach
-                            </tbody>
-                        </table>
+                        <div class="card-title">
+                            <h3 class="text-center">Perfil Usuário</h3>
+                        </div>
+                        <hr>
+                        <div class="col-md-6 offset-md-3 pb-2">
+                            <div class="mx-auto d-block text-center">
+                                <button type="button" class="btn btn-primary" onclick="window.location='{{ route('admin.usuarios.create') }}'">
+                                    <i class="fa fa-user"></i>&nbsp;Novo usuário
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nome</th>
+                                        <th>E-mail</th>
+                                        <th>Detalhar</th>
+                                        <th>Admin</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        $cont=1;
+                                    @endphp
+                                    @foreach($usuarios as $usuario)
+                                    <tr>
+                                        <td>{{$cont}}</td>
+                                        <td>
+                                            @if($usuario->foto!="")
+                                            <img class="user-avatar rounded-circle" src="{{ asset($usuario->foto)}}" style="width:32px; height:32px;">
+                                            @else
+                                            <img class="user-avatar rounded-circle" src="{{ asset('public/images/oloyfit-logo3.png') }}" style="width:32px; height:32px;">
+                                            @endif
+                                            {{$usuario->name}}
+                                        </td>
+                                        <td>{{$usuario->email}}</td>
+                                        <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='{{ route("admin.usuarios.edit", ['id' => $usuario->id]) }}'"><i class="fa fa-file-text-o"></i> Detalhar</button></td>
+                                        <td onclick="selecionar_tipo('{{$usuario->id}}')">
+                                            @if($usuario->tipo=='1')
+                                            <i id="{{$usuario->id}}" style="color:#5cb85c" class="fa fa-toggle-on fa-2x"></i>
+                                            @else
+                                            <i id="{{$usuario->id}}" style="color:#d9534f" class="fa fa-toggle-off fa-2x"></i>
+                                            @endif
+                                        </td>
+                                    </tr>
+                                    @php
+                                        $cont++;
+                                    @endphp
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

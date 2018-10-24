@@ -81,22 +81,29 @@ class UsuariosController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        $this->repository->create($data);
+
         if($request->hasFile('foto')){
+            $usuario = $this->repository->findWhere([
+                'name' => $data['name'],
+                'email' => $data['email']
+            ])->max();
+            $numero_aux = rand(1, 9999);
             $extensao = $request->foto->getClientOriginalExtension();
             $file = $request->foto;
-            $file->move('public/perfils', 'user'.$id.".".$extensao);
-            $url = 'public/perfils/user'.$id.".".$extensao;
+            $file->move('public/perfils', 'user'.$usuario->id."_".$numero_aux.".".$extensao);
+            $url = 'public/perfils/user'.$usuario->id."_".$numero_aux.".".$extensao;
             $data['foto'] = $url;
         }else{
             unset($data['foto']);
         }
-        //dd($data['foto']);
-        $data['slug'] = $this->montarSlug($data['name'], $id);
-        $this->repository->update($data, $id);
+
+        $data['slug'] = $this->montarSlug($data['name'], $usuario->id);
+        $this->repository->update($data, $usuario->id);
 
         \Session::flash('message', ' Dados atualizados com sucesso.');
 
-        return redirect()->route('admin.usuarios.edit',['id'=>$id]);
+        return redirect()->route('admin.usuarios.edit',['id'=>$usuario->id]);
     }
 
     /**
@@ -140,9 +147,10 @@ class UsuariosController extends Controller
         $data = $request->all();
         if($request->hasFile('foto')){
             $extensao = $request->foto->getClientOriginalExtension();
+            $numero_aux = rand(1, 9999);
             $file = $request->foto;
-            $file->move('public/perfils', 'user'.$id.".".$extensao);
-            $url = 'public/perfils/user'.$id.".".$extensao;
+            $file->move('public/perfils', 'user'.$id."_".$numero_aux.".".$extensao);
+            $url = 'public/perfils/user'.$id."_".$numero_aux.".".$extensao;
             $data['foto'] = $url;
         }else{
             unset($data['foto']);

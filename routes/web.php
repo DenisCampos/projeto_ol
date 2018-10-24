@@ -252,6 +252,11 @@ Route::group(['middleware'=>'auth'], function () {
         Route::post('/profissionalsubatuacoes/destroy', 'ProfissionalSubAtuacoesController@admindestroy')->name('profissionalsubatuacoes.admindestroy');
 
         //profissional banner admin
+        Route::get('/usuarios/{user}/profissionais/{profissional}/banner/novo', 'ProfissionalBannersController@admincreate')->name('profissionalbanners.admincreate');
+        Route::post('/usuarios/{user}/profissionais/{profissional}/banner/store', 'ProfissionalBannersController@adminstore')->name('profissionalbanners.adminstore');
+        Route::put('/usuarios/{user}/profissionais/{profissional}/banner/update/{banner}', 'ProfissionalBannersController@adminupdate')->name('profissionalbanners.adminupdate');
+        Route::get('/usuarios/{user}/profissionais/{profissional}/banner/{banner}/edit', 'ProfissionalBannersController@adminedit')->name('profissionalbanners.adminedit');
+        Route::get('/usuarios/{user}/profissionais/{profissional}/banner/{banner}/destroy', 'ProfissionalBannersController@admindestroy')->name('profissionalbanners.admindestroy');
         Route::get('/usuarios/{user}/profissionais/{profissional}/banner', 'ProfissionalBannersController@bannerprofs')->name('profissionalbanners.bannerprofs');
         Route::get('/usuarios/{user}/profissionais/{profissional}/banner/{banner}', 'ProfissionalBannersController@adminshow')->name('profissionalbanners.adminshow');
         Route::put('/profissionais/{profissional}/banner/analise', 'ProfissionalBannersController@analise')->name('profissionalbanners.analise');

@@ -214,6 +214,14 @@ class ProfissionalBannersController extends Controller
         return view('admin.profissionalbanners.bannerprofs', compact('profissional','banners','usuario'));
     }
 
+    public function admincreate($user_id, $prof_id)
+    {
+        $usuario = $this->usersrepository->find($user_id);
+        $profissional = $this->profissionaisrepository->find($prof_id);
+        return view('admin.profissionalbanners.create', compact('usuario','profissional'));
+    }
+
+
     public function adminshow($user_id, $prof_id, $banner_id)
     {
         $profissional = $this->profissionaisrepository->find($prof_id);

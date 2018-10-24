@@ -318,8 +318,6 @@ class ProfissionaisController extends Controller
 
 
         $data['user_id'] = $user_id;
-        $data['statu_id'] = 1;
-        $data['situacao_id'] = 1;
         $data['destaque_id'] = 1;
         $data['slug'] = $this->montarSlug($data['name'], '');
         $this->repository->create($data);

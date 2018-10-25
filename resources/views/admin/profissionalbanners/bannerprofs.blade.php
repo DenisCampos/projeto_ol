@@ -31,6 +31,13 @@
                             <h3 class="text-center">Banners</h3>
                         </div>
                         <hr>
+                        @if(count($banners)<2)
+                        <div class="col-md-6 offset-md-3 pb-2">
+                            <div class="mx-auto d-block text-center">
+                                <button type="button" class="btn btn-primary" onclick="window.location='{{ route('admin.profissionalbanners.admincreate', [$usuario->id, $profissional->id]) }}'"><i class="fa fa-user"></i>&nbsp;Novo Banner</button>
+                            </div>
+                        </div>
+                        @endif
                         <table class="table table-responsive">
                             <thead class="thead-dark">
                             <tr>
@@ -40,6 +47,8 @@
                                 <th scope="col">Situação</th>
                                 <th scope="col">Inicio</th>
                                 <th scope="col">Fim</th>
+                                <th scope="col" class="text-center" width="8%"></th>
+                                <th scope="col" class="text-center" width="8%"></th>
                                 <th scope="col" class="text-center" width="8%"></th>
                             </tr>
                             </thead>
@@ -69,7 +78,9 @@
                                         {{date('d/m/Y', strtotime($banner->data_fim))}}
                                         @endif
                                     </td>
-                                    <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='{{ route("admin.profissionalbanners.adminshow", [$usuario->id, $profissional->id, $banner->id]) }}'"><i class="fa fa-file-text-o"></i> Detalhar</button></td>
+                                    <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='{{ route('admin.profissionalbanners.adminshow', [$usuario->id, $profissional->id, $banner->id]) }}'"><i class="fa fa-file-text-o"></i> Detalhar</button></td>
+                                    <td class="text-center"><button type="button" class="btn btn-warning" onclick="window.location='{{ route('admin.profissionalbanners.adminedit', [ $usuario->id, $profissional->id, $banner->id]) }}'"><i class="fa fa-pencil-square-o"></i> Editar</button></td>
+                                    <td class="text-center"><button type="button" class="btn btn-danger" onclick="window.location='{{ route('admin.profissionalbanners.admindestroy', [$usuario->id, $profissional->id, $banner->id]) }}'"><i class="fa fa-trash-o"></i> Excluir</button></td>
                                 </tr>
                                 @php
                                     $cont++;

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Repositories\EmpresasRepository;
 use App\Repositories\EmpresaAtuacoesRepository;
 use App\Repositories\EmpresaSubAtuacoesRepository;
+use App\Repositories\EmpresaBannersRepository;
 use App\Repositories\UsersRepository;
 use App\Repositories\AtuacoesRepository;
 use App\Repositories\PaisesRepository;
@@ -18,12 +19,13 @@ class EmpresasController extends Controller
 {
 
     protected $repository;
-    private $empresaatuacoesrepository, $empresasubatuacoesrepository, $atuacoesrepository, $paisesrepository, $estadosrepository, $cidadesrepository, $usersrepository, $pareceres;
+    private $empresaatuacoesrepository, $empresasubatuacoesrepository, $empresabannersrepository, $atuacoesrepository, $paisesrepository, $estadosrepository, $cidadesrepository, $usersrepository, $pareceres;
 
     public function __construct(
         EmpresasRepository $repository, 
         EmpresaAtuacoesRepository $empresaatuacoesrepository,
         EmpresaSubAtuacoesRepository $empresasubatuacoesrepository,
+        EmpresaBannersRepository $empresabannersrepository,
         AtuacoesRepository $atuacoesrepository, 
         PaisesRepository $paisesrepository,
         EstadosRepository $estadosrepository,
@@ -34,6 +36,7 @@ class EmpresasController extends Controller
         $this->repository = $repository;
         $this->empresaatuacoesrepository = $empresaatuacoesrepository;
         $this->empresasubatuacoesrepository = $empresasubatuacoesrepository;
+        $this->empresabannersrepository = $empresabannersrepository;
         $this->atuacoesrepository = $atuacoesrepository;
         $this->paisesrepository = $paisesrepository;
         $this->estadosrepository = $estadosrepository;
@@ -294,6 +297,13 @@ class EmpresasController extends Controller
         $this->empresasubatuacoesrepository->deleteWhere([
             'empresa_id'=>$id,
         ]);
+        $banners = $this->empresabannersrepository->findwhere(['empresa_id' => $empresa->id]);
+        foreach($banners as $banner){
+            @unlink($banner->banner);
+        }
+        $this->empresabannersrepository->deleteWhere([
+            'empresa_id'=>$id,
+        ]);
         $this->repository->delete($id);
         \Session::flash('message', 'Empresa excluida com sucesso.');
 
@@ -320,6 +330,85 @@ class EmpresasController extends Controller
         $this->repository->update($data, $request->id);
 
         return $request->banne;
+    }
+
+    public function admincreate($user_id)
+    {
+        $usuario = $this->usersrepository->find($user_id);
+        $paises = $this->paisesrepository->pluck('descricao','id');
+        $paises->prepend('Selecione o País', '');
+        $estados = $this->estadosrepository->findWhere(['pais_id' => $usuario->pais_id])->pluck('descricao','id');
+        $estados->prepend('Selecione o Estado', '');
+        $cidades = $this->cidadesrepository->findWhere(['estado_id' => $usuario->estado_id])->pluck('descricao','id');
+        $cidades->prepend('Selecione a Cidade', '');
+        return view('admin.empresas.admincreate', compact('usuario','paises','estados','cidades'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function adminstore(Request $request, $user_id)
+    {
+        $usuario = $this->usersrepository->find($user_id);
+        $data = $request->all();
+        if($data['imagem1_crop']!=""){
+            $numero_aux = rand(1, 9999);
+            $img = $data['imagem1_crop'];
+            $img = str_replace('data:image/png;base64,', '', $img);
+            $img = str_replace(' ', '+', $img);
+            $arquivo = base64_decode($img);
+            $file = 'public/empresas_perfil/empresa_perfil'.$usuario->id."_".$numero_aux.".png";
+            $success = file_put_contents($file, $arquivo);
+            $url = 'public/empresas_perfil/empresa_perfil'.$usuario->id."_".$numero_aux.".png";
+            $data['imagem1'] = $url;
+        }else{
+            unset($data['imagem1']);
+        }
+        if($data['imagem2_crop']!=""){
+            $numero_aux = rand(1, 9999);
+            $img = $data['imagem2_crop'];
+            $img = str_replace('data:image/png;base64,', '', $img);
+            $img = str_replace(' ', '+', $img);
+            $arquivo = base64_decode($img);
+            $file = 'public/empresas_perfil/empresa_foto'.$usuario->id."_".$numero_aux.".png";
+            $success = file_put_contents($file, $arquivo);
+            $url = 'public/empresas_perfil/empresa_foto'.$usuario->id."_".$numero_aux.".png";
+            $data['imagem2'] = $url;
+        }else{
+            unset($data['imagem2']);
+        }
+        if($data['imagem3_crop']!=""){
+            $numero_aux = rand(1, 9999);
+            $img = $data['imagem3_crop'];
+            $img = str_replace('data:image/png;base64,', '', $img);
+            $img = str_replace(' ', '+', $img);
+            $arquivo = base64_decode($img);
+            $file = 'public/empresas_perfil/empresa_segunda_foto'.$usuario->id."_".$numero_aux.".png";
+            $success = file_put_contents($file, $arquivo);
+            $url = 'public/empresas_perfil/empresa_segunda_foto'.$usuario->id."_".$numero_aux.".png";
+            $data['imagem3'] = $url;
+        }else{
+            unset($data['imagem3']);
+        }
+
+        //dd($data);
+        
+        $data['user_id'] = $usuario->id;
+        $data['destaque_id'] = 1;
+        $data['slug'] = $this->montarSlug($data['name'], '');
+        $this->repository->create($data);
+       
+        \Session::flash('message', ' Empresa criada com sucesso.');
+
+        $id = Auth::user()->id;
+        $empresa = $this->repository->findWhere([
+            'user_id'=>$id
+        ])->max('id');
+
+        return redirect()->route('admin.empresaatuacoes.adminindex', [$usuario, $empresa]);
     }
 
     public function adminshow($user_id, $emp_id)

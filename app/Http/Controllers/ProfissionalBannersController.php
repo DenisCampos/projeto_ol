@@ -218,9 +218,93 @@ class ProfissionalBannersController extends Controller
     {
         $usuario = $this->usersrepository->find($user_id);
         $profissional = $this->profissionaisrepository->find($prof_id);
-        return view('admin.profissionalbanners.create', compact('usuario','profissional'));
+        return view('admin.profissionalbanners.admincreate', compact('usuario','profissional'));
     }
 
+    public function adminstore(Request $request, $user_id, $prof_id)
+    {        
+        $usuario = $this->usersrepository->find($user_id);
+        $profissional = $this->profissionaisrepository->find($prof_id);
+        $data = $request->all();
+        if($request->hasFile('banner')){
+            $numero_aux = rand(1, 9999);
+            $extensao = $request->banner->getClientOriginalExtension();
+            $file = $request->banner;
+            $file->move('public/profissionais_banner', 'banner_'.$profissional->id."_".$numero_aux.".".$extensao);
+            $url = 'public/profissionais_banner/banner_'.$profissional->id."_".$numero_aux.".".$extensao;
+            $data['banner'] = $url;
+        }else{
+            unset($data['banner']);
+        }
+        $data['profissional_id'] = $profissional->id;
+
+        $this->repository->create($data);
+        
+        \Session::flash('message', ' Banner criado com sucesso.');
+
+        return redirect()->route('admin.profissionalbanners.bannerprofs',[$usuario, $profissional]);
+    }
+
+    public function adminedit($user_id, $prof_id ,$banner_id)
+    {
+        $usuario = $this->usersrepository->find($user_id);
+        $profissional = $this->profissionaisrepository->find($prof_id);
+        $banner = $this->repository->find($banner_id);
+        return view('admin.profissionalbanners.adminedit', compact('usuario','banner','profissional'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function adminupdate(Request $request, $user_id, $prof_id, $banner_id)
+    {
+
+        $data = $request->all();
+        $usuario = $this->usersrepository->find($user_id);
+        $profissional = $this->profissionaisrepository->find($prof_id);
+        $banner = $this->repository->find($banner_id);
+        if($request->hasFile('banner')){
+            @unlink($banner->banner);
+            $numero_aux = rand(1, 9999);
+            $extensao = $request->banner->getClientOriginalExtension();
+            $file = $request->banner;
+            $file->move('public/profissionais_banner', 'banner_'.$profissional->id."_".$numero_aux.".".$extensao);
+            $url = 'public/profissionais_banner/banner_'.$profissional->id."_".$numero_aux.".".$extensao;
+            $data['banner'] = $url;
+        }else{
+            unset($data['banner']); 
+        }
+
+        $this->repository->update($data, $banner->id);
+        \Session::flash('message', ' Banner atualizados com sucesso.');
+
+        
+        return redirect()->route('admin.profissionalbanners.bannerprofs',[$usuario, $profissional]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function admindestroy($user_id, $prof_id, $banner_id)
+    {
+
+        $usuario = $this->usersrepository->find($user_id);
+        $profissional = $this->profissionaisrepository->find($prof_id);
+        $banner = $this->repository->find($banner_id);
+
+        @unlink($banner->banner);
+        $this->repository->delete($banner->id);
+        \Session::flash('message', 'Banner excluida com sucesso.');
+
+        return redirect()->route('admin.profissionalbanners.bannerprofs',[$usuario, $profissional]);
+    }
 
     public function adminshow($user_id, $prof_id, $banner_id)
     {

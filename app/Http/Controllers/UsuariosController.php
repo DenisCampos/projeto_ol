@@ -97,7 +97,7 @@ class UsuariosController extends Controller
         }else{
             unset($data['foto']);
         }
-
+        $data['password'] = bcrypt('oloyfit');
         $data['slug'] = $this->montarSlug($data['name'], $usuario->id);
         $this->repository->update($data, $usuario->id);
 
@@ -157,6 +157,7 @@ class UsuariosController extends Controller
         }
         //dd($data['foto']);
         $data['slug'] = $this->montarSlug($data['name'], $id);
+
         $this->repository->update($data, $id);
 
         \Session::flash('message', ' Dados atualizados com sucesso.');

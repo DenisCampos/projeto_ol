@@ -264,11 +264,13 @@ Breadcrumbs::for('admin.profissionais.negados', function ($trail) {
     $trail->push('Negados', route('admin.profissionais.negados'));
 });
 
+
 //profissional admin atuacoes
 Breadcrumbs::for('admin.profissionalatuacoes.adminindex', function ($trail, $usuario, $profissional) {
     $trail->parent('admin.profissionais.adminedit', $usuario, $profissional);
     $trail->push('Atuações', route('admin.profissionalatuacoes.adminindex',[$usuario->id, $profissional->id]));
 });
+
 
 //profissional admin sub atuacoes
 Breadcrumbs::for('admin.profissionalsubatuacoes.adminindex', function ($trail, $usuario, $profissional, $atuacao) {
@@ -276,10 +278,21 @@ Breadcrumbs::for('admin.profissionalsubatuacoes.adminindex', function ($trail, $
     $trail->push('Sub Atuações', route('admin.profissionalsubatuacoes.adminindex', [$usuario->id, $profissional->id, $atuacao->id]));
 });
 
+
 //profissional banner admin
 Breadcrumbs::for('admin.profissionalbanners.bannerprofs', function ($trail, $usuario, $profissional) {
     $trail->parent('admin.profissionais.adminshow', $usuario, $profissional);
     $trail->push('Banners', route('admin.profissionalbanners.bannerprofs', [$usuario->id, $profissional->id]));
+});
+
+Breadcrumbs::for('admin.profissionalbanners.admincreate', function ($trail, $usuario, $profissional) {
+    $trail->parent('admin.profissionalbanners.bannerprofs', $usuario, $profissional);
+    $trail->push('Novo', route('admin.profissionalbanners.admincreate', [$usuario->id, $profissional->id]));
+});
+
+Breadcrumbs::for('admin.profissionalbanners.adminedit', function ($trail, $usuario, $profissional, $banner) {
+    $trail->parent('admin.profissionalbanners.bannerprofs', $usuario, $profissional);
+    $trail->push('Editar', route('admin.profissionalbanners.adminedit', [$usuario->id, $profissional->id, $banner->id]));
 });
 
 Breadcrumbs::for('admin.profissionalbanners.adminshow', function ($trail, $usuario, $profissional, $banner) {
@@ -297,6 +310,11 @@ Breadcrumbs::for('admin.empresas.useremps', function ($trail, $usuario) {
 Breadcrumbs::for('admin.empresas.adminshow', function ($trail, $usuario, $empresa) {
     $trail->parent('admin.empresas.useremps', $usuario);
     $trail->push($empresa->name, route('admin.empresas.adminshow', [$usuario->id, $empresa->id]));
+});
+
+Breadcrumbs::for('admin.empresas.admincreate', function ($trail, $usuario) {
+    $trail->parent('admin.empresas.useremps', $usuario);
+    $trail->push('Novo', route('admin.empresas.admincreate', $usuario->id));
 });
 
 Breadcrumbs::for('admin.empresas.adminedit', function ($trail, $usuario, $empresa) {
@@ -320,10 +338,34 @@ Breadcrumbs::for('admin.empresas.negados', function ($trail) {
 });
 
 
+//empresa admin atuacoes
+Breadcrumbs::for('admin.empresaatuacoes.adminindex', function ($trail, $usuario, $empresa) {
+    $trail->parent('admin.empresas.adminedit', $usuario, $empresa);
+    $trail->push('Atuações', route('admin.empresaatuacoes.adminindex',[$usuario->id, $empresa->id]));
+});
+
+
+//empresa admin sub atuacoes
+Breadcrumbs::for('admin.empresasubatuacoes.adminindex', function ($trail, $usuario, $empresa, $atuacao) {
+    $trail->parent('admin.empresaatuacoes.adminindex', $usuario, $empresa);
+    $trail->push('Sub Atuações', route('admin.empresasubatuacoes.adminindex', [$usuario->id, $empresa->id, $atuacao->id]));
+});
+
+
 //empresa banner admin
 Breadcrumbs::for('admin.empresabanners.banneremps', function ($trail, $usuario, $empresa) {
     $trail->parent('admin.empresas.adminshow', $usuario, $empresa);
     $trail->push('Banners', route('admin.empresabanners.banneremps', [$usuario->id, $empresa->id]));
+});
+
+Breadcrumbs::for('admin.empresabanners.admincreate', function ($trail, $usuario, $empresa) {
+    $trail->parent('admin.empresabanners.bannerprofs', $usuario, $empresa);
+    $trail->push('Novo', route('admin.empresabanners.admincreate', [$usuario->id, $empresa->id]));
+});
+
+Breadcrumbs::for('admin.empresabanners.adminedit', function ($trail, $usuario, $empresa, $banner) {
+    $trail->parent('admin.empresabanners.bannerprofs', $usuario, $empresa);
+    $trail->push('Editar', route('admin.empresabanners.adminedit', [$usuario->id, $empresa->id, $banner->id]));
 });
 
 Breadcrumbs::for('admin.empresabanners.adminshow', function ($trail, $usuario, $empresa, $banner) {
@@ -359,8 +401,8 @@ Breadcrumbs::for('admin.cursos.negados', function ($trail) {
 });
 
 
- //eventos admin
- Breadcrumbs::for('admin.eventos.usereven', function ($trail, $usuario) {
+//eventos admin
+Breadcrumbs::for('admin.eventos.usereven', function ($trail, $usuario) {
     $trail->parent('admin.usuarios.edit', $usuario);
     $trail->push('Eventos', route('admin.eventos.usereven',$usuario->id));
 });

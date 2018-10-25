@@ -263,20 +263,38 @@ Route::group(['middleware'=>'auth'], function () {
 
         //empresa admin
         Route::get('/usuarios/{user}/empresas/useremps/', 'EmpresasController@useremps')->name('empresas.useremps');
+        Route::get('/usuarios/{user}/empresas/novo', 'EmpresasController@admincreate')->name('empresas.admincreate');
+        Route::post('/usuarios/{user}/empresas/store', 'EmpresasController@adminstore')->name('empresas.adminstore'); 
         Route::post('/empresas/liberabanner', 'EmpresasController@liberabanner')->name('empresas.liberabanner');
         Route::post('/empresas/liberadestaque', 'EmpresasController@liberadestaque')->name('empresas.liberadestaque');
         Route::get('/usuarios/{user}/empresas/adminshow/{empresa}', 'EmpresasController@adminshow')->name('empresas.adminshow');
         Route::get('/usuarios/{user}/empresas/adminedit/{empresa}', 'EmpresasController@adminedit')->name('empresas.adminedit'); 
         Route::put('/empresas/adminupdate/{empresa}', 'EmpresasController@adminupdate')->name('empresas.adminupdate');
+        Route::get('/usuarios/{user}/empresas/{empresa}/destroy', 'EmpresasController@admindestroy')->name('empresas.admindestroy');
         Route::put('/empresas/analise', 'EmpresasController@analise')->name('empresas.analise');
         Route::get('/empresas/enviados/', 'EmpresasController@enviados')->name('empresas.enviados');
         Route::get('/empresas/aprovados/', 'EmpresasController@aprovados')->name('empresas.aprovados');
         Route::get('/empresas/negados/', 'EmpresasController@negados')->name('empresas.negados');
 
         //empresa banner admin
+        Route::get('/usuarios/{user}/empresas/{empresa}/banner/novo', 'EmpresaBannersController@admincreate')->name('empresabanners.admincreate');
+        Route::post('/usuarios/{user}/empresas/{empresa}/banner/store', 'EmpresaBannersController@adminstore')->name('empresabanners.adminstore');
+        Route::put('/usuarios/{user}/empresas/{empresa}/banner/update/{banner}', 'EmpresaBannersController@adminupdate')->name('empresabanners.adminupdate');
+        Route::get('/usuarios/{user}/empresas/{empresa}/banner/{banner}/edit', 'EmpresaBannersController@adminedit')->name('empresabanners.adminedit');
+        Route::get('/usuarios/{user}/empresas/{empresa}/banner/{banner}/destroy', 'EmpresaBannersController@admindestroy')->name('empresabanners.admindestroy');
         Route::get('/usuarios/{user}/empresas/{empresa}/banner', 'EmpresaBannersController@banneremps')->name('empresabanners.banneremps');
         Route::get('/usuarios/{user}/empresas/{empresa}/banner/{banner}', 'EmpresaBannersController@adminshow')->name('empresabanners.adminshow');
         Route::put('/empresas/{empresa}/banner/analise', 'EmpresaBannersController@analise')->name('empresabanners.analise');
+
+        //empresa admin atuacoes
+        Route::get('/usuarios/{user}/empresas/adminedit/{empresa}/empresaatuacoes', 'EmpresaAtuacoesController@adminindex')->name('empresaatuacoes.adminindex');
+        Route::post('/empresaatuacoes/store', 'EmpresaAtuacoesController@adminstore')->name('empresaatuacoes.adminstore');
+        Route::post('/empresaatuacoes/destroy', 'EmpresaAtuacoesController@admindestroy')->name('empresaatuacoes.admindestroy');
+ 
+        //empresa admin sub atuacoes
+        Route::get('/usuarios/{user}/empresas/adminedit/{empresa}/empresaatuacoes/{atuacao}', 'EmpresaSubAtuacoesController@adminindex')->name('empresasubatuacoes.adminindex');
+        Route::post('/empresasubatuacoes/store', 'EmpresaSubAtuacoesController@adminstore')->name('empresasubatuacoes.adminstore');
+        Route::post('/empresasubatuacoes/destroy', 'EmpresaSubAtuacoesController@admindestroy')->name('empresasubatuacoes.admindestroy');
 
         //cursos admin
         Route::get('/usuarios/{user}/cursos/usercursos/', 'CursosController@usercursos')->name('cursos.usercursos');

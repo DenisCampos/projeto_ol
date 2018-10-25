@@ -1,30 +1,32 @@
 @extends('layouts.sufee')
 
-@section('page_name', 'Novo')
+@section('page_name', 'Editar')
 
-@section('breadcrumbs', Breadcrumbs::render('admin.profissionalbanners.admincreate', $usuario, $profissional))
+@section('breadcrumbs', Breadcrumbs::render('admin.profissionalbanners.adminedit', $usuario, $profissional, $banner))
 
 @section('content')
 
 <div class="content mt-3">
     @if(Session::has('message'))
+    <div class="row">
         <div class="col-sm-12">
             <div class="alert  alert-success alert-dismissible fade show" role="alert">
-                <span class="badge badge-pill badge-success">Sucesso</span>  {!! Session::get('message') !!}.
+                <span class="badge badge-pill badge-success">Sucesso</span>  {!! Session::get('message') !!}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
         </div>
+    </div>
     @endif
     <div class="animated fadeIn">
         <div class="row">
             <div class="col-lg-4">
                 <div class="card">
                     <div class="card-header">
-                        <strong class="card-title">Crie um novo banner</strong>
+                        <strong class="card-title">Edite o Banner</strong>
                     </div>
-                    {!! Form::open(['route' => ['admin.profissionalbanners.adminstore', 'user_id' => $usuario->id, 'prof_id' => $profissional->id],'class' => 'form', 'method' => 'POST', 'enctype'=>'multipart/form-data']) !!}
+                    {!! Form::model($banner,['route' => ['admin.profissionalbanners.adminupdate', 'user_id' => $usuario->id ,'prof_id' => $profissional->id , 'banner_id' => $banner->id],'class' => 'form', 'method' => 'PUT', 'enctype'=>'multipart/form-data']) !!}
                     <div class="card-body">
                         <div class="card-title">
                             <h3 class="text-center">Dados do Banner</h3>
@@ -42,6 +44,7 @@
     </div>
 </div>
 @endsection
+
 @section('assets_scripts')
 <script>
     function pega_estados(pais) {

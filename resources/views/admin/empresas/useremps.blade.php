@@ -30,6 +30,11 @@
                             <h3 class="text-center">Perfil da Empresa</h3>
                         </div>
                         <hr>
+                        <div class="col-md-6 offset-md-3 pb-2">
+                            <div class="mx-auto d-block text-center">
+                                <button type="button" class="btn btn-primary" onclick="window.location='{{ route('admin.empresas.admincreate', [ $usuario->id]) }}'"><i class="fa fa-building-o"></i>&nbsp;Nova empresa</button>
+                            </div>
+                        </div>
                         <table class="table table-responsive">
                             <thead class="thead-dark">
                             <tr>
@@ -39,6 +44,7 @@
                                 <th scope="col">Situação</th>
                                 <th scope="col" class="text-center">Banners</th>
                                 <th scope="col" class="text-center">Destaque</th>
+                                <th scope="col" class="text-center" width="8%"></th>
                                 <th scope="col" class="text-center" width="8%"></th>
                                 <th scope="col" class="text-center" width="8%"></th>
                             </tr>
@@ -75,11 +81,20 @@
                                         @endif
                                     </td>     
                                     <td class="text-center">
-                                        <button type="button" class="btn btn-secondary" onclick="window.location='{{ route("admin.empresabanners.banneremps", [$usuario->id, $empresa->id]) }}'">
+                                        <button type="button" class="btn btn-secondary" onclick="window.location='{{ route('admin.empresabanners.banneremps', [$usuario->id, $empresa->id]) }}'">
                                             <i class="fa fa-picture-o"></i> Ver Banners
                                         </button>
                                     </td>                               
-                                    <td class="text-center"><button type="button" class="btn btn-info" onclick="window.location='{{ route("admin.empresas.adminshow", [$usuario->id, $empresa->id]) }}'"><i class="fa fa-file-text-o"></i> Detalhar</button></td>
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-info" onclick="window.location='{{ route('admin.empresas.adminshow', [$usuario->id, $empresa->id]) }}'">
+                                            <i class="fa fa-file-text-o"></i> Detalhar
+                                        </button>
+                                    </td>
+                                    <td class="text-center">
+                                        <button type="button" class="btn btn-danger" onclick="window.location='{{ route('admin.empresas.admindestroy', [ $usuario->id , $empresa->id]) }}'">
+                                            <i class="fa fa-trash-o"></i> Excluir
+                                        </button>
+                                    </td>
                                 </tr>
                                 @php
                                     $cont++;

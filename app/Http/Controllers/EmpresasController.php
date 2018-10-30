@@ -403,9 +403,8 @@ class EmpresasController extends Controller
        
         \Session::flash('message', ' Empresa criada com sucesso.');
 
-        $id = Auth::user()->id;
         $empresa = $this->repository->findWhere([
-            'user_id'=>$id
+            'user_id'=>$usuario->id
         ])->max('id');
 
         return redirect()->route('admin.empresaatuacoes.adminindex', [$usuario, $empresa]);

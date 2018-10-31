@@ -106,11 +106,12 @@ class EmpresaSubAtuacoesController extends Controller
             ->orderBy('sub_atuacoes.descricao', 'asc')
             ->select('sub_atuacoes.id as sub_atuacoesid', 'sub_atuacoes.descricao', 'empresa_sub_atuacoes.id as esubatuacaoid')
             ->get();
-        $empresa = $this->empresasrepository->find($id);
+        $empresa = $this->empresasrepository->find($emp_id);
         $usuario = $this->usersrepository->find($user_id);
+        $atuacao = $this->atuacoesrepository->find($atuacao_id);
         //dd($atuacoes);
 
-        return view('empresasubatuacoes.index', compact('empresa', 'subatuacoes','atuacao'));
+        return view('empresasubatuacoes.index', compact('usuario', 'empresa', 'subatuacoes','atuacao'));
     }
 
     public function adminstore(Request $request){
@@ -125,7 +126,6 @@ class EmpresaSubAtuacoesController extends Controller
             'subatuacao_id'=>$request->id,
             'empresa_id'=>$request->eid,
         ]);
-        $emp['statu_id'] = '1';
         return \Response::json($request->id); 
     }
 }

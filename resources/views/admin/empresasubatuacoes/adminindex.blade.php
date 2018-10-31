@@ -2,7 +2,7 @@
 
 @section('page_name', 'Sub Atuações')
 
-@section('breadcrumbs', Breadcrumbs::render('empresasubatuacoes.index', $empresa, $atuacao))
+@section('breadcrumbs', Breadcrumbs::render('admin.empresasubatuacoes.adminindex', $usuario, $empresa, $atuacao))
 
 @section('content')
 
@@ -59,7 +59,7 @@
                         </table>
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-primary btn-block" onclick="window.open('{{route('empresas.index')}}', '_self')">Finalizar</button>
+                        <button class="btn btn-primary btn-block" onclick="window.open('{{route('admin.empresas.useremps',[$usuario->id])}}', '_self')">Finalizar</button>
                     </div>
                 </div>
             </div>
@@ -77,11 +77,11 @@
         if (classe == 'fa fa-toggle-on fa-2x'){
             document.getElementById(subatuacao).setAttribute('class', 'fa fa-toggle-off fa-2x');
             document.getElementById(subatuacao).setAttribute('style', 'color:#d9534f');
-            acao = "{{route('empresasubatuacoes.destroy')}}";
+            acao = "{{route('admin.empresasubatuacoes.admindestroy')}}";
         }else{
             document.getElementById(subatuacao).setAttribute('class', 'fa fa-toggle-on fa-2x');
             document.getElementById(subatuacao).setAttribute('style', 'color:#5cb85c');
-            acao = "{{route('empresasubatuacoes.store')}}";
+            acao = "{{route('adminempresasubatuacoes.adminstore')}}";
         }
 
         jQuery.ajax({

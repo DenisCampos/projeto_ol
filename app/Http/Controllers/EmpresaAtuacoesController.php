@@ -34,7 +34,8 @@ class EmpresaAtuacoesController extends Controller
                     ->where('empresa_atuacoes.empresa_id', '=', $id);
             })
             ->leftJoin('sub_atuacoes', function ($join) use ($id) {
-                $join->on('atuacoes.id', '=', 'sub_atuacoes.atuacao_id');
+                $join->on('atuacoes.id', '=', 'sub_atuacoes.atuacao_id')
+                ->whereIn('sub_atuacoes.tipo', [2, 3]);
             })
             ->whereIn('atuacoes.tipo', [2, 3])
             ->orderBy('atuacoes.descricao', 'asc')
@@ -87,9 +88,10 @@ class EmpresaAtuacoesController extends Controller
                     ->where('empresa_atuacoes.empresa_id', '=', $emp_id);
             })
             ->leftJoin('sub_atuacoes', function ($join) use ($emp_id) {
-                $join->on('atuacoes.id', '=', 'sub_atuacoes.atuacao_id');
+                $join->on('atuacoes.id', '=', 'sub_atuacoes.atuacao_id')
+                ->whereIn('sub_atuacoes.tipo', [2, 3]);
             })
-            ->whereIn('atuacoes.tipo', [1, 3])
+            ->whereIn('atuacoes.tipo', [2, 3])
             ->orderBy('atuacoes.descricao', 'asc')
             ->select('atuacoes.id as atuacaoid', 'atuacoes.descricao', 'empresa_atuacoes.id as eatuacaoid', DB::raw('count(sub_atuacoes.id) as subcontador'))
             ->groupBy('atuacoes.id')

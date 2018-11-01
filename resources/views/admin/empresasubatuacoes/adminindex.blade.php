@@ -81,7 +81,7 @@
         }else{
             document.getElementById(subatuacao).setAttribute('class', 'fa fa-toggle-on fa-2x');
             document.getElementById(subatuacao).setAttribute('style', 'color:#5cb85c');
-            acao = "{{route('adminempresasubatuacoes.adminstore')}}";
+            acao = "{{route('admin.empresasubatuacoes.adminstore')}}";
         }
 
         jQuery.ajax({

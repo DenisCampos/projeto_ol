@@ -523,7 +523,7 @@ class EmpresasController extends Controller
 
         \Session::flash('message', ' Dados atualizados com sucesso.');
 
-        return redirect()->route('admin.empresas.adminshow', [$usuario, $empresa]); 
+        return redirect()->route('admin.empresaatuacoes.adminindex', [$usuario, $empresa]); 
     }
  
     public function enviados()

@@ -53,7 +53,9 @@
                                     </td>
                                     <td class="text-center">
                                         @if($atuacao->subcontador>0)
-                                        <button type="button" class="btn btn-primary" onclick="window.location='{{ route('admin.empresasubatuacoes.adminindex', [$usuario->id, $empresa->id, $atuacao->atuacaoid]) }}'"><i class="fa fa-check-square-o"></i> Ações</button>
+                                        <button type="button" class="btn btn-primary" onclick="window.location='{{ route('admin.empresasubatuacoes.adminindex', [$usuario->id, $empresa->id, $atuacao->atuacaoid]) }}'">
+                                            <i class="fa fa-check-square-o"></i> Ações
+                                        </button>
                                         @endif
                                     </td>
                                 </tr>

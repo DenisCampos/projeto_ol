@@ -111,7 +111,7 @@ class EmpresaSubAtuacoesController extends Controller
         $atuacao = $this->atuacoesrepository->find($atuacao_id);
         //dd($atuacoes);
 
-        return view('empresasubatuacoes.index', compact('usuario', 'empresa', 'subatuacoes','atuacao'));
+        return view('admin.empresasubatuacoes.adminindex', compact('usuario', 'empresa', 'subatuacoes','atuacao'));
     }
 
     public function adminstore(Request $request){

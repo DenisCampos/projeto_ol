@@ -526,6 +526,37 @@ class EmpresasController extends Controller
         return redirect()->route('admin.empresaatuacoes.adminindex', [$usuario, $empresa]); 
     }
  
+    public function admindestroy($user_id, $emp_id)
+    {
+        $usuario = $this->usersrepository->find($user_id);
+        $empresa = $this->repository->find($emp_id);
+
+        @unlink($empresa->imagem1);
+        if($empresa->imagem2!=""){
+            @unlink($empresa->imagem2);
+        }
+        if($empresa->imagem3!=""){
+            @unlink($empresa->imagem3);
+        }
+        $this->empresaatuacoesrepository->deleteWhere([
+            'empresa_id'=>$empresa->id,
+        ]);
+        $this->empresasubatuacoesrepository->deleteWhere([
+            'empresa_id'=>$empresa->id,
+        ]);
+        $banners = $this->empresabannersrepository->findwhere(['empresa_id' => $empresa->id]);
+        foreach($banners as $banner){
+            @unlink($banner->banner);
+        }
+        $this->empresabannersrepository->deleteWhere([
+            'empresa_id'=>$empresa->id,
+        ]);
+        $this->repository->delete($empresa->id);
+        \Session::flash('message', 'Empresa excluida com sucesso.');
+
+        return redirect()->route('admin.empresas.useremps', [$usuario, $empresa]); 
+    }
+
     public function enviados()
     {
         $empresas = $this->repository->findWhere([

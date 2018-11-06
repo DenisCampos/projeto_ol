@@ -146,7 +146,9 @@ class SiteController extends Controller
                     ->orderBy('descricao');
                 })
                 ->findWhere(['profissional_id' => $profissional->id]);
+            if(count($profatuacoes)>0){
                 array_push($profatuacoes_array, $profatuacoes);
+            }
         }
                 
         //empresas
@@ -163,7 +165,9 @@ class SiteController extends Controller
                     ->orderBy('descricao');
                 })
                 ->findWhere(['empresa_id' => $empresa->id]);
+            if(count($empatuacoes)>0){
                 array_push($empatuacoes_array, $empatuacoes);
+            }
         }
 
         $bannersprincipais = $this->bannersprincipaisrepository->findWhere(['statu_id' => 2]);
@@ -661,7 +665,9 @@ class SiteController extends Controller
                     ->orderBy('descricao');
                 })
                 ->findWhere(['profissional_id' => $profissional->id]);
+            if(count($profatuacoes)>0){
                 array_push($profatuacoes_array, $profatuacoes);
+            }
         }
        
 
@@ -726,7 +732,9 @@ class SiteController extends Controller
                     ->orderBy('descricao');
                 })
                 ->findWhere(['profissional_id' => $profissional->id]);
+            if(count($profatuacoes)>0){
                 array_push($profatuacoes_array, $profatuacoes);
+            }
         }
        
 
@@ -769,7 +777,9 @@ class SiteController extends Controller
                     ->orderBy('descricao');
                 })
                 ->findWhere(['profissional_id' => $profissional_outro->id]);
+            if(count($profatuacoes)>0){
                 array_push($profatuacoes_array, $profatuacoes_outro);
+            }
         }
        
         return view('profissionais.post', compact('patuacoes','psubatuacoes','eatuacoes','esubatuacoes','vcategorias','bannersprincipais','profissionais','profissional','banners','profatuacoes','profatuacoes_array'));
@@ -818,7 +828,9 @@ class SiteController extends Controller
                     ->orderBy('descricao');
                 })
                 ->findWhere(['empresa_id' => $empresa->id]);
+            if(count($empatuacoes)>0){
                 array_push($empatuacoes_array, $empatuacoes);
+            }
         }
 
         return view('empresas.posts', compact('patuacoes','psubatuacoes','eatuacoes','esubatuacoes','vcategorias','bannersprincipais','empresas','atuacao','empatuacoes_array'));
@@ -882,7 +894,9 @@ class SiteController extends Controller
                     ->orderBy('descricao');
                 })
                 ->findWhere(['empresa_id' => $empresa->id]);
+            if(count($empatuacoes)>0){
                 array_push($empatuacoes_array, $empatuacoes);
+            }
         }
        
 
@@ -917,12 +931,14 @@ class SiteController extends Controller
         }
         $empatuacoes_array = array();
         foreach ($empresas as $empresa_outro){
-            $empatuacoes = $this->empresaatuacoesrepository->scopeQuery(function($query){
+            $empatuacoes_outro = $this->empresaatuacoesrepository->scopeQuery(function($query){
                 return $query->join('atuacoes', 'atuacoes.id', '=', 'empresa_atuacoes.atuacao_id')
                     ->orderBy('descricao');
                 })
                 ->findWhere(['empresa_id' => $empresa_outro->id]);
-                array_push($empatuacoes_array, $empatuacoes);
+            if(count($empatuacoes_outro)>0){
+                array_push($empatuacoes_array, $empatuacoes_outro); 
+            }
         }
        
         return view('empresas.post', compact('patuacoes','psubatuacoes','eatuacoes','esubatuacoes','vcategorias','bannersprincipais','empresas','empresa','banners','empatuacoes_array'));

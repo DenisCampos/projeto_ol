@@ -359,12 +359,12 @@ Breadcrumbs::for('admin.empresabanners.banneremps', function ($trail, $usuario, 
 });
 
 Breadcrumbs::for('admin.empresabanners.admincreate', function ($trail, $usuario, $empresa) {
-    $trail->parent('admin.empresabanners.bannerprofs', $usuario, $empresa);
+    $trail->parent('admin.empresabanners.banneremps', $usuario, $empresa);
     $trail->push('Novo', route('admin.empresabanners.admincreate', [$usuario->id, $empresa->id]));
 });
 
 Breadcrumbs::for('admin.empresabanners.adminedit', function ($trail, $usuario, $empresa, $banner) {
-    $trail->parent('admin.empresabanners.bannerprofs', $usuario, $empresa);
+    $trail->parent('admin.empresabanners.banneremps', $usuario, $empresa);
     $trail->push('Editar', route('admin.empresabanners.adminedit', [$usuario->id, $empresa->id, $banner->id]));
 });
 

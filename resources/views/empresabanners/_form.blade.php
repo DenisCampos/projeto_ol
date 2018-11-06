@@ -19,6 +19,24 @@
             @endif
         </div>
     </div>
+    @if(Auth::user()->tipo==1)
+        <div class="col-lg-6">
+            {!! Form::label('data_inicio', 'Inicio', ['class' => 'control-label']) !!}
+            {!! Form::date('data_inicio', null, ['class' => 'form-control']) !!}<br>
+        </div>
+        <div class="col-lg-6">
+            {!! Form::label('data_fim', 'Fim', ['class' => 'control-label']) !!}
+            {!! Form::date('data_fim', null, ['class' => 'form-control']) !!}<br>
+        </div>
+        <div class="col-lg-6">
+            {!! Form::label('statu_id', 'Status*', ['class' => 'control-label']) !!}
+            {!! Form::select('statu_id', ['1' => 'Despublicado', '2' => 'Publicado'], null, ['class' => 'form-control', 'required' => 'required']) !!}
+        </div>
+        <div class="col-lg-6">
+            {!! Form::label('situacao_id', 'Situação*', ['class' => 'control-label']) !!}
+            {!! Form::select('situacao_id', ['1' => 'Criado', '2' => 'Enviado', '3' => 'Aceito', '4' => 'Negado'], null, ['class' => 'form-control', 'required' => 'required']) !!}
+        </div>
+    @endif
     <div class="col-lg-12">
         {!! Form::label('site', 'Link de redirecionamento', ['class' => 'control-label']) !!}   
         <div class="input-group">

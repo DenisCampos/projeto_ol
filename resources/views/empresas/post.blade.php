@@ -169,7 +169,7 @@
                 @foreach($empresas as $empresa)
                 <div class="col-lg-3 col-sm-6 portfolio-item">
                     <div class="card h-100">
-                        <a href="{{route('empresas.post',['empresa'=>$empresa->slug])}}"><img class="card-img-top" src="{{asset($empresa->imagem2)}}" alt=""></a>
+                        <a href="{{route('empresas.post',['empresa'=>$empresa->slug])}}"><img class="card-img-top" src="{{asset($empresa->imagem1)}}" alt=""></a>
                         <div class="card-body">
                             <h5 class="card-title text-center">
                                 <a href="{{route('empresas.post',['empresa'=>$empresa->slug])}}">{{$empresa->name}}</a>
